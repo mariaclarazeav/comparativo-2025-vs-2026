@@ -520,11 +520,11 @@
   }
   .ramas{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,560px));
+    justify-content:center;
     gap:16px;
   }
   .rama{ border:1px solid var(--linea); border-top:3px solid var(--morado); padding:16px 18px 6px; }
-  .rama.pend{ border-top-color:var(--amarillo-ln); background:#FFFDF6; }
   .rama h3{
     font-family:var(--display);
     font-weight:600;
@@ -558,12 +558,6 @@
     text-align:right;
   }
   .rama .fila.fuerte dd{ font-size:15px; color:var(--morado); }
-  .rama .texto-pend{
-    font-size:13.5px;
-    color:#6B4E00;
-    line-height:1.5;
-    margin:0 0 14px;
-  }
 
   /* ---------- Pie ---------- */
   footer{
@@ -722,11 +716,6 @@
           <h3>Desde pauta (Meta)</h3>
           <p class="conv" id="conv-pauta"></p>
           <dl id="dl-pauta"></dl>
-        </div>
-        <div class="rama pend">
-          <h3>Otros canales <span class="marca-amarilla">Pendiente</span></h3>
-          <p class="conv">Botón página web, Pop Up, Comunicación flash, Orgánico</p>
-          <p class="texto-pend">Otros canales (Botón página web, Pop Up, Comunicación flash, Orgánico) — 2.226 conversaciones sin desglosar, pendiente.</p>
         </div>
       </div>
     </div>
