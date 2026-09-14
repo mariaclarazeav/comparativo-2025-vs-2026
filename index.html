@@ -323,6 +323,9 @@
   .marca{ visibility:hidden; }
   .marca.on{ visibility:visible; }
 
+  .pend-box.alto{ min-height:300px; }
+  #grafico-google{ margin-bottom:28px; }
+
   .tip{
     position:absolute;
     top:6px;
@@ -375,7 +378,7 @@
     color:var(--tinta-3);
     display:block;
   }
-  .panel .pend-box{
+  .pend-box{
     margin-top:10px;
     min-height:124px;
     display:flex;
@@ -632,6 +635,26 @@
       <span class="etq">Parcial</span>
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
     </div>
+    <div class="nota">
+      <span class="etq">Pendiente</span>
+      <span>Tendencia mensual de inversión pendiente — el export actual de Meta no viene desglosado por mes.</span>
+    </div>
+  </section>
+
+  <!-- PAUTA GOOGLE ADS -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Pauta · Google Ads</span>
+      <h2>Inversión semanal</h2>
+    </div>
+    <p class="sub">Inversión por semana, 2025 vs 2026. Debajo, los totales del periodo: costo, conversiones y costo por conversión.</p>
+    <div class="leyenda-lineas">
+      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
+      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
+    </div>
+    <div id="grafico-google"></div>
+    <div class="scroll"><table id="t-google"></table></div>
+    <div id="nota-google"></div>
   </section>
 
   <!-- BLOQUE 4 -->
@@ -711,12 +734,16 @@
   var COLOR25 = '#9C7A56', COLOR26 = '#4C1D6B';
   var GEO_PANEL = {W:620, H:330, PL:58, PR:18, PT:20, PB:46};
   var GEO_MEDIO = {W:580, H:300, PL:78, PR:18, PT:20, PB:46};
+  var GEO_LARGO = {W:1140, H:340, PL:84, PR:20, PT:20, PB:46};
   var GRAFICOS = {};
 
   function svgLinea(cfg){
     var g = cfg.geo;
+    var etq = cfg.etiquetas || etiquetasMes;
+    var n = etq.length;
     var ancho = g.W - g.PL - g.PR, alto = g.H - g.PT - g.PB;
-    var paso = ancho / 7;
+    var paso = ancho / (n - 1);
+    var salto = Math.ceil(n / 12);   /* con muchos puntos, se rotula uno de cada tantos */
     var base = cfg.base || 0;
     var px = function(i){ return g.PL + i * paso; };
     var py = function(v){ return g.PT + (1 - (v - base) / (cfg.escala - base)) * alto; };
@@ -730,8 +757,12 @@
              'font-family="IBM Plex Mono, monospace" font-size="11" fill="#77707E">' + cfg.fmtEje(v) + '</text>';
     });
 
-    /* Etiquetas de los meses, siempre visibles bajo el eje */
-    etiquetasMes.forEach(function(m,i){
+    /* Etiquetas del eje horizontal, siempre visibles bajo la línea */
+    var ultimoRotulado = Math.floor((n-1) / salto) * salto;
+    etq.forEach(function(m,i){
+      /* el último punto solo se rotula si no queda pegado a la etiqueta anterior */
+      var forzarUltimo = (i === n-1) && (n-1 - ultimoRotulado >= Math.ceil(salto/2));
+      if (i % salto !== 0 && !forzarUltimo) return;
       svg += '<text x="' + px(i).toFixed(1) + '" y="' + (g.H-16) + '" text-anchor="middle" ' +
              'font-family="IBM Plex Mono, monospace" font-size="12" fill="#514B57">' + m + '</text>';
     });
@@ -745,8 +776,8 @@
              '<circle cx="' + px(ult).toFixed(1) + '" cy="' + py(vals[ult]).toFixed(1) + '" r="3.4" fill="' + color + '"></circle>';
     });
 
-    /* Marca del mes señalado y zona sensible al mouse, una por mes */
-    etiquetasMes.forEach(function(m,i){
+    /* Marca del punto señalado y zona sensible al mouse, una por punto */
+    etq.forEach(function(m,i){
       var x = px(i).toFixed(1);
       svg += '<g class="marca" data-m="' + i + '">' +
         '<line x1="' + x + '" y1="' + g.PT + '" x2="' + x + '" y2="' + (g.PT+alto) + '" stroke="#D8D2DE" stroke-width="1"></line>' +
@@ -754,7 +785,7 @@
         '<circle cx="' + x + '" cy="' + py(cfg.b[i]).toFixed(1) + '" r="4.5" fill="#FFFFFF" stroke="' + COLOR26 + '" stroke-width="2"></circle>' +
       '</g>';
     });
-    etiquetasMes.forEach(function(m,i){
+    etq.forEach(function(m,i){
       var x0 = Math.max(g.PL, px(i) - paso/2);
       var x1 = Math.min(g.PL + ancho, px(i) + paso/2);
       svg += '<rect class="hit" data-m="' + i + '" x="' + x0.toFixed(1) + '" y="' + g.PT + '" ' +
@@ -785,7 +816,7 @@
         var flecha = dif < 0 ? '▼' : (dif > 0 ? '▲' : '—');
 
         tip.innerHTML =
-          '<div class="tip-mes">' + nombresMes[i] + '</div>' +
+          '<div class="tip-mes">' + (cfg.nombres || nombresMes)[i] + '</div>' +
           '<div class="tip-fila"><span class="pt" style="background:' + COLOR25 + '"></span>2025<b>' + cfg.fmt(a) + '</b></div>' +
           '<div class="tip-fila"><span class="pt" style="background:' + COLOR26 + '"></span>2026<b>' + cfg.fmt(b) + '</b></div>' +
           '<div class="tip-dif"><span class="rot">Diferencia 2026 − 2025</span>' +
@@ -1045,8 +1076,6 @@
     '</div>';
   }).join('');
 
-  ligarGraficos();
-
   if (!ordenCat.every(tieneSerie)){
     document.getElementById('nota-tendencia').innerHTML =
       '<div class="nota"><span class="etq">Pendiente</span><span>' +
@@ -1123,6 +1152,77 @@
 
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
+  /* ---------------- Pauta Google Ads ---------------- */
+  /* Inversión por semana. Pendiente: falta el export de Google Ads.
+     Formato:  { etiquetas:['S1','S2',...], a2025:[...], a2026:[...] }
+     Al cargarlo aquí, el gráfico se dibuja con el mismo estilo del Bloque 1. */
+  var googleSemanal = null;
+
+  /* Totales del periodo. Pendiente: faltan las cifras. */
+  var googleTotales = {
+    costo:        {a:null, b:null},
+    conversiones: {a:null, b:null},
+    costoConv:    {a:null, b:null}
+  };
+
+  var hayGoogleSemanal = !!(googleSemanal && googleSemanal.a2025 && googleSemanal.a2026 &&
+                            googleSemanal.a2025.length === googleSemanal.a2026.length &&
+                            googleSemanal.a2025.length > 1);
+
+  if (hayGoogleSemanal){
+    var picoG = googleSemanal.a2025.concat(googleSemanal.a2026).reduce(function(m,v){ return v > m ? v : m; }, 0);
+    var escalonG = Math.pow(10, String(Math.round(picoG)).length - 1) / 2;
+    var techoG = Math.ceil(picoG / escalonG) * escalonG;
+    document.getElementById('grafico-google').innerHTML =
+      '<div class="grafico-b1">' +
+        '<div class="rot">Inversión por semana <span class="eje">eje desde 0</span></div>' +
+        bloqueGrafico('g-inv', {
+          a: googleSemanal.a2025, b: googleSemanal.a2026,
+          etiquetas: googleSemanal.etiquetas,
+          nombres: googleSemanal.etiquetas.map(function(e){ return 'Semana ' + String(e).replace(/^S/, ''); }),
+          escala: techoG, ticks: [0, techoG/2, techoG], geo: GEO_LARGO,
+          fmtEje: function(v){ return '$' + u(v/1000000) + ' M'; },
+          fmt: cop, fmtDif: difCop,
+          titulo: 'Inversión semanal en Google Ads, 2025 y 2026'
+        }) +
+      '</div>';
+  } else {
+    document.getElementById('grafico-google').innerHTML =
+      '<div class="pend-box alto">Inversión semanal pendiente<br>' +
+      'falta la serie semana a semana de 2025 y 2026</div>';
+  }
+
+  var filasGoogle = [
+    ['Costo',                googleTotales.costo,        cop],
+    ['Conversiones',         googleTotales.conversiones, u],
+    ['Costo por conversión', googleTotales.costoConv,    cop]
+  ];
+
+  document.getElementById('t-google').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th><th>2025</th><th>2026</th><th>Variación</th>' +
+    '</tr></thead><tbody>' +
+    filasGoogle.map(function(f){
+      var d = f[1], fmt = f[2];
+      var hay = d.a !== null && d.b !== null;
+      return '<tr>' +
+        '<td class="lft">' + f[0] + (hay ? '' : '<span class="marca-amarilla">Pendiente</span>') + '</td>' +
+        (hay
+          ? '<td class="num">' + fmt(d.a) + '</td><td class="num">' + fmt(d.b) + '</td>' + varTd(d.a, d.b)
+          : '<td class="num pendiente">—</td><td class="num pendiente">—</td><td class="num pendiente">—</td>') +
+      '</tr>';
+    }).join('') +
+    '</tbody>';
+
+  if (!hayGoogleSemanal || filasGoogle.some(function(f){ return f[1].a === null || f[1].b === null; })){
+    document.getElementById('nota-google').innerHTML =
+      '<div class="nota"><span class="etq">Pendiente</span><span>' +
+        'Faltan las cifras de Google Ads: la inversión semana a semana de 2025 y de 2026 para el gráfico, ' +
+        'y el costo, las conversiones y el costo por conversión de cada año para la tabla. ' +
+        'La sección queda armada y se llena con esos datos.' +
+      '</span></div>';
+  }
+
   /* ---------------- Bloque 4 ---------------- */
   document.getElementById('leads-total').textContent = u(5602);
   document.getElementById('conv-pauta').textContent = u(3376) + ' conversaciones';
@@ -1161,5 +1261,7 @@
   }).join('');
 
   document.getElementById('t-leads').innerHTML = encab5 + '<tbody>' + html5 + '</tbody>';
+
+  ligarGraficos();
 })();
 </script>
