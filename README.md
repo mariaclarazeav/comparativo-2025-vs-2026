@@ -6,9 +6,11 @@ fuentes de Google. Se abre directamente en el navegador.
 Cinco bloques, con los datos entregados tal cual:
 
 1. **Ventas generales por mes** — 4 categorías, ambos canales, enero–agosto.
+   Arriba, dos gráficos mensuales (unidades y valor) con eje ajustado al rango
+   de los datos; debajo, la tabla.
 2. **Categoría × canal comercial** — unidades y valor, con subtotales por categoría.
-   Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto) con eje
-   vertical compartido: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
+   Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto), cada uno
+   con el gráfico arriba y sus totales abajo, y eje vertical compartido desde cero: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
    Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
    la diferencia 2026 − 2025 en unidades y en porcentaje.
 3. **Pauta Meta por categoría** — inversión, compras, ROAS, CPA real vs benchmark 8% y semáforo.
