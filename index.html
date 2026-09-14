@@ -484,7 +484,6 @@
     </div>
     <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año.</p>
     <div class="scroll"><table id="t-mes"></table></div>
-    <div id="nota-b1"></div>
   </section>
 
   <!-- BLOQUE 2 -->
@@ -605,14 +604,14 @@
 
   /* ---------------- Bloque 1 ---------------- */
   var meses = [
-    ['Enero',     687,  93103941, 712, 112408526],
-    ['Febrero',   639,  97029325, 617, 109364510],
-    ['Marzo',     678, 103940816, 754, 122432482],
-    ['Abril',     896, 121789104, 643, 109909283],
-    ['Mayo',      844, 116566057, 691, 112284924],
-    ['Junio',     695, 105839748, 692, 109113303],
-    ['Julio',     841, 123687129, 753, 115646916],
-    ['Agosto',    775, 122930729, 751, 114391076]
+    ['Enero',     759, 108696703, 882, 149904805],
+    ['Febrero',   727, 116271573, 725, 135431437],
+    ['Marzo',     750, 118971700, 874, 153245931],
+    ['Abril',     946, 132660815, 754, 136555390],
+    ['Mayo',      902, 129335545, 822, 143221073],
+    ['Junio',     758, 120321037, 795, 134139233],
+    ['Julio',     975, 150714442, 857, 139898078],
+    ['Agosto',    906, 148782562, 831, 134938835]
   ];
 
   var tot = meses.reduce(function(a,m){
@@ -645,21 +644,12 @@
     '</tr>';
   }).join('');
 
-  /* Total general corregido (incluye la corrección de Fajas). El detalle
-     mensual de arriba todavía viene sin corregir: la diferencia se muestra. */
-  var TOTAL = {u25:6723, v25:1025754377, u26:6540, v26:1127334782};
+  /* El detalle mensual suma exactamente el total general. */
+  var TOTAL = {u25:tot[0], v25:tot[1], u26:tot[2], v26:tot[3]};
 
   var pie =
-    '<tr class="suma-pend">' +
-      '<td class="lft pendiente">Suma de los meses mostrados<span class="marca-amarilla">Sin corregir</span></td>' +
-      '<td class="num pendiente">' + u(tot[0]) + '</td>' +
-      '<td class="num pendiente">' + cop(tot[1]) + '</td>' +
-      '<td class="num pendiente">' + u(tot[2]) + '</td>' +
-      '<td class="num pendiente">' + cop(tot[3]) + '</td>' +
-      varTd(tot[0], tot[2], 'pendiente') + varTd(tot[1], tot[3], 'pendiente') +
-    '</tr>' +
     '<tr class="total">' +
-      '<td class="lft">Total general Ene–Ago · corregido</td>' +
+      '<td class="lft">Total Ene–Ago</td>' +
       '<td class="num">' + u(TOTAL.u25) + '</td>' +
       '<td class="num">' + cop(TOTAL.v25) + '</td>' +
       '<td class="num">' + u(TOTAL.u26) + '</td>' +
@@ -668,14 +658,6 @@
     '</tr>';
 
   document.getElementById('t-mes').innerHTML = encab + '<tbody>' + cuerpo + pie + '</tbody>';
-
-  document.getElementById('nota-b1').innerHTML =
-    '<div class="nota"><span class="etq">Pendiente</span><span>' +
-      'El detalle mes a mes todavía refleja las cifras de Fajas anteriores a la corrección. ' +
-      'Faltan ' + u(TOTAL.u25 - tot[0]) + ' unidades / ' + cop(TOTAL.v25 - tot[1]) + ' en 2025 y ' +
-      u(TOTAL.u26 - tot[2]) + ' unidades / ' + cop(TOTAL.v26 - tot[3]) + ' en 2026 por repartir entre los meses. ' +
-      'El total general ya está corregido.' +
-    '</span></div>';
 
   /* ---------------- Tiles ---------------- */
   var vU = varTxt(TOTAL.u25, TOTAL.u26), vV = varTxt(TOTAL.v25, TOTAL.v26);
@@ -769,11 +751,13 @@
   var ordenCat = ['Fajas','Cinturilla','Short','Brasier'];
   var inicialesMes = ['E','F','M','A','M','J','J','A'];
 
-  /* Unidades por mes (enero–agosto) de cada categoría.
-     Pendiente: falta el detalle mensual por categoría. Al cargar aquí los ocho
-     valores de cada año, los paneles se dibujan solos con el eje compartido.
-     Formato:  Fajas: { a2025:[...8...], a2026:[...8...] }                     */
-  var serieMes = { Fajas:{}, Cinturilla:{}, Short:{}, Brasier:{} };
+  /* Unidades por mes (enero–agosto) de cada categoría. */
+  var serieMes = {
+    Fajas:      { a2025:[293,383,366,309,325,325,477,430], a2026:[391,327,360,356,354,310,335,279] },
+    Cinturilla: { a2025:[ 41, 34, 49, 93,181, 85, 66, 97], a2026:[ 63, 49, 70, 51, 31, 53, 48, 47] },
+    Short:      { a2025:[388,255,292,472,330,313,397,347], a2026:[389,308,402,295,418,377,433,467] },
+    Brasier:    { a2025:[ 37, 55, 43, 72, 66, 35, 35, 32], a2026:[ 39, 41, 42, 52, 19, 55, 41, 38] }
+  };
 
   function totalCategoria(cat){
     return filas.filter(function(f){ return f[0] === cat; })
