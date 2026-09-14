@@ -1,0 +1,769 @@
+<meta charset="utf-8">
+<title>Comparativo Fajitex 2025–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --negro:#1A1A1A;
+    --morado:#4C1D6B;
+    --nude:#D4B8A3;
+    --paper:#FFFFFF;
+
+    --tinta-2:#514B57;
+    --tinta-3:#77707E;
+    --linea:#E4DFE9;
+    --linea-suave:#F1EEF4;
+    --lavado:#FAF8FB;
+
+    --verde:#1B7F4C;   --verde-bg:#E7F4EC;   --verde-ln:#B7DFC8;
+    --amarillo:#8A6300; --amarillo-bg:#FFF6DC; --amarillo-ln:#E9C766;
+    --rojo:#A81F12;    --rojo-bg:#FCEBE8;    --rojo-ln:#F1BFB6;
+    --neutro-bg:#F3F1F5; --neutro-ln:#E0DBE6;
+
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --texto:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+    --cifra:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--negro);
+    font-family:var(--texto);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .hoja{
+    max-width:1180px;
+    margin:0 auto;
+    padding-inline:20px;
+    padding-block:40px 64px;
+  }
+
+  /* ---------- Encabezado ---------- */
+  .eyebrow{
+    font-family:var(--cifra);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--morado);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(28px,4.2vw,42px);
+    line-height:1.08;
+    letter-spacing:-.02em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .bajada{
+    margin:10px 0 0;
+    max-width:62ch;
+    color:var(--tinta-2);
+    font-size:16px;
+  }
+  .regla{
+    height:3px;
+    margin:22px 0 28px;
+    background:linear-gradient(90deg,
+      var(--negro) 0 92px,
+      var(--morado) 92px 152px,
+      var(--nude) 152px 196px,
+      var(--linea) 196px);
+  }
+
+  /* ---------- Tiles de resumen ---------- */
+  .tiles{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:14px;
+    margin-bottom:12px;
+  }
+  .tile{
+    border:1px solid var(--linea);
+    padding:18px 20px 16px;
+  }
+  .tile .rot{
+    font-family:var(--cifra);
+    font-size:10.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+  }
+  .tile .par{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:8px;
+    font-family:var(--display);
+    font-weight:600;
+    letter-spacing:-.015em;
+  }
+  .tile .a{ font-size:19px; color:var(--tinta-3); }
+  .tile .flecha{ color:var(--nude); font-size:16px; }
+  .tile .b{ font-size:clamp(22px,2.6vw,29px); color:var(--negro); }
+  .tile .pie{ margin-top:6px; font-size:13px; color:var(--tinta-2); }
+  .pie-nota{
+    font-size:13px;
+    color:var(--tinta-3);
+    margin:0 0 34px;
+  }
+
+  /* ---------- Bloques ---------- */
+  section{
+    border-top:1px solid var(--negro);
+    padding-top:18px;
+    margin-top:44px;
+  }
+  .cab{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:8px 14px;
+    margin-bottom:6px;
+  }
+  .num-bloque{
+    font-family:var(--cifra);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--morado);
+  }
+  h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:21px;
+    letter-spacing:-.015em;
+    margin:0;
+  }
+  .sub{
+    margin:0 0 18px;
+    color:var(--tinta-2);
+    font-size:14px;
+    max-width:74ch;
+  }
+
+  /* ---------- Tablas ---------- */
+  .scroll{ overflow-x:auto; }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+    min-width:640px;
+  }
+  thead th{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+    text-align:right;
+    padding:8px 12px;
+    white-space:nowrap;
+  }
+  thead tr.grupos th{
+    color:var(--negro);
+    font-size:12px;
+    letter-spacing:.09em;
+    padding-bottom:6px;
+  }
+  thead tr.grupos th.g25{ border-bottom:2px solid var(--nude); }
+  thead tr.grupos th.g26{ border-bottom:2px solid var(--morado); }
+  thead tr.grupos th.gv{ border-bottom:2px solid var(--linea); }
+  thead tr.campos th{ border-bottom:1px solid var(--negro); }
+  th.lft, td.lft{ text-align:left; }
+  thead th.lft{ border-bottom:1px solid var(--negro); vertical-align:bottom; }
+
+  tbody td{
+    padding:9px 12px;
+    border-bottom:1px solid var(--linea-suave);
+    text-align:right;
+    vertical-align:baseline;
+  }
+  tbody tr:hover{ background:var(--lavado); }
+  td.num, th.num{
+    font-family:var(--cifra);
+    font-size:13px;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+  td.lft{ font-weight:600; }
+  td.canal{ font-weight:400; color:var(--tinta-2); }
+  .var .flecha{ color:var(--tinta-3); margin-right:5px; font-size:11px; }
+  tr.sub-total td{
+    background:var(--lavado);
+    border-bottom:1px solid var(--linea);
+    color:var(--tinta-2);
+    font-weight:600;
+  }
+  tr.total td{
+    border-top:2px solid var(--negro);
+    border-bottom:none;
+    background:var(--paper);
+    font-weight:700;
+    padding-top:11px;
+  }
+  tr.total td.lft{ font-family:var(--display); }
+  tr.total + tr.total td{ border-top:1px solid var(--linea); padding-top:9px; }
+  tr.sep td{ border-bottom:1px solid var(--linea); }
+
+  td.pendiente{
+    background:var(--amarillo-bg);
+    color:var(--amarillo);
+  }
+  .marca-amarilla{
+    display:inline-block;
+    font-family:var(--cifra);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amarillo);
+    background:var(--amarillo-bg);
+    border:1px solid var(--amarillo-ln);
+    padding:1px 6px;
+    margin-left:8px;
+    vertical-align:2px;
+  }
+
+  /* ---------- Semáforo ---------- */
+  .sem{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--texto);
+    font-size:12px;
+    font-weight:600;
+    padding:3px 10px;
+    border-radius:999px;
+    border:1px solid;
+    white-space:nowrap;
+  }
+  .sem .punto{ width:7px; height:7px; border-radius:50%; display:inline-block; }
+  .sem.verde{ color:var(--verde); background:var(--verde-bg); border-color:var(--verde-ln); }
+  .sem.verde .punto{ background:var(--verde); }
+  .sem.amarillo{ color:var(--amarillo); background:var(--amarillo-bg); border-color:var(--amarillo-ln); }
+  .sem.amarillo .punto{ background:#E0A800; }
+  .sem.rojo{ color:var(--rojo); background:var(--rojo-bg); border-color:var(--rojo-ln); }
+  .sem.rojo .punto{ background:#D0342B; }
+  .sem.na{ color:var(--tinta-3); background:var(--neutro-bg); border-color:var(--neutro-ln); font-weight:400; }
+  .sem.na .punto{ background:var(--tinta-3); opacity:.5; }
+
+  .leyenda{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+    margin-top:16px;
+    font-size:13px;
+    color:var(--tinta-2);
+  }
+
+  /* ---------- Notas ---------- */
+  .nota{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:var(--amarillo-bg);
+    border:1px solid var(--amarillo-ln);
+    padding:12px 14px;
+    font-size:13.5px;
+    line-height:1.5;
+    color:#6B4E00;
+    margin-top:16px;
+  }
+  .nota + .nota{ margin-top:8px; }
+  .nota .etq{
+    font-family:var(--cifra);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amarillo);
+    border:1px solid var(--amarillo-ln);
+    padding:1px 6px;
+    flex:0 0 auto;
+    margin-top:2px;
+    background:#FFFDF4;
+  }
+
+  /* ---------- Embudo ---------- */
+  .embudo{ display:flex; flex-direction:column; align-items:stretch; }
+  .nodo-top{
+    border:1px solid var(--negro);
+    padding:16px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 16px;
+  }
+  .nodo-top .rot{
+    font-family:var(--cifra);
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+  }
+  .nodo-top .cifra{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:30px;
+    letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums;
+  }
+  .conector{
+    width:1px;
+    height:26px;
+    background:var(--linea);
+    margin:0 auto;
+  }
+  .ramas{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:16px;
+  }
+  .rama{ border:1px solid var(--linea); border-top:3px solid var(--morado); padding:16px 18px 6px; }
+  .rama.pend{ border-top-color:var(--amarillo-ln); background:#FFFDF6; }
+  .rama h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:15px;
+    margin:0 0 2px;
+    letter-spacing:-.01em;
+  }
+  .rama .conv{
+    font-family:var(--cifra);
+    font-size:13px;
+    color:var(--tinta-2);
+    margin:0 0 12px;
+  }
+  .rama dl{ margin:0; }
+  .rama .fila{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    padding:9px 0;
+    border-top:1px solid var(--linea-suave);
+    font-size:14px;
+  }
+  .rama .fila dt{ color:var(--tinta-2); }
+  .rama .fila dd{
+    margin:0;
+    font-family:var(--cifra);
+    font-size:13px;
+    font-variant-numeric:tabular-nums;
+    font-weight:500;
+    text-align:right;
+  }
+  .rama .fila.fuerte dd{ font-size:15px; color:var(--morado); }
+  .rama .texto-pend{
+    font-size:13.5px;
+    color:#6B4E00;
+    line-height:1.5;
+    margin:0 0 14px;
+  }
+
+  /* ---------- Pie ---------- */
+  footer{
+    margin-top:56px;
+    border-top:1px solid var(--linea);
+    padding-top:16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 20px;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--tinta-3);
+  }
+  footer .marca{ font-family:var(--display); font-weight:600; color:var(--negro); letter-spacing:-.01em; }
+
+  @media (max-width:640px){
+    .hoja{ padding-block:28px 48px; }
+    .nodo-top .cifra{ font-size:26px; }
+  }
+
+  @media print{
+    .hoja{ padding-block:0; max-width:none; }
+    section{ break-inside:avoid; page-break-inside:avoid; }
+    tbody tr:hover{ background:transparent; }
+  }
+</style>
+
+<div class="hoja">
+
+  <header>
+    <p class="eyebrow">Fajitex · Comparativo interno</p>
+    <h1>Comparativo 2025 vs 2026</h1>
+    <p class="bajada">Ventas, pauta y generación de demanda de las 4 categorías (Brasier, Cinturilla, Fajas, Short) en los dos canales comerciales: WhatsApp y Sitio Web.</p>
+    <div class="regla"></div>
+
+    <div class="tiles" id="tiles"></div>
+    <p class="pie-nota">Resumen del Bloque 1 — ventas generales enero a agosto, 4 categorías, ambos canales. Cada bloque indica su propio rango de tiempo.</p>
+  </header>
+
+  <!-- BLOQUE 1 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 01</span>
+      <h2>Ventas generales por mes</h2>
+    </div>
+    <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año.</p>
+    <div class="scroll"><table id="t-mes"></table></div>
+  </section>
+
+  <!-- BLOQUE 2 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 02</span>
+      <h2>Categoría × canal comercial</h2>
+    </div>
+    <p class="sub">Unidades y valor por categoría en cada canal. Los subtotales y el total son la suma de las filas mostradas.</p>
+    <div class="scroll"><table id="t-cat"></table></div>
+  </section>
+
+  <!-- BLOQUE 3 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 03</span>
+      <h2>Pauta Meta por categoría</h2>
+    </div>
+    <p class="sub">Inversión, compras atribuidas y CPA real frente al benchmark de 8%. El semáforo marca el cumplimiento del CPA contra ese benchmark.</p>
+    <div class="scroll"><table id="t-pauta"></table></div>
+    <div class="leyenda">
+      <span>Semáforo de cumplimiento:</span>
+      <span class="sem verde"><span class="punto"></span>Verde</span>
+      <span class="sem amarillo"><span class="punto"></span>Amarillo</span>
+      <span class="sem rojo"><span class="punto"></span>Rojo</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Parcial</span>
+      <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
+    </div>
+  </section>
+
+  <!-- BLOQUE 4 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 04</span>
+      <h2>Embudo WhatsApp</h2>
+    </div>
+    <p class="sub">Agosto. Del total de leads que entran por WhatsApp, solo la rama de pauta Meta está desglosada.</p>
+
+    <div class="embudo">
+      <div class="nodo-top">
+        <span class="rot">Total leads WhatsApp · agosto</span>
+        <span class="cifra" id="leads-total"></span>
+      </div>
+      <div class="conector"></div>
+      <div class="ramas">
+        <div class="rama">
+          <h3>Desde pauta (Meta)</h3>
+          <p class="conv" id="conv-pauta"></p>
+          <dl id="dl-pauta"></dl>
+        </div>
+        <div class="rama pend">
+          <h3>Otros canales <span class="marca-amarilla">Pendiente</span></h3>
+          <p class="conv">Botón página web, Pop Up, Comunicación flash, Orgánico</p>
+          <p class="texto-pend">Otros canales (Botón página web, Pop Up, Comunicación flash, Orgánico) — 2.226 conversaciones sin desglosar, pendiente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOQUE 5 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 05</span>
+      <h2>Leads, conversaciones y sesiones desde pauta</h2>
+    </div>
+    <p class="sub">2025 corresponde al año completo (12 meses); 2026 va del 1 de enero al 13 de septiembre (8,4 meses).</p>
+    <div class="scroll"><table id="t-leads"></table></div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Sesiones = clics de Meta, no dato real de GA4.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Rango</span>
+      <span>2026 es parcial (8,4 meses) vs 2025 completo (12 meses) — no comparar directo sin ajustar el rango.</span>
+    </div>
+  </section>
+
+  <footer>
+    <span class="marca">Fajitex</span>
+    <span>Cifras en pesos colombianos (COP). Unidades = unidades vendidas.</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var nf0 = new Intl.NumberFormat('es-CO', {maximumFractionDigits:0});
+  var nf1 = new Intl.NumberFormat('es-CO', {minimumFractionDigits:1, maximumFractionDigits:1});
+  var u   = function(n){ return nf0.format(n); };
+  var cop = function(n){ return '$' + nf0.format(n); };
+
+  function varTxt(a,b){
+    var v = (b/a - 1) * 100;
+    var s = (v > 0 ? '+' : '') + nf1.format(v) + '%';
+    return { v:v, s:s };
+  }
+  function varTd(a,b,extra){
+    var r = varTxt(a,b);
+    var f = r.v < 0 ? '▼' : (r.v > 0 ? '▲' : '—');
+    return '<td class="num var ' + (extra||'') + '"><span class="flecha">' + f + '</span>' + r.s + '</td>';
+  }
+
+  /* ---------------- Bloque 1 ---------------- */
+  var meses = [
+    ['Enero',     687,  93103941, 712, 112408526],
+    ['Febrero',   639,  97029325, 617, 109364510],
+    ['Marzo',     678, 103940816, 754, 122432482],
+    ['Abril',     896, 121789104, 643, 109909283],
+    ['Mayo',      844, 116566057, 691, 112284924],
+    ['Junio',     695, 105839748, 692, 109113303],
+    ['Julio',     841, 123687129, 753, 115646916],
+    ['Agosto',    775, 122930729, 751, 114391076]
+  ];
+
+  var tot = meses.reduce(function(a,m){
+    return [a[0]+m[1], a[1]+m[2], a[2]+m[3], a[3]+m[4]];
+  }, [0,0,0,0]);
+
+  var encab =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        '<th class="g25" colspan="2">2025</th>' +
+        '<th class="g26" colspan="2">2026</th>' +
+        '<th class="gv" colspan="2">Variación</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Unidades</th><th>Valor</th>' +
+        '<th>Unidades</th><th>Valor</th>' +
+        '<th>Und.</th><th>Valor</th>' +
+      '</tr>' +
+    '</thead>';
+
+  var cuerpo = meses.map(function(m){
+    return '<tr>' +
+      '<td class="lft">' + m[0] + '</td>' +
+      '<td class="num">' + u(m[1]) + '</td>' +
+      '<td class="num">' + cop(m[2]) + '</td>' +
+      '<td class="num">' + u(m[3]) + '</td>' +
+      '<td class="num">' + cop(m[4]) + '</td>' +
+      varTd(m[1], m[3]) + varTd(m[2], m[4]) +
+    '</tr>';
+  }).join('');
+
+  var pie = '<tr class="total">' +
+      '<td class="lft">Total Ene–Ago</td>' +
+      '<td class="num">' + u(tot[0]) + '</td>' +
+      '<td class="num">' + cop(tot[1]) + '</td>' +
+      '<td class="num">' + u(tot[2]) + '</td>' +
+      '<td class="num">' + cop(tot[3]) + '</td>' +
+      varTd(tot[0], tot[2]) + varTd(tot[1], tot[3]) +
+    '</tr>';
+
+  document.getElementById('t-mes').innerHTML = encab + '<tbody>' + cuerpo + pie + '</tbody>';
+
+  /* ---------------- Tiles ---------------- */
+  var vU = varTxt(tot[0], tot[2]), vV = varTxt(tot[1], tot[3]);
+  document.getElementById('tiles').innerHTML =
+    '<div class="tile">' +
+      '<div class="rot">Unidades vendidas · Ene–Ago</div>' +
+      '<div class="par"><span class="a">' + u(tot[0]) + '</span><span class="flecha">→</span><span class="b">' + u(tot[2]) + '</span></div>' +
+      '<div class="pie">' + vU.s + ' frente a 2025 · ' + u(tot[2]-tot[0]) + ' unidades</div>' +
+    '</div>' +
+    '<div class="tile">' +
+      '<div class="rot">Valor vendido · Ene–Ago</div>' +
+      '<div class="par"><span class="a">' + cop(tot[1]) + '</span><span class="flecha">→</span><span class="b">' + cop(tot[3]) + '</span></div>' +
+      '<div class="pie">' + vV.s + ' frente a 2025 · ' + cop(tot[3]-tot[1]) + '</div>' +
+    '</div>';
+
+  /* ---------------- Bloque 2 ---------------- */
+  var filas = [
+    ['Brasier',   'WhatsApp',   284,  22992202,  180,  17015996],
+    ['Brasier',   'Sitio Web',   91,   7698971,  147,  14378077],
+    ['Cinturilla','WhatsApp',   357,  40901371,  230,  36749594],
+    ['Cinturilla','Sitio Web',  289,  28656670,  182,  29537476],
+    ['Fajas',     'WhatsApp',  1572, 333395166,  858, 193822723],
+    ['Fajas',     'Sitio Web',  668, 140867528,  927, 221783762],
+    ['Short',     'WhatsApp',  1839, 199509066, 1630, 204757753],
+    ['Short',     'Sitio Web',  955, 110865875, 1459, 187505639]
+  ];
+
+  var encab2 =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Categoría</th>' +
+        '<th class="lft" rowspan="2">Canal</th>' +
+        '<th class="g25" colspan="2">2025</th>' +
+        '<th class="g26" colspan="2">2026</th>' +
+        '<th class="gv" colspan="2">Variación</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Unidades</th><th>Valor</th>' +
+        '<th>Unidades</th><th>Valor</th>' +
+        '<th>Und.</th><th>Valor</th>' +
+      '</tr>' +
+    '</thead>';
+
+  var html2 = '', acc = [0,0,0,0], gran = [0,0,0,0], catActual = null;
+
+  function subtotalRow(cat, a){
+    return '<tr class="sub-total">' +
+      '<td class="lft">Subtotal ' + cat + '</td><td></td>' +
+      '<td class="num">' + u(a[0]) + '</td>' +
+      '<td class="num">' + cop(a[1]) + '</td>' +
+      '<td class="num">' + u(a[2]) + '</td>' +
+      '<td class="num">' + cop(a[3]) + '</td>' +
+      varTd(a[0], a[2]) + varTd(a[1], a[3]) +
+    '</tr>';
+  }
+
+  filas.forEach(function(f, i){
+    if (catActual !== null && f[0] !== catActual){
+      html2 += subtotalRow(catActual, acc);
+      acc = [0,0,0,0];
+    }
+    catActual = f[0];
+    acc = [acc[0]+f[2], acc[1]+f[3], acc[2]+f[4], acc[3]+f[5]];
+    gran = [gran[0]+f[2], gran[1]+f[3], gran[2]+f[4], gran[3]+f[5]];
+
+    html2 += '<tr>' +
+      '<td class="lft">' + (f[1] === 'WhatsApp' ? f[0] : '') + '</td>' +
+      '<td class="lft canal">' + f[1] + '</td>' +
+      '<td class="num">' + u(f[2]) + '</td>' +
+      '<td class="num">' + cop(f[3]) + '</td>' +
+      '<td class="num">' + u(f[4]) + '</td>' +
+      '<td class="num">' + cop(f[5]) + '</td>' +
+      varTd(f[2], f[4]) + varTd(f[3], f[5]) +
+    '</tr>';
+
+    if (i === filas.length - 1){ html2 += subtotalRow(catActual, acc); }
+  });
+
+  html2 += '<tr class="total">' +
+      '<td class="lft">Total</td><td></td>' +
+      '<td class="num">' + u(gran[0]) + '</td>' +
+      '<td class="num">' + cop(gran[1]) + '</td>' +
+      '<td class="num">' + u(gran[2]) + '</td>' +
+      '<td class="num">' + cop(gran[3]) + '</td>' +
+      varTd(gran[0], gran[2]) + varTd(gran[1], gran[3]) +
+    '</tr>';
+
+  document.getElementById('t-cat').innerHTML = encab2 + '<tbody>' + html2 + '</tbody>';
+
+  /* ---------------- Bloque 3 ---------------- */
+  var pauta = [
+    {cat:'Fajas',      anio:2025, inv:38719107, compras:910, roas:'5,6x',  cpa:42548, bench:16938, sem:'rojo'},
+    {cat:'Fajas',      anio:2026, inv:6438208,  compras:276, roas:'12,3x', cpa:23327, bench:18627, sem:'rojo'},
+    {cat:'Short',      anio:2025, inv:10287149, compras:332, roas:'6,4x',  cpa:30985, bench:8887,  sem:'rojo'},
+    {cat:'Short',      anio:2026, inv:21420474, compras:902, roas:'10,0x', cpa:23748, bench:10159, sem:'rojo'},
+    {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, roas:'7,6x',  cpa:29769, bench:8614,  sem:'rojo'},
+    {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  roas:'6,1x',  cpa:33050, bench:12871, sem:'rojo'},
+    {cat:'Brasier',    anio:2025, inv:0, compras:null, roas:null, cpa:null, bench:null, sem:'na', nota:'no maneja campañas'},
+    {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, bench:null, sem:'na', nota:'no maneja campañas'}
+  ];
+
+  var chips = {
+    verde:    '<span class="sem verde"><span class="punto"></span>Verde</span>',
+    amarillo: '<span class="sem amarillo"><span class="punto"></span>Amarillo</span>',
+    rojo:     '<span class="sem rojo"><span class="punto"></span>Rojo</span>',
+    na:       '<span class="sem na"><span class="punto"></span>No aplica</span>'
+  };
+
+  var encab3 =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría</th>' +
+      '<th class="lft">Año</th>' +
+      '<th>Inversión</th>' +
+      '<th>Compras</th>' +
+      '<th>ROAS</th>' +
+      '<th>CPA real</th>' +
+      '<th>Benchmark 8%</th>' +
+      '<th class="lft">Semáforo</th>' +
+    '</tr></thead>';
+
+  var html3 = '', invT = [0,0], compT = [0,0];
+
+  pauta.forEach(function(p, i){
+    var cierra = (i % 2 === 1) ? ' class="sep"' : '';
+    var esBrasier = (p.compras === null);
+    if (!esBrasier){
+      if (p.anio === 2025){ invT[0] += p.inv; compT[0] += p.compras; }
+      else { invT[1] += p.inv; compT[1] += p.compras; }
+    }
+    html3 += '<tr' + cierra + '>' +
+      '<td class="lft">' + (p.anio === 2025 ? p.cat : '') + '</td>' +
+      '<td class="lft canal">' + p.anio + '</td>' +
+      '<td class="num' + (esBrasier ? ' pendiente' : '') + '">' + cop(p.inv) + '</td>' +
+      '<td class="num">' + (esBrasier ? '—' : u(p.compras)) + '</td>' +
+      '<td class="num">' + (esBrasier ? '—' : p.roas) + '</td>' +
+      '<td class="num">' + (esBrasier ? '—' : cop(p.cpa)) + '</td>' +
+      '<td class="num">' + (esBrasier ? '—' : cop(p.bench)) + '</td>' +
+      '<td class="lft">' + chips[p.sem] + (esBrasier ? '<span class="marca-amarilla">' + p.nota + '</span>' : '') + '</td>' +
+    '</tr>';
+  });
+
+  html3 += '<tr class="total">' +
+      '<td class="lft">Total 2025</td><td class="lft canal">2025</td>' +
+      '<td class="num">' + cop(invT[0]) + '</td>' +
+      '<td class="num">' + u(compT[0]) + '</td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Total 2026</td><td class="lft canal">2026</td>' +
+      '<td class="num">' + cop(invT[1]) + '</td>' +
+      '<td class="num">' + u(compT[1]) + '</td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+    '</tr>';
+
+  document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
+
+  /* ---------------- Bloque 4 ---------------- */
+  document.getElementById('leads-total').textContent = u(5602);
+  document.getElementById('conv-pauta').textContent = u(3376) + ' conversaciones';
+  document.getElementById('dl-pauta').innerHTML =
+    '<div class="fila"><dt>Inversión</dt><dd>' + cop(3488102) + '</dd></div>' +
+    '<div class="fila"><dt>Ventas cerradas</dt><dd>' + u(7) + '</dd></div>' +
+    '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' + cop(498300) + '</dd></div>' +
+    '<div class="fila"><dt>Venta aprox. por conversión</dt><dd>' + cop(840612) + '</dd></div>';
+
+  /* ---------------- Bloque 5 ---------------- */
+  var leads = [
+    {ind:'Conversaciones WhatsApp desde pauta', a:36405,  b:27701,  pend:false},
+    {ind:'Sesiones desde pauta',                a:765271, b:371789, pend:true, marca:'Proxy', pie:'Clics de Meta, no dato real de GA4'},
+    {ind:'Leads B2B (formulario)',              a:248,    b:1,      pend:false}
+  ];
+
+  var encab5 =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th>' +
+      '<th>2025 · año completo</th>' +
+      '<th>2026 · 1 ene – 13 sep</th>' +
+      '<th>Variación</th>' +
+    '</tr></thead>';
+
+  var html5 = leads.map(function(l){
+    var cls = l.pend ? ' pendiente' : '';
+    return '<tr>' +
+      '<td class="lft">' + l.ind +
+        (l.marca ? '<span class="marca-amarilla">' + l.marca + '</span>' : '') +
+        (l.pie ? '<div style="font-weight:400;font-size:12.5px;color:var(--tinta-3)">' + l.pie + '</div>' : '') +
+      '</td>' +
+      '<td class="num' + cls + '">' + u(l.a) + '</td>' +
+      '<td class="num' + cls + '">' + u(l.b) + '</td>' +
+      varTd(l.a, l.b) +
+    '</tr>';
+  }).join('');
+
+  document.getElementById('t-leads').innerHTML = encab5 + '<tbody>' + html5 + '</tbody>';
+})();
+</script>
