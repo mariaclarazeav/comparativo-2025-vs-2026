@@ -690,7 +690,12 @@
       <span class="num-bloque">Pauta · Google Ads</span>
       <h2>Costo y valor de conversión</h2>
     </div>
-    <p class="sub">Valor de conversión mes a mes, 2025 vs 2026, con ambos años cortados al 13 de septiembre. Es el valor reportado por Google. El costo y las conversiones siguen pendientes.</p>
+    <p class="sub">Costo y valor de conversión mes a mes, 2025 vs 2026, por mes calendario y con ambos años cortados al 13 de septiembre. Cifras reportadas por Google.</p>
+    <div class="leyenda-lineas">
+      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
+      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
+    </div>
+    <div id="grafico-google"></div>
     <div class="scroll"><table id="t-google-mes"></table></div>
 
     <h3 class="sub-cab">Totales del periodo</h3>
@@ -1261,43 +1266,74 @@
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
   /* ---------------- Pauta Google Ads ---------------- */
-  /* Valor de conversión por mes, reportado por Google.
-     Ambos años cortados al 13 de septiembre. */
+  /* Costo y valor de conversión por mes, reportados por Google.
+     Mes calendario, ambos años cortados al 13 de septiembre.
+     [mes, costo 2025, costo 2026, valor conv. 2025, valor conv. 2026] */
   var googleMes = [
-    ['Enero',            0,   5112128],
-    ['Febrero',          0,   8430322],
-    ['Marzo',            0,  24819597],
-    ['Abril',            0,  17203298],
-    ['Mayo',             0,  13396898],
-    ['Junio',      4088517,  24296441],
-    ['Julio',      8213293,  28352719],
-    ['Agosto',     7878977,  82444888],
-    ['Septiembre', 7871349,  14092311]
+    ['Enero',            0,  767663,        0,  5112128],
+    ['Febrero',          0,  957916,        0,  7640895],
+    ['Marzo',            0, 2327934,        0, 20551126],
+    ['Abril',            0, 2198206,        0, 19106898],
+    ['Mayo',             0, 2984869,        0, 16551195],
+    ['Junio',       184260, 4538867,  1848331, 20285431],
+    ['Julio',       943497, 5531348, 10043194, 28493448],
+    ['Agosto',     1211398, 5548367,  8289262, 67599844],
+    ['Septiembre',  533168, 2500384,  7871349, 32807636]
   ];
-  var googleValTot = [28052136, 218148601];
+  var googleCostoTot = [2872323, 27355553];
+  var googleValTot   = [28052136, 218148601];
 
-  /* Totales del periodo. El costo y las conversiones siguen pendientes. */
+  /* Las conversiones y el costo por conversión siguen pendientes. */
   var googleTotales = {
-    costo:        {a:null, b:null},
-    valorConv:    {a:googleValTot[0], b:googleValTot[1]},
+    costo:        {a:googleCostoTot[0], b:googleCostoTot[1]},
+    valorConv:    {a:googleValTot[0],   b:googleValTot[1]},
     conversiones: {a:null, b:null},
     costoConv:    {a:null, b:null}
   };
 
+  document.getElementById('grafico-google').innerHTML =
+    '<div class="grafico-b1">' +
+      '<div class="rot">Costo por mes <span class="eje">eje desde 0</span></div>' +
+      bloqueGrafico('g-costo', {
+        a: googleMes.map(function(m){ return m[1]; }),
+        b: googleMes.map(function(m){ return m[2]; }),
+        etiquetas: googleMes.map(function(m){ return m[0].slice(0,3); }),
+        nombres: googleMes.map(function(m){ return m[0]; }),
+        escala: 6000000, ticks: [0, 3000000, 6000000], geo: GEO_LARGO,
+        fmtEje: function(v){ return '$' + u(v/1000000) + ' M'; },
+        fmt: cop, fmtDif: difCop,
+        titulo: 'Costo mensual en Google Ads, 2025 y 2026'
+      }) +
+    '</div>';
+
   document.getElementById('t-google-mes').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Mes</th><th>Valor de conversión 2025</th><th>Valor de conversión 2026</th><th>Variación</th>' +
-    '</tr></thead><tbody>' +
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        '<th class="gv" colspan="3">Costo</th>' +
+        '<th class="gv" colspan="3">Valor de conversión</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>2025</th><th>2026</th><th>Var.</th>' +
+        '<th>2025</th><th>2026</th><th>Var.</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
     googleMes.map(function(m){
       return '<tr>' +
         '<td class="lft">' + m[0] + '</td>' +
         '<td class="num">' + cop(m[1]) + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
         varTd(m[1], m[2]) +
+        '<td class="num">' + cop(m[3]) + '</td>' +
+        '<td class="num">' + cop(m[4]) + '</td>' +
+        varTd(m[3], m[4]) +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
       '<td class="lft">Total Ene–13 sep</td>' +
+      '<td class="num">' + cop(googleCostoTot[0]) + '</td>' +
+      '<td class="num">' + cop(googleCostoTot[1]) + '</td>' +
+      varTd(googleCostoTot[0], googleCostoTot[1]) +
       '<td class="num">' + cop(googleValTot[0]) + '</td>' +
       '<td class="num">' + cop(googleValTot[1]) + '</td>' +
       varTd(googleValTot[0], googleValTot[1]) +
@@ -1329,8 +1365,8 @@
   if (filasGoogle.some(function(f){ return f[1].a === null || f[1].b === null; })){
     document.getElementById('nota-google').innerHTML =
       '<div class="nota"><span class="etq">Pendiente</span><span>' +
-        'Faltan las cifras de Google Ads: costo, conversiones y costo por conversión de cada año. ' +
-        'La tabla queda armada y se llena con esos datos.' +
+        'Faltan las conversiones de Google Ads y, con ellas, el costo por conversión de cada año. ' +
+        'Las dos filas se llenan con ese dato.' +
       '</span></div>';
   }
 

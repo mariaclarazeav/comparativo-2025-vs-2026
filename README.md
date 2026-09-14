@@ -17,9 +17,9 @@ Cinco bloques, con los datos entregados tal cual:
    al 13 de septiembre) con su tabla de totales mensuales, y debajo el detalle por
    categoría: inversión, compras (número y valor estimado), ROAS, CPA real, CPA
    como % del ticket frente al benchmark de 8% y semáforo.
-   **Pauta Google Ads** — valor de conversión mes a mes (dato real de Google) y
-   tabla de totales del periodo. El costo, las conversiones y el costo por
-   conversión siguen pendientes y entran por `googleTotales`.
+   **Pauta Google Ads** — gráfico de costo mensual y tabla con costo y valor de
+   conversión mes a mes (datos reales de Google), más los totales del periodo.
+   Las conversiones y el costo por conversión siguen pendientes.
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada; la rama de otros
    canales queda marcada como pendiente. Debajo, las ventas cerradas por canal
    de origen, donde la fila de «Anuncio» es el mismo dato de la rama de pauta.
