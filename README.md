@@ -13,8 +13,10 @@ Cinco bloques, con los datos entregados tal cual:
    con el gráfico arriba y sus totales abajo, y eje vertical compartido desde cero: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
    Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
    la diferencia 2026 − 2025 en unidades y en porcentaje.
-3. **Pauta Meta por categoría** — inversión, compras, ROAS, CPA real vs benchmark 8% y semáforo.
-   Al final, la nota de que la tendencia mensual de inversión sigue pendiente.
+3. **Pauta Meta** — gráfico de inversión mensual 2025 vs 2026 (ambos años cortados
+   al 13 de septiembre) con su tabla de totales mensuales, y debajo el detalle por
+   categoría: inversión, compras, ROAS, CPA real, CPA como % del ticket frente al
+   benchmark de 8% y semáforo.
    **Pauta Google Ads** — gráfico de inversión semanal arriba y tabla de totales
    (costo, conversiones, costo por conversión) debajo. A la espera de los datos:
    la serie semanal va en `googleSemanal` y los totales en `googleTotales`.

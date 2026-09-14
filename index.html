@@ -216,6 +216,8 @@
   tr.sep td{ border-bottom:1px solid var(--linea); }
   tr.suma-pend td{ border-bottom:1px solid var(--linea); font-weight:600; }
 
+  thead th.wrap{ white-space:normal; max-width:120px; line-height:1.3; }
+  td.pct{ font-weight:500; color:var(--negro); }
   td.pendiente{
     background:var(--amarillo-bg);
     color:var(--amarillo);
@@ -296,6 +298,15 @@
     grid-template-columns:repeat(2,minmax(0,1fr));
     gap:24px;
     margin-bottom:30px;
+  }
+  .sub-cab{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:17px;
+    letter-spacing:-.01em;
+    margin:38px 0 4px;
+    padding-top:18px;
+    border-top:1px solid var(--linea);
   }
   .rot .eje{
     font-family:var(--texto);
@@ -621,8 +632,17 @@
   <section>
     <div class="cab">
       <span class="num-bloque">Bloque 03</span>
-      <h2>Pauta Meta por categoría</h2>
+      <h2>Pauta Meta</h2>
     </div>
+    <p class="sub">Inversión mensual y detalle por categoría. Los dos años van cortados al 13 de septiembre, así que septiembre es parcial en ambos y la comparación es pareja.</p>
+    <div class="leyenda-lineas">
+      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
+      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
+    </div>
+    <div id="grafico-meta"></div>
+    <div class="scroll"><table id="t-meta-mes"></table></div>
+
+    <h3 class="sub-cab">Pauta por categoría</h3>
     <p class="sub">Inversión, compras atribuidas y CPA real frente al benchmark de 8%. El semáforo marca el cumplimiento del CPA contra ese benchmark.</p>
     <div class="scroll"><table id="t-pauta"></table></div>
     <div class="leyenda">
@@ -634,10 +654,6 @@
     <div class="nota">
       <span class="etq">Parcial</span>
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Pendiente</span>
-      <span>Tendencia mensual de inversión pendiente — el export actual de Meta no viene desglosado por mes.</span>
     </div>
   </section>
 
@@ -1087,15 +1103,63 @@
 
   /* ---------------- Bloque 3 ---------------- */
   var pauta = [
-    {cat:'Fajas',      anio:2025, inv:38719107, compras:910, roas:'5,6x',  cpa:42548, bench:16938, sem:'rojo'},
-    {cat:'Fajas',      anio:2026, inv:6438208,  compras:276, roas:'12,3x', cpa:23327, bench:18627, sem:'rojo'},
-    {cat:'Short',      anio:2025, inv:10287149, compras:332, roas:'6,4x',  cpa:30985, bench:8887,  sem:'rojo'},
-    {cat:'Short',      anio:2026, inv:21420474, compras:902, roas:'10,0x', cpa:23748, bench:10159, sem:'rojo'},
-    {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, roas:'7,6x',  cpa:29769, bench:8614,  sem:'rojo'},
-    {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  roas:'6,1x',  cpa:33050, bench:12871, sem:'rojo'},
-    {cat:'Brasier',    anio:2025, inv:0, compras:null, roas:null, cpa:null, bench:null, sem:'na', nota:'no maneja campañas'},
-    {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, bench:null, sem:'na', nota:'no maneja campañas'}
+    {cat:'Fajas',      anio:2025, inv:38719107, compras:910, roas:'5,6x',  cpa:42548, pct:20.1, bench:16938, sem:'rojo'},
+    {cat:'Fajas',      anio:2026, inv:6438208,  compras:276, roas:'12,3x', cpa:23327, pct:9.9,  bench:18627, sem:'rojo'},
+    {cat:'Short',      anio:2025, inv:10287149, compras:332, roas:'6,4x',  cpa:30985, pct:27.9, bench:8887,  sem:'rojo'},
+    {cat:'Short',      anio:2026, inv:21420474, compras:902, roas:'10,0x', cpa:23748, pct:18.7, bench:10159, sem:'rojo'},
+    {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, roas:'7,6x',  cpa:29769, pct:27.6, bench:8614,  sem:'rojo'},
+    {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
+    {cat:'Brasier',    anio:2025, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'},
+    {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'}
   ];
+
+  /* Inversión mensual en Meta, ambos años cortados al 13 de septiembre */
+  var metaMes = [
+    ['Enero',      'Ene', 18546010, 15984516],
+    ['Febrero',    'Feb', 16728334, 11835958],
+    ['Marzo',      'Mar', 19547309, 10328995],
+    ['Abril',      'Abr', 10818104,  8010146],
+    ['Mayo',       'May', 15876197, 10206426],
+    ['Junio',      'Jun', 13790261, 13243075],
+    ['Julio',      'Jul', 11076617, 13533089],
+    ['Agosto',     'Ago', 13536905, 13812049],
+    ['Septiembre', 'Sep',  5552622,  6821975]
+  ];
+  var metaTot = metaMes.reduce(function(a,m){ return [a[0]+m[2], a[1]+m[3]]; }, [0,0]);
+
+  document.getElementById('grafico-meta').innerHTML =
+    '<div class="grafico-b1">' +
+      '<div class="rot">Inversión por mes <span class="eje">eje desde 0 · incluye todas las campañas, también las que no se pueden categorizar por producto</span></div>' +
+      bloqueGrafico('meta-inv', {
+        a: metaMes.map(function(m){ return m[2]; }),
+        b: metaMes.map(function(m){ return m[3]; }),
+        etiquetas: metaMes.map(function(m){ return m[1]; }),
+        nombres: metaMes.map(function(m){ return m[0]; }),
+        escala: 20000000, ticks: [0, 10000000, 20000000], geo: GEO_LARGO,
+        fmtEje: function(v){ return '$' + u(v/1000000) + ' M'; },
+        fmt: cop, fmtDif: difCop,
+        titulo: 'Inversión mensual en Meta, 2025 y 2026'
+      }) +
+    '</div>';
+
+  document.getElementById('t-meta-mes').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Mes</th><th>Inversión 2025</th><th>Inversión 2026</th><th>Variación</th>' +
+    '</tr></thead><tbody>' +
+    metaMes.map(function(m){
+      return '<tr>' +
+        '<td class="lft">' + m[0] + '</td>' +
+        '<td class="num">' + cop(m[2]) + '</td>' +
+        '<td class="num">' + cop(m[3]) + '</td>' +
+        varTd(m[2], m[3]) +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total Ene–13 sep</td>' +
+      '<td class="num">' + cop(metaTot[0]) + '</td>' +
+      '<td class="num">' + cop(metaTot[1]) + '</td>' +
+      varTd(metaTot[0], metaTot[1]) +
+    '</tr></tbody>';
 
   var chips = {
     verde:    '<span class="sem verde"><span class="punto"></span>Verde</span>',
@@ -1112,6 +1176,7 @@
       '<th>Compras</th>' +
       '<th>ROAS</th>' +
       '<th>CPA real</th>' +
+      '<th class="wrap">CPA como % del ticket</th>' +
       '<th>Benchmark 8%</th>' +
       '<th class="lft">Semáforo</th>' +
     '</tr></thead>';
@@ -1132,6 +1197,7 @@
       '<td class="num">' + (esBrasier ? '—' : u(p.compras)) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : p.roas) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : cop(p.cpa)) + '</td>' +
+      '<td class="num pct">' + (esBrasier ? '—' : nf1.format(p.pct) + '%') + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : cop(p.bench)) + '</td>' +
       '<td class="lft">' + chips[p.sem] + (esBrasier ? '<span class="marca-amarilla">' + p.nota + '</span>' : '') + '</td>' +
     '</tr>';
@@ -1141,13 +1207,13 @@
       '<td class="lft">Total 2025</td><td class="lft canal">2025</td>' +
       '<td class="num">' + cop(invT[0]) + '</td>' +
       '<td class="num">' + u(compT[0]) + '</td>' +
-      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>' +
     '<tr class="total">' +
       '<td class="lft">Total 2026</td><td class="lft canal">2026</td>' +
       '<td class="num">' + cop(invT[1]) + '</td>' +
       '<td class="num">' + u(compT[1]) + '</td>' +
-      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>';
 
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
