@@ -218,6 +218,7 @@
 
   thead th.wrap{ white-space:normal; max-width:120px; line-height:1.3; }
   td.pct{ font-weight:500; color:var(--negro); }
+  td.estimado{ background:var(--amarillo-bg); color:var(--amarillo); }
   td.pendiente{
     background:var(--amarillo-bg);
     color:var(--amarillo);
@@ -650,6 +651,10 @@
       <span class="sem rojo"><span class="punto"></span>Rojo</span>
     </div>
     <div class="nota">
+      <span class="etq">Estimado</span>
+      <span>Compras (valor estimado): inversión × ROAS, no es el ingreso real de Shopify.</span>
+    </div>
+    <div class="nota">
       <span class="etq">Parcial</span>
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
     </div>
@@ -659,9 +664,12 @@
   <section>
     <div class="cab">
       <span class="num-bloque">Pauta · Google Ads</span>
-      <h2>Totales del periodo</h2>
+      <h2>Costo y valor de conversión</h2>
     </div>
-    <p class="sub">Costo, conversiones y costo por conversión, 2025 vs 2026.</p>
+    <p class="sub">Valor de conversión mes a mes, 2025 vs 2026, con ambos años cortados al 13 de septiembre. Es el valor reportado por Google. El costo y las conversiones siguen pendientes.</p>
+    <div class="scroll"><table id="t-google-mes"></table></div>
+
+    <h3 class="sub-cab">Totales del periodo</h3>
     <div class="scroll"><table id="t-google"></table></div>
     <div id="nota-google"></div>
   </section>
@@ -732,6 +740,7 @@
     return { v:v, s:s };
   }
   function varTd(a,b,extra){
+    if (a === 0){ return '<td class="num var ' + (extra||'') + '">—</td>'; }
     var r = varTxt(a,b);
     var f = r.v < 0 ? '▼' : (r.v > 0 ? '▲' : '—');
     return '<td class="num var ' + (extra||'') + '"><span class="flecha">' + f + '</span>' + r.s + '</td>';
@@ -1096,12 +1105,12 @@
 
   /* ---------------- Bloque 3 ---------------- */
   var pauta = [
-    {cat:'Fajas',      anio:2025, inv:38719107, compras:910, roas:'5,6x',  cpa:42548, pct:20.1, bench:16938, sem:'rojo'},
-    {cat:'Fajas',      anio:2026, inv:6438208,  compras:276, roas:'12,3x', cpa:23327, pct:9.9,  bench:18627, sem:'rojo'},
-    {cat:'Short',      anio:2025, inv:10287149, compras:332, roas:'6,4x',  cpa:30985, pct:27.9, bench:8887,  sem:'rojo'},
-    {cat:'Short',      anio:2026, inv:21420474, compras:902, roas:'10,0x', cpa:23748, pct:18.7, bench:10159, sem:'rojo'},
-    {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, roas:'7,6x',  cpa:29769, pct:27.6, bench:8614,  sem:'rojo'},
-    {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
+    {cat:'Fajas',      anio:2025, inv:38719107, compras:910, valor:217015852, roas:'5,6x',  cpa:42548, pct:20.1, bench:16938, sem:'rojo'},
+    {cat:'Fajas',      anio:2026, inv:6438208,  compras:276, valor:79496114,  roas:'12,3x', cpa:23327, pct:9.9,  bench:18627, sem:'rojo'},
+    {cat:'Short',      anio:2025, inv:10287149, compras:332, valor:65427842,  roas:'6,4x',  cpa:30985, pct:27.9, bench:8887,  sem:'rojo'},
+    {cat:'Short',      anio:2026, inv:21420474, compras:902, valor:214177066, roas:'10,0x', cpa:23748, pct:18.7, bench:10159, sem:'rojo'},
+    {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, valor:51388677,  roas:'7,6x',  cpa:29769, pct:27.6, bench:8614,  sem:'rojo'},
+    {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  valor:3452190,   roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
     {cat:'Brasier',    anio:2025, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'},
     {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'}
   ];
@@ -1167,6 +1176,7 @@
       '<th class="lft">Año</th>' +
       '<th>Inversión</th>' +
       '<th>Compras</th>' +
+      '<th class="wrap">Compras (valor estimado)<span class="marca-amarilla">Estimado</span></th>' +
       '<th>ROAS</th>' +
       '<th>CPA real</th>' +
       '<th class="wrap">CPA como % del ticket</th>' +
@@ -1174,20 +1184,21 @@
       '<th class="lft">Semáforo</th>' +
     '</tr></thead>';
 
-  var html3 = '', invT = [0,0], compT = [0,0];
+  var html3 = '', invT = [0,0], compT = [0,0], valT = [0,0];
 
   pauta.forEach(function(p, i){
     var cierra = (i % 2 === 1) ? ' class="sep"' : '';
     var esBrasier = (p.compras === null);
     if (!esBrasier){
-      if (p.anio === 2025){ invT[0] += p.inv; compT[0] += p.compras; }
-      else { invT[1] += p.inv; compT[1] += p.compras; }
+      if (p.anio === 2025){ invT[0] += p.inv; compT[0] += p.compras; valT[0] += p.valor; }
+      else { invT[1] += p.inv; compT[1] += p.compras; valT[1] += p.valor; }
     }
     html3 += '<tr' + cierra + '>' +
       '<td class="lft">' + (p.anio === 2025 ? p.cat : '') + '</td>' +
       '<td class="lft canal">' + p.anio + '</td>' +
       '<td class="num' + (esBrasier ? ' pendiente' : '') + '">' + cop(p.inv) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : u(p.compras)) + '</td>' +
+      '<td class="num estimado">' + (esBrasier ? '—' : cop(p.valor)) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : p.roas) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : cop(p.cpa)) + '</td>' +
       '<td class="num pct">' + (esBrasier ? '—' : nf1.format(p.pct) + '%') + '</td>' +
@@ -1200,27 +1211,65 @@
       '<td class="lft">Total 2025</td><td class="lft canal">2025</td>' +
       '<td class="num">' + cop(invT[0]) + '</td>' +
       '<td class="num">' + u(compT[0]) + '</td>' +
+      '<td class="num estimado">' + cop(valT[0]) + '</td>' +
       '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>' +
     '<tr class="total">' +
       '<td class="lft">Total 2026</td><td class="lft canal">2026</td>' +
       '<td class="num">' + cop(invT[1]) + '</td>' +
       '<td class="num">' + u(compT[1]) + '</td>' +
+      '<td class="num estimado">' + cop(valT[1]) + '</td>' +
       '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>';
 
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
   /* ---------------- Pauta Google Ads ---------------- */
-  /* Totales del periodo. Pendiente: faltan las cifras. */
+  /* Valor de conversión por mes, reportado por Google.
+     Ambos años cortados al 13 de septiembre. */
+  var googleMes = [
+    ['Enero',            0,   5112128],
+    ['Febrero',          0,   8430322],
+    ['Marzo',            0,  24819597],
+    ['Abril',            0,  17203298],
+    ['Mayo',             0,  13396898],
+    ['Junio',      4088517,  24296441],
+    ['Julio',      8213293,  28352719],
+    ['Agosto',     7878977,  82444888],
+    ['Septiembre', 7871349,  14092311]
+  ];
+  var googleValTot = [28052136, 218148601];
+
+  /* Totales del periodo. El costo y las conversiones siguen pendientes. */
   var googleTotales = {
     costo:        {a:null, b:null},
+    valorConv:    {a:googleValTot[0], b:googleValTot[1]},
     conversiones: {a:null, b:null},
     costoConv:    {a:null, b:null}
   };
 
+  document.getElementById('t-google-mes').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Mes</th><th>Valor de conversión 2025</th><th>Valor de conversión 2026</th><th>Variación</th>' +
+    '</tr></thead><tbody>' +
+    googleMes.map(function(m){
+      return '<tr>' +
+        '<td class="lft">' + m[0] + '</td>' +
+        '<td class="num">' + cop(m[1]) + '</td>' +
+        '<td class="num">' + cop(m[2]) + '</td>' +
+        varTd(m[1], m[2]) +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total Ene–13 sep</td>' +
+      '<td class="num">' + cop(googleValTot[0]) + '</td>' +
+      '<td class="num">' + cop(googleValTot[1]) + '</td>' +
+      varTd(googleValTot[0], googleValTot[1]) +
+    '</tr></tbody>';
+
   var filasGoogle = [
     ['Costo',                googleTotales.costo,        cop],
+    ['Valor de conversión',  googleTotales.valorConv,    cop],
     ['Conversiones',         googleTotales.conversiones, u],
     ['Costo por conversión', googleTotales.costoConv,    cop]
   ];
