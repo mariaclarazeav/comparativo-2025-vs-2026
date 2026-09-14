@@ -9,6 +9,8 @@ Cinco bloques, con los datos entregados tal cual:
 2. **Categoría × canal comercial** — unidades y valor, con subtotales por categoría.
    Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto) con eje
    vertical compartido: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
+   Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
+   la diferencia 2026 − 2025 en unidades y en porcentaje.
 3. **Pauta Meta por categoría** — inversión, compras, ROAS, CPA real vs benchmark 8% y semáforo.
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada; la rama de otros canales queda marcada como pendiente.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.

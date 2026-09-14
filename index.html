@@ -251,12 +251,18 @@
     vertical-align:middle;
     margin-right:8px;
   }
+  section.ancha{
+    width:min(1420px, calc(100vw - 40px));
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+  }
   .paneles{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:22px;
+    gap:24px;
   }
-  .panel{ border:1px solid var(--linea); padding:18px 20px 14px; }
+  .panel{ border:1px solid var(--linea); padding:20px 22px 16px; }
   .panel h3{
     font-family:var(--display);
     font-weight:600;
@@ -284,7 +290,64 @@
     text-transform:uppercase;
     color:var(--tinta-3);
   }
-  .panel svg{ display:block; width:100%; height:auto; margin-top:10px; }
+  .panel svg{ display:block; width:100%; height:auto; }
+  .grafico{ position:relative; margin-top:12px; }
+  .hit{ cursor:crosshair; }
+  .marca{ visibility:hidden; }
+  .marca.on{ visibility:visible; }
+
+  .tip{
+    position:absolute;
+    top:6px;
+    left:0;
+    transform:translateX(-50%);
+    z-index:2;
+    pointer-events:none;
+    min-width:172px;
+    background:var(--paper);
+    border:1px solid var(--linea);
+    box-shadow:0 2px 10px rgba(26,26,26,.10);
+    padding:10px 13px;
+  }
+  .tip.abajo{ top:auto; bottom:6px; }
+  .tip-mes{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:13.5px;
+    margin-bottom:6px;
+  }
+  .tip-fila{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:var(--cifra);
+    font-size:12.5px;
+    color:var(--tinta-2);
+    line-height:1.7;
+  }
+  .tip-fila b{
+    margin-left:auto;
+    color:var(--negro);
+    font-weight:500;
+    font-variant-numeric:tabular-nums;
+  }
+  .tip .pt{ width:12px; height:3px; display:inline-block; flex:0 0 auto; }
+  .tip-dif{
+    margin-top:7px;
+    padding-top:7px;
+    border-top:1px solid var(--linea-suave);
+    font-family:var(--cifra);
+    font-size:12.5px;
+    font-variant-numeric:tabular-nums;
+    color:var(--tinta-2);
+  }
+  .tip-dif .rot{
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+    display:block;
+  }
   .panel .pend-box{
     margin-top:10px;
     min-height:124px;
@@ -453,8 +516,10 @@
   footer .marca{ font-family:var(--display); font-weight:600; color:var(--negro); letter-spacing:-.01em; }
 
   @media (max-width:720px){
+    section.ancha{ width:auto; left:auto; transform:none; }
     .paneles{ grid-template-columns:1fr; gap:16px; }
     .panel{ padding:14px 14px 10px; }
+    .tip{ min-width:150px; padding:8px 10px; }
   }
 
   @media (max-width:640px){
@@ -502,12 +567,12 @@
   </section>
 
   <!-- TENDENCIA -->
-  <section>
+  <section class="ancha">
     <div class="cab">
       <span class="num-bloque">Tendencia</span>
       <h2>Unidades por mes y categoría</h2>
     </div>
-    <p class="sub">Enero – agosto. Los cuatro paneles comparten el mismo eje vertical, así que la altura de las líneas es comparable entre categorías. Los totales del periodo salen del Bloque 2.</p>
+    <p class="sub">Enero – agosto. Los cuatro paneles comparten el mismo eje vertical, así que la altura de las líneas es comparable entre categorías. Los totales del periodo salen del Bloque 2. Pase el mouse sobre cualquier mes para ver el detalle.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -755,6 +820,7 @@
   /* ---------------- Tendencia por categoría ---------------- */
   var ordenCat = ['Fajas','Cinturilla','Short','Brasier'];
   var etiquetasMes = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago'];
+  var nombresMes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'];
 
   /* Unidades por mes (enero–agosto) de cada categoría. */
   var serieMes = {
@@ -781,9 +847,10 @@
   });
   var escala = techo > 0 ? Math.ceil(techo / 50) * 50 : 0;
 
-  var W = 520, H = 240, PL = 52, PR = 16, PT = 18, PB = 32;
+  var W = 620, H = 330, PL = 56, PR = 18, PT = 20, PB = 38;
   var ancho = W - PL - PR, alto = H - PT - PB;
-  var px = function(i){ return PL + i * (ancho / 7); };
+  var paso = ancho / 7;
+  var px = function(i){ return PL + i * paso; };
   var py = function(v){ return PT + (1 - v / escala) * alto; };
 
   function linea(vals, color){
@@ -796,6 +863,7 @@
 
   function grafico(cat){
     var d = serieMes[cat], svg = '';
+
     [0, escala/2, escala].forEach(function(v){
       var y = py(v).toFixed(1);
       svg += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W-PR) + '" y2="' + y + '" ' +
@@ -804,10 +872,28 @@
              'font-family="IBM Plex Mono, monospace" font-size="11" fill="#77707E">' + u(v) + '</text>';
     });
     etiquetasMes.forEach(function(m,i){
-      svg += '<text x="' + px(i).toFixed(1) + '" y="' + (H-10) + '" text-anchor="middle" ' +
+      svg += '<text x="' + px(i).toFixed(1) + '" y="' + (H-12) + '" text-anchor="middle" ' +
              'font-family="IBM Plex Mono, monospace" font-size="11" fill="#77707E">' + m + '</text>';
     });
+
     svg += linea(d.a2025, '#9C7A56') + linea(d.a2026, '#4C1D6B');
+
+    /* Marca del mes señalado + zona sensible al mouse, una por mes */
+    etiquetasMes.forEach(function(m,i){
+      var x = px(i).toFixed(1);
+      svg += '<g class="marca" data-m="' + i + '">' +
+        '<line x1="' + x + '" y1="' + PT + '" x2="' + x + '" y2="' + (PT+alto) + '" stroke="#D8D2DE" stroke-width="1"></line>' +
+        '<circle cx="' + x + '" cy="' + py(d.a2025[i]).toFixed(1) + '" r="4.5" fill="#FFFFFF" stroke="#9C7A56" stroke-width="2"></circle>' +
+        '<circle cx="' + x + '" cy="' + py(d.a2026[i]).toFixed(1) + '" r="4.5" fill="#FFFFFF" stroke="#4C1D6B" stroke-width="2"></circle>' +
+      '</g>';
+    });
+    etiquetasMes.forEach(function(m,i){
+      var x0 = Math.max(PL, px(i) - paso/2);
+      var x1 = Math.min(PL + ancho, px(i) + paso/2);
+      svg += '<rect class="hit" data-m="' + i + '" x="' + x0.toFixed(1) + '" y="' + PT + '" ' +
+             'width="' + (x1-x0).toFixed(1) + '" height="' + alto + '" fill="transparent"></rect>';
+    });
+
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
            'aria-label="Unidades por mes de ' + cat + ', 2025 y 2026">' + svg + '</svg>';
   }
@@ -815,7 +901,7 @@
   document.getElementById('paneles').innerHTML = ordenCat.map(function(cat){
     var t = totalCategoria(cat), v = varTxt(t[0], t[1]);
     var f = v.v < 0 ? '▼' : (v.v > 0 ? '▲' : '—');
-    return '<div class="panel">' +
+    return '<div class="panel" data-cat="' + cat + '">' +
       '<h3>' + cat + '</h3>' +
       '<div class="tot">' +
         '<span>' + u(t[0]) + '</span>' +
@@ -825,10 +911,62 @@
       '</div>' +
       '<div class="rot">Unidades · Ene–Ago</div>' +
       (tieneSerie(cat)
-        ? grafico(cat)
+        ? '<div class="grafico">' + grafico(cat) + '<div class="tip" hidden></div></div>'
         : '<div class="pend-box">Sin detalle mensual<br>pendiente</div>') +
     '</div>';
   }).join('');
+
+  /* Tooltip: mes, unidades de cada año y la diferencia 2026 − 2025 */
+  Array.prototype.forEach.call(document.querySelectorAll('.panel'), function(panel){
+    var cat = panel.getAttribute('data-cat');
+    if (!tieneSerie(cat)) return;
+
+    var caja   = panel.querySelector('.grafico');
+    var tip    = panel.querySelector('.tip');
+    var marcas = panel.querySelectorAll('.marca');
+    var d      = serieMes[cat];
+
+    function mostrar(i, zona){
+      var a = d.a2025[i], b = d.a2026[i];
+      var dif = b - a, pct = varTxt(a, b);
+      var flecha = dif < 0 ? '▼' : (dif > 0 ? '▲' : '—');
+
+      tip.innerHTML =
+        '<div class="tip-mes">' + nombresMes[i] + '</div>' +
+        '<div class="tip-fila"><span class="pt" style="background:#9C7A56"></span>2025<b>' + u(a) + '</b></div>' +
+        '<div class="tip-fila"><span class="pt" style="background:#4C1D6B"></span>2026<b>' + u(b) + '</b></div>' +
+        '<div class="tip-dif"><span class="rot">Diferencia 2026 − 2025</span>' +
+          flecha + ' ' + (dif > 0 ? '+' : '') + u(dif) + ' u · ' + pct.s +
+        '</div>';
+
+      tip.hidden = false;
+      /* si los puntos van altos, el tooltip baja para no taparlos */
+      tip.classList.toggle('abajo', Math.max(a, b) > escala * 0.55);
+
+      var cajaBox = caja.getBoundingClientRect();
+      var zonaBox = zona.getBoundingClientRect();
+      var x = zonaBox.left - cajaBox.left + zonaBox.width / 2;
+      var w = tip.offsetWidth;
+      tip.style.left = Math.max(w/2 + 4, Math.min(cajaBox.width - w/2 - 4, x)) + 'px';
+
+      Array.prototype.forEach.call(marcas, function(g){
+        g.classList.toggle('on', g.getAttribute('data-m') === String(i));
+      });
+    }
+
+    function ocultar(){
+      tip.hidden = true;
+      Array.prototype.forEach.call(marcas, function(g){ g.classList.remove('on'); });
+    }
+
+    Array.prototype.forEach.call(panel.querySelectorAll('.hit'), function(zona){
+      var i = parseInt(zona.getAttribute('data-m'), 10);
+      zona.addEventListener('mouseenter', function(){ mostrar(i, zona); });
+      zona.addEventListener('touchstart', function(e){ e.preventDefault(); mostrar(i, zona); }, {passive:false});
+    });
+    caja.addEventListener('mouseleave', ocultar);
+    caja.addEventListener('touchend', ocultar);
+  });
 
   if (!ordenCat.every(tieneSerie)){
     document.getElementById('nota-tendencia').innerHTML =
