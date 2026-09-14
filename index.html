@@ -9,6 +9,7 @@
     --negro:#1A1A1A;
     --morado:#4C1D6B;
     --nude:#D4B8A3;
+    --nude-oscuro:#9C7A56;
     --paper:#FFFFFF;
 
     --tinta-2:#514B57;
@@ -213,6 +214,7 @@
   tr.total td.lft{ font-family:var(--display); }
   tr.total + tr.total td{ border-top:1px solid var(--linea); padding-top:9px; }
   tr.sep td{ border-bottom:1px solid var(--linea); }
+  tr.suma-pend td{ border-bottom:1px solid var(--linea); font-weight:600; }
 
   td.pendiente{
     background:var(--amarillo-bg);
@@ -230,6 +232,72 @@
     padding:1px 6px;
     margin-left:8px;
     vertical-align:2px;
+  }
+
+  /* ---------- Tendencia ---------- */
+  .leyenda-lineas{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    align-items:center;
+    font-size:13px;
+    color:var(--tinta-2);
+    margin-bottom:18px;
+  }
+  .sw{
+    width:20px;
+    height:3px;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:8px;
+  }
+  .paneles{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(248px,1fr));
+    gap:18px;
+  }
+  .panel{ border:1px solid var(--linea); padding:14px 14px 10px; }
+  .panel h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:-.01em;
+    margin:0 0 4px;
+  }
+  .panel .tot{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:4px 9px;
+    font-family:var(--cifra);
+    font-size:13px;
+    font-variant-numeric:tabular-nums;
+    color:var(--tinta-2);
+  }
+  .panel .tot .b{ color:var(--negro); font-weight:500; }
+  .panel .tot .flecha{ color:var(--nude); }
+  .panel .tot .delta{ color:var(--tinta-3); font-size:12px; }
+  .panel .rot{
+    font-family:var(--cifra);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+  }
+  .panel svg{ display:block; width:100%; height:auto; margin-top:6px; }
+  .panel .pend-box{
+    margin-top:10px;
+    min-height:124px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#FFFDF6;
+    border:1px dashed var(--amarillo-ln);
+    color:#6B4E00;
+    font-size:12.5px;
+    line-height:1.45;
+    padding:12px 14px;
   }
 
   /* ---------- Semáforo ---------- */
@@ -416,6 +484,7 @@
     </div>
     <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año.</p>
     <div class="scroll"><table id="t-mes"></table></div>
+    <div id="nota-b1"></div>
   </section>
 
   <!-- BLOQUE 2 -->
@@ -426,6 +495,21 @@
     </div>
     <p class="sub">Unidades y valor por categoría en cada canal. Los subtotales y el total son la suma de las filas mostradas.</p>
     <div class="scroll"><table id="t-cat"></table></div>
+  </section>
+
+  <!-- TENDENCIA -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Tendencia</span>
+      <h2>Unidades por mes y categoría</h2>
+    </div>
+    <p class="sub">Enero – agosto. Los cuatro paneles comparten el mismo eje vertical, así que la altura de las líneas es comparable entre categorías. Los totales del periodo salen del Bloque 2.</p>
+    <div class="leyenda-lineas">
+      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
+      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
+    </div>
+    <div class="paneles" id="paneles"></div>
+    <div id="nota-tendencia"></div>
   </section>
 
   <!-- BLOQUE 3 -->
@@ -561,29 +645,50 @@
     '</tr>';
   }).join('');
 
-  var pie = '<tr class="total">' +
-      '<td class="lft">Total Ene–Ago</td>' +
-      '<td class="num">' + u(tot[0]) + '</td>' +
-      '<td class="num">' + cop(tot[1]) + '</td>' +
-      '<td class="num">' + u(tot[2]) + '</td>' +
-      '<td class="num">' + cop(tot[3]) + '</td>' +
-      varTd(tot[0], tot[2]) + varTd(tot[1], tot[3]) +
+  /* Total general corregido (incluye la corrección de Fajas). El detalle
+     mensual de arriba todavía viene sin corregir: la diferencia se muestra. */
+  var TOTAL = {u25:6723, v25:1025754377, u26:6540, v26:1127334782};
+
+  var pie =
+    '<tr class="suma-pend">' +
+      '<td class="lft pendiente">Suma de los meses mostrados<span class="marca-amarilla">Sin corregir</span></td>' +
+      '<td class="num pendiente">' + u(tot[0]) + '</td>' +
+      '<td class="num pendiente">' + cop(tot[1]) + '</td>' +
+      '<td class="num pendiente">' + u(tot[2]) + '</td>' +
+      '<td class="num pendiente">' + cop(tot[3]) + '</td>' +
+      varTd(tot[0], tot[2], 'pendiente') + varTd(tot[1], tot[3], 'pendiente') +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Total general Ene–Ago · corregido</td>' +
+      '<td class="num">' + u(TOTAL.u25) + '</td>' +
+      '<td class="num">' + cop(TOTAL.v25) + '</td>' +
+      '<td class="num">' + u(TOTAL.u26) + '</td>' +
+      '<td class="num">' + cop(TOTAL.v26) + '</td>' +
+      varTd(TOTAL.u25, TOTAL.u26) + varTd(TOTAL.v25, TOTAL.v26) +
     '</tr>';
 
   document.getElementById('t-mes').innerHTML = encab + '<tbody>' + cuerpo + pie + '</tbody>';
 
+  document.getElementById('nota-b1').innerHTML =
+    '<div class="nota"><span class="etq">Pendiente</span><span>' +
+      'El detalle mes a mes todavía refleja las cifras de Fajas anteriores a la corrección. ' +
+      'Faltan ' + u(TOTAL.u25 - tot[0]) + ' unidades / ' + cop(TOTAL.v25 - tot[1]) + ' en 2025 y ' +
+      u(TOTAL.u26 - tot[2]) + ' unidades / ' + cop(TOTAL.v26 - tot[3]) + ' en 2026 por repartir entre los meses. ' +
+      'El total general ya está corregido.' +
+    '</span></div>';
+
   /* ---------------- Tiles ---------------- */
-  var vU = varTxt(tot[0], tot[2]), vV = varTxt(tot[1], tot[3]);
+  var vU = varTxt(TOTAL.u25, TOTAL.u26), vV = varTxt(TOTAL.v25, TOTAL.v26);
   document.getElementById('tiles').innerHTML =
     '<div class="tile">' +
       '<div class="rot">Unidades vendidas · Ene–Ago</div>' +
-      '<div class="par"><span class="a">' + u(tot[0]) + '</span><span class="flecha">→</span><span class="b">' + u(tot[2]) + '</span></div>' +
-      '<div class="pie">' + vU.s + ' frente a 2025 · ' + u(tot[2]-tot[0]) + ' unidades</div>' +
+      '<div class="par"><span class="a">' + u(TOTAL.u25) + '</span><span class="flecha">→</span><span class="b">' + u(TOTAL.u26) + '</span></div>' +
+      '<div class="pie">' + vU.s + ' frente a 2025 · ' + u(TOTAL.u26-TOTAL.u25) + ' unidades</div>' +
     '</div>' +
     '<div class="tile">' +
       '<div class="rot">Valor vendido · Ene–Ago</div>' +
-      '<div class="par"><span class="a">' + cop(tot[1]) + '</span><span class="flecha">→</span><span class="b">' + cop(tot[3]) + '</span></div>' +
-      '<div class="pie">' + vV.s + ' frente a 2025 · ' + cop(tot[3]-tot[1]) + '</div>' +
+      '<div class="par"><span class="a">' + cop(TOTAL.v25) + '</span><span class="flecha">→</span><span class="b">' + cop(TOTAL.v26) + '</span></div>' +
+      '<div class="pie">' + vV.s + ' frente a 2025 · ' + cop(TOTAL.v26-TOTAL.v25) + '</div>' +
     '</div>';
 
   /* ---------------- Bloque 2 ---------------- */
@@ -592,7 +697,7 @@
     ['Brasier',   'Sitio Web',   91,   7698971,  147,  14378077],
     ['Cinturilla','WhatsApp',   357,  40901371,  230,  36749594],
     ['Cinturilla','Sitio Web',  289,  28656670,  182,  29537476],
-    ['Fajas',     'WhatsApp',  1572, 333395166,  858, 193822723],
+    ['Fajas',     'WhatsApp',  2240, 474262694, 1785, 415606485],
     ['Fajas',     'Sitio Web',  668, 140867528,  927, 221783762],
     ['Short',     'WhatsApp',  1839, 199509066, 1630, 204757753],
     ['Short',     'Sitio Web',  955, 110865875, 1459, 187505639]
@@ -659,6 +764,91 @@
     '</tr>';
 
   document.getElementById('t-cat').innerHTML = encab2 + '<tbody>' + html2 + '</tbody>';
+
+  /* ---------------- Tendencia por categoría ---------------- */
+  var ordenCat = ['Fajas','Cinturilla','Short','Brasier'];
+  var inicialesMes = ['E','F','M','A','M','J','J','A'];
+
+  /* Unidades por mes (enero–agosto) de cada categoría.
+     Pendiente: falta el detalle mensual por categoría. Al cargar aquí los ocho
+     valores de cada año, los paneles se dibujan solos con el eje compartido.
+     Formato:  Fajas: { a2025:[...8...], a2026:[...8...] }                     */
+  var serieMes = { Fajas:{}, Cinturilla:{}, Short:{}, Brasier:{} };
+
+  function totalCategoria(cat){
+    return filas.filter(function(f){ return f[0] === cat; })
+                .reduce(function(a,f){ return [a[0]+f[2], a[1]+f[4]]; }, [0,0]);
+  }
+  function tieneSerie(cat){
+    var d = serieMes[cat];
+    return !!(d && d.a2025 && d.a2026 && d.a2025.length === 8 && d.a2026.length === 8);
+  }
+
+  /* Eje vertical compartido por los cuatro paneles */
+  var techo = 0;
+  ordenCat.forEach(function(c){
+    if (!tieneSerie(c)) return;
+    serieMes[c].a2025.concat(serieMes[c].a2026).forEach(function(v){ if (v > techo) techo = v; });
+  });
+  var escala = techo > 0 ? Math.ceil(techo / 50) * 50 : 0;
+
+  var W = 320, H = 158, PL = 40, PR = 10, PT = 12, PB = 24;
+  var ancho = W - PL - PR, alto = H - PT - PB;
+  var px = function(i){ return PL + i * (ancho / 7); };
+  var py = function(v){ return PT + (1 - v / escala) * alto; };
+
+  function linea(vals, color){
+    var pts = vals.map(function(v,i){ return px(i).toFixed(1) + ',' + py(v).toFixed(1); }).join(' ');
+    var fin = vals.length - 1;
+    return '<polyline points="' + pts + '" fill="none" stroke="' + color + '" stroke-width="1.8" ' +
+             'stroke-linejoin="round" stroke-linecap="round"></polyline>' +
+           '<circle cx="' + px(fin).toFixed(1) + '" cy="' + py(vals[fin]).toFixed(1) + '" r="2.8" fill="' + color + '"></circle>';
+  }
+
+  function grafico(cat){
+    var d = serieMes[cat], svg = '';
+    [0, escala/2, escala].forEach(function(v){
+      var y = py(v).toFixed(1);
+      svg += '<line x1="' + PL + '" y1="' + y + '" x2="' + (W-PR) + '" y2="' + y + '" ' +
+             'stroke="' + (v === 0 ? '#E4DFE9' : '#F1EEF4') + '" stroke-width="1"></line>' +
+             '<text x="' + (PL-8) + '" y="' + (parseFloat(y)+3.5) + '" text-anchor="end" ' +
+             'font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#77707E">' + u(v) + '</text>';
+    });
+    inicialesMes.forEach(function(m,i){
+      svg += '<text x="' + px(i).toFixed(1) + '" y="' + (H-8) + '" text-anchor="middle" ' +
+             'font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#77707E">' + m + '</text>';
+    });
+    svg += linea(d.a2025, '#9C7A56') + linea(d.a2026, '#4C1D6B');
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+           'aria-label="Unidades por mes de ' + cat + ', 2025 y 2026">' + svg + '</svg>';
+  }
+
+  document.getElementById('paneles').innerHTML = ordenCat.map(function(cat){
+    var t = totalCategoria(cat), v = varTxt(t[0], t[1]);
+    var f = v.v < 0 ? '▼' : (v.v > 0 ? '▲' : '—');
+    return '<div class="panel">' +
+      '<h3>' + cat + '</h3>' +
+      '<div class="tot">' +
+        '<span>' + u(t[0]) + '</span>' +
+        '<span class="flecha">→</span>' +
+        '<span class="b">' + u(t[1]) + '</span>' +
+        '<span class="delta">' + f + ' ' + v.s + '</span>' +
+      '</div>' +
+      '<div class="rot">Unidades · Ene–Ago</div>' +
+      (tieneSerie(cat)
+        ? grafico(cat)
+        : '<div class="pend-box">Sin detalle mensual<br>pendiente</div>') +
+    '</div>';
+  }).join('');
+
+  if (!ordenCat.every(tieneSerie)){
+    document.getElementById('nota-tendencia').innerHTML =
+      '<div class="nota"><span class="etq">Pendiente</span><span>' +
+        'Falta la serie de unidades mes a mes por categoría (enero–agosto, 2025 y 2026). ' +
+        'Los totales y las variaciones de cada panel sí son definitivos: salen del Bloque 2. ' +
+        'Al cargar esa serie, las líneas se dibujan con el eje ya compartido.' +
+      '</span></div>';
+  }
 
   /* ---------------- Bloque 3 ---------------- */
   var pauta = [
