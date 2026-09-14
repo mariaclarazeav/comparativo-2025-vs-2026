@@ -450,6 +450,30 @@
     margin-top:16px;
   }
   .nota + .nota{ margin-top:8px; }
+  .nota.info{
+    background:#F8F4FB;
+    border-color:#DCCEE7;
+    color:#3D1F55;
+  }
+  .nota.info .etq{
+    color:var(--morado);
+    border-color:#DCCEE7;
+    background:var(--paper);
+  }
+  .marca-morada{
+    display:inline-block;
+    font-family:var(--cifra);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--morado);
+    background:#F8F4FB;
+    border:1px solid #DCCEE7;
+    padding:1px 6px;
+    margin-left:8px;
+    vertical-align:2px;
+  }
+  tr.enlazada td{ background:#F8F4FB; }
   .nota .etq{
     font-family:var(--cifra);
     font-size:10px;
@@ -700,6 +724,18 @@
           <p class="texto-pend">Otros canales (Botón página web, Pop Up, Comunicación flash, Orgánico) — 2.226 conversaciones sin desglosar, pendiente.</p>
         </div>
       </div>
+    </div>
+
+    <h3 class="sub-cab">Ventas cerradas por canal de origen</h3>
+    <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba.</p>
+    <div class="scroll"><table id="t-canales"></table></div>
+    <div class="nota info">
+      <span class="etq">Mismo dato</span>
+      <span>Las 7 ventas de «Anuncio (pauta)» son exactamente las 7 ventas cerradas de la rama de pauta del embudo: es el mismo dato visto desde otro ángulo, no se suman.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Pendiente</span>
+      <span>Conversaciones iniciadas por canal (solo tenemos las ventas cerradas, no el total de conversaciones por canal, así que no se puede calcular tasa de cierre por canal todavía).</span>
     </div>
   </section>
 
@@ -1306,6 +1342,33 @@
     '<div class="fila"><dt>Ventas cerradas</dt><dd>' + u(7) + '</dd></div>' +
     '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' + cop(498300) + '</dd></div>' +
     '<div class="fila"><dt>Venta aprox. por conversión</dt><dd>' + cop(840612) + '</dd></div>';
+
+  /* Ventas cerradas de agosto, por canal de origen del contacto */
+  var canalesVenta = [
+    ['Botón WhatsApp sitio web', 86, '50,6%', false],
+    ['Orgánico',                 67, '39,4%', false],
+    ['Anuncio (pauta)',           7, '4,1%',  true ],
+    ['Walink correo',             7, '4,1%',  false],
+    ['SMS',                       3, '1,8%',  false]
+  ];
+  var canalesTot = canalesVenta.reduce(function(a,c){ return a + c[1]; }, 0);
+
+  document.getElementById('t-canales').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% del total</th>' +
+    '</tr></thead><tbody>' +
+    canalesVenta.map(function(c){
+      return '<tr' + (c[3] ? ' class="enlazada"' : '') + '>' +
+        '<td class="lft">' + c[0] + (c[3] ? '<span class="marca-morada">= rama de pauta</span>' : '') + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + c[2] + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total agosto</td>' +
+      '<td class="num">' + u(canalesTot) + '</td>' +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
 
   /* ---------------- Bloque 5 ---------------- */
   var leads = [

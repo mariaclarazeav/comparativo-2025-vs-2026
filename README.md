@@ -20,7 +20,9 @@ Cinco bloques, con los datos entregados tal cual:
    **Pauta Google Ads** — valor de conversión mes a mes (dato real de Google) y
    tabla de totales del periodo. El costo, las conversiones y el costo por
    conversión siguen pendientes y entran por `googleTotales`.
-4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada; la rama de otros canales queda marcada como pendiente.
+4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada; la rama de otros
+   canales queda marcada como pendiente. Debajo, las ventas cerradas por canal
+   de origen, donde la fila de «Anuncio» es el mismo dato de la rama de pauta.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
 
 Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
