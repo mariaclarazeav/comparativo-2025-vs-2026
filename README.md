@@ -17,9 +17,9 @@ Cinco bloques, con los datos entregados tal cual:
    al 13 de septiembre) con su tabla de totales mensuales, y debajo el detalle por
    categoría: inversión, compras, ROAS, CPA real, CPA como % del ticket frente al
    benchmark de 8% y semáforo.
-   **Pauta Google Ads** — gráfico de inversión semanal arriba y tabla de totales
-   (costo, conversiones, costo por conversión) debajo. A la espera de los datos:
-   la serie semanal va en `googleSemanal` y los totales en `googleTotales`.
+   **Pauta Google Ads** — tabla de totales del periodo (costo, conversiones,
+   costo por conversión). A la espera de los datos, que entran por
+   `googleTotales`.
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada; la rama de otros canales queda marcada como pendiente.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
 

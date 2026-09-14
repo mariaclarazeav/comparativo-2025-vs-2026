@@ -334,8 +334,6 @@
   .marca{ visibility:hidden; }
   .marca.on{ visibility:visible; }
 
-  .pend-box.alto{ min-height:300px; }
-  #grafico-google{ margin-bottom:28px; }
 
   .tip{
     position:absolute;
@@ -661,14 +659,9 @@
   <section>
     <div class="cab">
       <span class="num-bloque">Pauta · Google Ads</span>
-      <h2>Inversión semanal</h2>
+      <h2>Totales del periodo</h2>
     </div>
-    <p class="sub">Inversión por semana, 2025 vs 2026. Debajo, los totales del periodo: costo, conversiones y costo por conversión.</p>
-    <div class="leyenda-lineas">
-      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
-      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
-    </div>
-    <div id="grafico-google"></div>
+    <p class="sub">Costo, conversiones y costo por conversión, 2025 vs 2026.</p>
     <div class="scroll"><table id="t-google"></table></div>
     <div id="nota-google"></div>
   </section>
@@ -1219,44 +1212,12 @@
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
   /* ---------------- Pauta Google Ads ---------------- */
-  /* Inversión por semana. Pendiente: falta el export de Google Ads.
-     Formato:  { etiquetas:['S1','S2',...], a2025:[...], a2026:[...] }
-     Al cargarlo aquí, el gráfico se dibuja con el mismo estilo del Bloque 1. */
-  var googleSemanal = null;
-
   /* Totales del periodo. Pendiente: faltan las cifras. */
   var googleTotales = {
     costo:        {a:null, b:null},
     conversiones: {a:null, b:null},
     costoConv:    {a:null, b:null}
   };
-
-  var hayGoogleSemanal = !!(googleSemanal && googleSemanal.a2025 && googleSemanal.a2026 &&
-                            googleSemanal.a2025.length === googleSemanal.a2026.length &&
-                            googleSemanal.a2025.length > 1);
-
-  if (hayGoogleSemanal){
-    var picoG = googleSemanal.a2025.concat(googleSemanal.a2026).reduce(function(m,v){ return v > m ? v : m; }, 0);
-    var escalonG = Math.pow(10, String(Math.round(picoG)).length - 1) / 2;
-    var techoG = Math.ceil(picoG / escalonG) * escalonG;
-    document.getElementById('grafico-google').innerHTML =
-      '<div class="grafico-b1">' +
-        '<div class="rot">Inversión por semana <span class="eje">eje desde 0</span></div>' +
-        bloqueGrafico('g-inv', {
-          a: googleSemanal.a2025, b: googleSemanal.a2026,
-          etiquetas: googleSemanal.etiquetas,
-          nombres: googleSemanal.etiquetas.map(function(e){ return 'Semana ' + String(e).replace(/^S/, ''); }),
-          escala: techoG, ticks: [0, techoG/2, techoG], geo: GEO_LARGO,
-          fmtEje: function(v){ return '$' + u(v/1000000) + ' M'; },
-          fmt: cop, fmtDif: difCop,
-          titulo: 'Inversión semanal en Google Ads, 2025 y 2026'
-        }) +
-      '</div>';
-  } else {
-    document.getElementById('grafico-google').innerHTML =
-      '<div class="pend-box alto">Inversión semanal pendiente<br>' +
-      'falta la serie semana a semana de 2025 y 2026</div>';
-  }
 
   var filasGoogle = [
     ['Costo',                googleTotales.costo,        cop],
@@ -1280,12 +1241,11 @@
     }).join('') +
     '</tbody>';
 
-  if (!hayGoogleSemanal || filasGoogle.some(function(f){ return f[1].a === null || f[1].b === null; })){
+  if (filasGoogle.some(function(f){ return f[1].a === null || f[1].b === null; })){
     document.getElementById('nota-google').innerHTML =
       '<div class="nota"><span class="etq">Pendiente</span><span>' +
-        'Faltan las cifras de Google Ads: la inversión semana a semana de 2025 y de 2026 para el gráfico, ' +
-        'y el costo, las conversiones y el costo por conversión de cada año para la tabla. ' +
-        'La sección queda armada y se llena con esos datos.' +
+        'Faltan las cifras de Google Ads: costo, conversiones y costo por conversión de cada año. ' +
+        'La tabla queda armada y se llena con esos datos.' +
       '</span></div>';
   }
 
