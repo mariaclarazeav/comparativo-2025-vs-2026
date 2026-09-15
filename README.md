@@ -14,9 +14,10 @@ Cinco bloques, con los datos entregados tal cual:
    Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
    la diferencia 2026 − 2025 en unidades y en porcentaje.
 3. **Pauta Meta** — gráfico de inversión mensual 2025 vs 2026 (ambos años cortados
-   al 13 de septiembre) con su tabla de totales mensuales, y debajo el detalle por
-   categoría: inversión, compras (número y valor estimado), ROAS, CPA real, CPA
-   como % del ticket frente al benchmark de 8% y semáforo.
+   al 13 de septiembre), tabla mensual completa (inversión, compras, ROAS y CPA),
+   detalle por categoría (inversión, compras en número y valor estimado, ROAS, CPA
+   real, CPA como % del ticket frente al benchmark de 8% y semáforo) y ticket
+   promedio por canal según el píxel de Meta.
    **Pauta Google Ads** — gráfico de costo mensual y tabla con costo y valor de
    conversión mes a mes (datos reales de Google), más los totales del periodo.
    Las conversiones y el costo por conversión siguen pendientes.

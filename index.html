@@ -731,6 +731,10 @@
     </div>
     <div id="grafico-meta"></div>
     <div class="scroll"><table id="t-meta-mes"></table></div>
+    <div class="nota info">
+      <span class="etq">Lectura</span>
+      <span>2025 tuvo mejor ROAS y CPA que 2026 en jul-ago-sep (9-11x vs 6-7x) — 2026 no es una mejora frente a 2025 en esos meses, solo frente al baseline de mayo-junio de la propia agencia.</span>
+    </div>
 
     <h3 class="sub-cab">Pauta por categoría</h3>
     <p class="sub">Inversión, compras atribuidas y CPA real frente al benchmark de 8%. El semáforo marca el cumplimiento del CPA contra ese benchmark.</p>
@@ -748,6 +752,14 @@
     <div class="nota">
       <span class="etq">Parcial</span>
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
+    </div>
+
+    <h3 class="sub-cab">Ticket promedio por canal</h3>
+    <p class="sub">Compras y ticket promedio según el píxel de Meta, por canal de cierre.</p>
+    <div class="scroll"><table id="t-ticket"></table></div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Esto es el píxel de Meta, no B2Chat — probablemente subestima las ventas reales de WhatsApp, que se cierran fuera del píxel.</span>
     </div>
   </section>
 
@@ -1262,26 +1274,29 @@
     {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'}
   ];
 
-  /* Inversión mensual en Meta, ambos años cortados al 13 de septiembre */
+  /* Meta mes a mes, ambos años cortados al 13 de septiembre.
+     [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26, cpa26] */
   var metaMes = [
-    ['Enero',      'Ene', 18546010, 15984516],
-    ['Febrero',    'Feb', 16728334, 11835958],
-    ['Marzo',      'Mar', 19547309, 10328995],
-    ['Abril',      'Abr', 10818104,  8010146],
-    ['Mayo',       'May', 15876197, 10206426],
-    ['Junio',      'Jun', 13790261, 13243075],
-    ['Julio',      'Jul', 11076617, 13533089],
-    ['Agosto',     'Ago', 13536905, 13812049],
-    ['Septiembre', 'Sep',  5552622,  6821975]
+    ['Enero',      'Ene', 18546010, 398, '4,68x',  46598, 15984516, 469, '7,79x', 34082],
+    ['Febrero',    'Feb', 16728334, 341, '4,45x',  49057, 11835958, 312, '6,86x', 37936],
+    ['Marzo',      'Mar', 19547309, 377, '4,71x',  51850, 10328995, 277, '7,42x', 37289],
+    ['Abril',      'Abr', 10818104, 279, '5,90x',  38775,  8010146, 227, '6,86x', 35287],
+    ['Mayo',       'May', 15876197, 489, '6,76x',  32467, 10206426, 293, '7,83x', 34834],
+    ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321, '5,62x', 41256],
+    ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379, '6,93x', 35707],
+    ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372, '5,97x', 37129],
+    ['Septiembre', 'Sep',  5552622, 237, '9,28x',  23429,  6821975, 181, '6,13x', 37690]
   ];
-  var metaTot = metaMes.reduce(function(a,m){ return [a[0]+m[2], a[1]+m[3]]; }, [0,0]);
+  var metaTot = metaMes.reduce(function(a,m){
+    return [a[0]+m[2], a[1]+m[3], a[2]+m[6], a[3]+m[7]];
+  }, [0,0,0,0]);
 
   document.getElementById('grafico-meta').innerHTML =
     '<div class="grafico-b1">' +
       '<div class="rot">Inversión por mes <span class="eje">eje desde 0 · incluye todas las campañas, también las que no se pueden categorizar por producto</span></div>' +
       bloqueGrafico('meta-inv', {
         a: metaMes.map(function(m){ return m[2]; }),
-        b: metaMes.map(function(m){ return m[3]; }),
+        b: metaMes.map(function(m){ return m[6]; }),
         etiquetas: metaMes.map(function(m){ return m[1]; }),
         nombres: metaMes.map(function(m){ return m[0]; }),
         escala: 20000000, ticks: [0, 10000000, 20000000], geo: GEO_LARGO,
@@ -1292,22 +1307,75 @@
     '</div>';
 
   document.getElementById('t-meta-mes').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Mes</th><th>Inversión 2025</th><th>Inversión 2026</th><th>Variación</th>' +
-    '</tr></thead><tbody>' +
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        '<th class="g25" colspan="4">2025</th>' +
+        '<th class="g26" colspan="4">2026</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th>' +
+        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
     metaMes.map(function(m){
       return '<tr>' +
         '<td class="lft">' + m[0] + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
-        '<td class="num">' + cop(m[3]) + '</td>' +
-        varTd(m[2], m[3]) +
+        '<td class="num">' + u(m[3]) + '</td>' +
+        '<td class="num">' + m[4] + '</td>' +
+        '<td class="num">' + cop(m[5]) + '</td>' +
+        '<td class="num">' + cop(m[6]) + '</td>' +
+        '<td class="num">' + u(m[7]) + '</td>' +
+        '<td class="num">' + m[8] + '</td>' +
+        '<td class="num">' + cop(m[9]) + '</td>' +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
       '<td class="lft">Total Ene–13 sep</td>' +
       '<td class="num">' + cop(metaTot[0]) + '</td>' +
-      '<td class="num">' + cop(metaTot[1]) + '</td>' +
-      varTd(metaTot[0], metaTot[1]) +
+      '<td class="num">' + u(metaTot[1]) + '</td>' +
+      '<td class="num">—</td>' +
+      '<td class="num">' + cop(Math.round(metaTot[0]/metaTot[1])) + '</td>' +
+      '<td class="num">' + cop(metaTot[2]) + '</td>' +
+      '<td class="num">' + u(metaTot[3]) + '</td>' +
+      '<td class="num">—</td>' +
+      '<td class="num">' + cop(Math.round(metaTot[2]/metaTot[3])) + '</td>' +
+    '</tr></tbody>';
+
+  /* Ticket promedio por canal, según el píxel de Meta */
+  var ticketCanal = [
+    ['Sitio web/otros', 3345, 233074, 2590, 252628],
+    ['WhatsApp',         244, 219731,  241, 229432]
+  ];
+
+  document.getElementById('t-ticket').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Canal</th>' +
+        '<th class="g25" colspan="2">2025</th>' +
+        '<th class="g26" colspan="2">2026</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Compras</th><th>Ticket promedio</th>' +
+        '<th>Compras</th><th>Ticket promedio</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    ticketCanal.map(function(c){
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + cop(c[2]) + '</td>' +
+        '<td class="num">' + u(c[3]) + '</td>' +
+        '<td class="num">' + cop(c[4]) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total compras</td>' +
+      '<td class="num">' + u(ticketCanal[0][1] + ticketCanal[1][1]) + '</td>' +
+      '<td class="num">—</td>' +
+      '<td class="num">' + u(ticketCanal[0][3] + ticketCanal[1][3]) + '</td>' +
+      '<td class="num">—</td>' +
     '</tr></tbody>';
 
   var chips = {
