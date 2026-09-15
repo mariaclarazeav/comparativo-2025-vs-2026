@@ -24,6 +24,12 @@ Cinco bloques, con los datos entregados tal cual:
    cerradas por canal de origen, donde la fila de «Anuncio» es el mismo dato de
    la rama de pauta.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
+6. **Descuentos por canal (ERP, B2C)** — descuentos, neto y % sobre venta neta por
+   canal, más la tendencia mensual del %. Sale del ERP de facturación, no de
+   Shopify, así que no se mezcla con los Bloques 1 y 2.
+7. **Auditoría del reporte de la agencia (MLO Growth)** — lo verificado contra
+   nuestros datos de Meta, lo contradictorio, y el reparto real de los leads de
+   pauta según B2Chat.
 
 Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
 Los totales, subtotales y porcentajes de variación se calculan a partir de las
