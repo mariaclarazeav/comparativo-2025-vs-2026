@@ -747,7 +747,7 @@
     </div>
     <div class="nota">
       <span class="etq">Estimado</span>
-      <span>Compras (valor estimado): inversión × ROAS, no es el ingreso real de Shopify.</span>
+      <span>Compras (valor estimado): inversión × ROAS, no es el ingreso real de Shopify. El ticket promedio sale de dividir ese estimado entre las compras, así que arrastra el mismo supuesto.</span>
     </div>
     <div class="nota">
       <span class="etq">Parcial</span>
@@ -1390,8 +1390,9 @@
       '<th class="lft">Categoría</th>' +
       '<th class="lft">Año</th>' +
       '<th>Inversión</th>' +
-      '<th>Compras</th>' +
+      '<th>Compras (#)</th>' +
       '<th class="wrap">Compras (valor estimado)<span class="marca-amarilla">Estimado</span></th>' +
+      '<th class="wrap">Ticket promedio<span class="marca-amarilla">Estimado</span></th>' +
       '<th>ROAS</th>' +
       '<th>CPA real</th>' +
       '<th class="wrap">CPA como % del ticket</th>' +
@@ -1414,6 +1415,7 @@
       '<td class="num' + (esBrasier ? ' pendiente' : '') + '">' + cop(p.inv) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : u(p.compras)) + '</td>' +
       '<td class="num estimado">' + (esBrasier ? '—' : cop(p.valor)) + '</td>' +
+      '<td class="num estimado">' + (esBrasier ? '—' : cop(Math.round(p.valor / p.compras))) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : p.roas) + '</td>' +
       '<td class="num">' + (esBrasier ? '—' : cop(p.cpa)) + '</td>' +
       '<td class="num pct">' + (esBrasier ? '—' : nf1.format(p.pct) + '%') + '</td>' +
@@ -1427,6 +1429,7 @@
       '<td class="num">' + cop(invT[0]) + '</td>' +
       '<td class="num">' + u(compT[0]) + '</td>' +
       '<td class="num estimado">' + cop(valT[0]) + '</td>' +
+      '<td class="num estimado">' + cop(Math.round(valT[0]/compT[0])) + '</td>' +
       '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>' +
     '<tr class="total">' +
@@ -1434,6 +1437,7 @@
       '<td class="num">' + cop(invT[1]) + '</td>' +
       '<td class="num">' + u(compT[1]) + '</td>' +
       '<td class="num estimado">' + cop(valT[1]) + '</td>' +
+      '<td class="num estimado">' + cop(Math.round(valT[1]/compT[1])) + '</td>' +
       '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr>';
 
