@@ -217,6 +217,16 @@
   tr.suma-pend td{ border-bottom:1px solid var(--linea); font-weight:600; }
 
   thead th.wrap{ white-space:normal; max-width:120px; line-height:1.3; }
+  thead th .obj{
+    display:block;
+    font-family:var(--texto);
+    text-transform:none;
+    letter-spacing:0;
+    font-weight:400;
+    font-size:11px;
+    color:var(--tinta-3);
+    margin-top:2px;
+  }
   td.pct{ font-weight:500; color:var(--negro); }
   td.estimado{ background:var(--amarillo-bg); color:var(--amarillo); }
   td.pendiente{
@@ -608,6 +618,51 @@
     white-space:nowrap;
   }
 
+  .acciones{
+    margin-top:26px;
+    border:1px solid var(--linea);
+    border-top:3px solid var(--morado);
+    padding:20px 24px 22px;
+  }
+  .acciones h4{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:-.01em;
+    margin:0 0 10px;
+  }
+  .acciones ol{
+    margin:0;
+    padding-left:20px;
+    display:grid;
+    gap:8px;
+  }
+  .acciones li{
+    font-size:14.5px;
+    line-height:1.5;
+    padding-left:4px;
+  }
+  .acciones li::marker{
+    font-family:var(--cifra);
+    font-size:12px;
+    color:var(--morado);
+  }
+
+  .rama-hija{
+    border:1px solid var(--linea);
+    border-top:3px solid var(--morado);
+    padding:20px 22px 18px;
+  }
+  .rama-hija > .rot{
+    font-family:var(--cifra);
+    font-size:10.5px;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+    margin-bottom:14px;
+  }
+  .rama-hija .nota{ margin-top:18px; }
+
   .conclusion{
     margin-top:28px;
     background:var(--morado);
@@ -716,6 +771,7 @@
     </div>
     <div class="paneles" id="paneles"></div>
     <div id="nota-tendencia"></div>
+    <div class="scroll" style="margin-top:28px"><table id="t-cat-mes"></table></div>
   </section>
 
   <!-- BLOQUE 3 -->
@@ -738,6 +794,10 @@
 
     <h3 class="sub-cab">Pauta por categoría</h3>
     <p class="sub">Inversión, compras atribuidas y CPA real frente al benchmark de 8%. El semáforo marca el cumplimiento del CPA contra ese benchmark.</p>
+    <div class="nota info">
+      <span class="etq">Cobertura</span>
+      <span>Brasier no ha tenido pauta en Meta ni en 2025 ni en 2026.</span>
+    </div>
     <div class="scroll"><table id="t-pauta"></table></div>
     <div class="nota">
       <span class="etq">Fuente</span>
@@ -756,6 +816,16 @@
     <div class="nota">
       <span class="etq">Parcial</span>
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
+    </div>
+
+    <div class="acciones">
+      <h4>Qué falta para mejorar</h4>
+      <ol>
+        <li>Separar Fajas y Short de las campañas Advantage+/Catálogo genéricas.</li>
+        <li>Alinear el objetivo de optimización de la agencia (ROAS ≥ 5x) con el umbral real del negocio (CPA ≤ 8% del ticket).</li>
+        <li>Revisar fatiga de creativos en Cinturilla.</li>
+        <li>Confirmar que el Conversions API esté activo, no solo el píxel.</li>
+      </ol>
     </div>
 
     <h3 class="sub-cab">Ticket promedio por canal</h3>
@@ -781,9 +851,13 @@
     <div id="grafico-google"></div>
     <div class="scroll"><table id="t-google-mes"></table></div>
 
-    <h3 class="sub-cab">Totales del periodo</h3>
+    <h3 class="sub-cab">Resumen del periodo (1 ene – 13 sep)</h3>
+    <p class="sub">Las conversiones solo están disponibles a nivel de cuenta completa, no por mes, así que van aparte de la tabla mensual.</p>
     <div class="scroll"><table id="t-google"></table></div>
-    <div id="nota-google"></div>
+    <div class="nota">
+      <span class="etq">Ojo</span>
+      <span>Conversiones mezcla objetivos distintos en al menos una campaña (Web y WA) — no comparar el costo/conversión de Google 1 a 1 contra el CPA de Meta.</span>
+    </div>
   </section>
 
   <!-- BLOQUE 4 -->
@@ -807,6 +881,15 @@
           <dl id="dl-pauta"></dl>
         </div>
       </div>
+      <div class="conector"></div>
+      <div class="rama-hija">
+        <div class="rot">Qué pasó con esas conversaciones · B2Chat, agosto</div>
+        <div class="torta" id="torta-leads"></div>
+        <div class="nota info">
+          <span class="etq">Cruce</span>
+          <span>B2Chat registra 3.245 conversaciones con ad_source=ad en este periodo — prácticamente la misma población que las 3.376 de pauta del embudo (96% de coincidencia).</span>
+        </div>
+      </div>
     </div>
 
     <h3 class="sub-cab">Ventas cerradas por canal de origen</h3>
@@ -815,10 +898,6 @@
     <div class="nota info">
       <span class="etq">Mismo dato</span>
       <span>Las 7 ventas de «Anuncio (pauta)» son exactamente las 7 ventas cerradas de la rama de pauta del embudo: es el mismo dato visto desde otro ángulo, no se suman.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Pendiente</span>
-      <span>Conversaciones iniciadas por canal (solo tenemos las ventas cerradas, no el total de conversaciones por canal, así que no se puede calcular tasa de cierre por canal todavía).</span>
     </div>
   </section>
 
@@ -851,8 +930,9 @@
     <div class="scroll"><table id="t-desc"></table></div>
 
     <h3 class="sub-cab">Tendencia mensual del % de descuento sobre venta neta</h3>
-    <p class="sub">Enero – agosto, por canal.</p>
-    <div class="scroll"><table id="t-desc-mes"></table></div>
+    <p class="sub">Enero – agosto. El color distingue el año y el trazo el canal: línea continua para WhatsApp, punteada para Ecommerce.</p>
+    <div class="leyenda-lineas" id="leyenda-desc"></div>
+    <div id="grafico-desc"></div>
 
     <div class="nota">
       <span class="etq">Pendiente</span>
@@ -875,8 +955,7 @@
     <div class="scroll"><table id="t-audit-no" class="texto"></table></div>
 
     <h3 class="sub-cab">Qué pasa realmente con los leads de pauta</h3>
-    <p class="sub">Fuente: B2Chat, agosto. 3.245 conversaciones que entraron desde pauta, clasificadas por lo que pasó con cada una. El Bloque 04 muestra 3.376 conversaciones desde pauta según Meta: son dos fuentes distintas.</p>
-    <div class="torta" id="torta-leads"></div>
+    <p class="sub">De las 3.245 conversaciones que B2Chat registra desde pauta en agosto, el 62,7% no responde al saludo, el 17,9% queda para retomar y solo 4 terminan en venta (0,12%). El desglose completo está en el embudo del Bloque 04.</p>
 
     <div class="conclusion">
       <span class="rot">Hallazgo propio</span>
@@ -918,6 +997,13 @@
   var GEO_LARGO = {W:1140, H:340, PL:84, PR:20, PT:20, PB:46};
   var GRAFICOS = {};
 
+  function seriesDe(cfg){
+    return cfg.series || [
+      {nombre:'2025', vals:cfg.a, color:COLOR25},
+      {nombre:'2026', vals:cfg.b, color:COLOR26}
+    ];
+  }
+
   function svgLinea(cfg){
     var g = cfg.geo;
     var etq = cfg.etiquetas || etiquetasMes;
@@ -948,11 +1034,12 @@
              'font-family="IBM Plex Mono, monospace" font-size="12" fill="#514B57">' + m + '</text>';
     });
 
-    [[cfg.a, COLOR25], [cfg.b, COLOR26]].forEach(function(serie){
-      var vals = serie[0], color = serie[1];
+    seriesDe(cfg).forEach(function(serie){
+      var vals = serie.vals, color = serie.color;
       var pts = vals.map(function(v,i){ return px(i).toFixed(1) + ',' + py(v).toFixed(1); }).join(' ');
       var ult = vals.length - 1;
       svg += '<polyline points="' + pts + '" fill="none" stroke="' + color + '" stroke-width="2" ' +
+               (serie.trazo ? 'stroke-dasharray="' + serie.trazo + '" ' : '') +
                'stroke-linejoin="round" stroke-linecap="round"></polyline>' +
              '<circle cx="' + px(ult).toFixed(1) + '" cy="' + py(vals[ult]).toFixed(1) + '" r="3.4" fill="' + color + '"></circle>';
     });
@@ -962,8 +1049,10 @@
       var x = px(i).toFixed(1);
       svg += '<g class="marca" data-m="' + i + '">' +
         '<line x1="' + x + '" y1="' + g.PT + '" x2="' + x + '" y2="' + (g.PT+alto) + '" stroke="#D8D2DE" stroke-width="1"></line>' +
-        '<circle cx="' + x + '" cy="' + py(cfg.a[i]).toFixed(1) + '" r="4.5" fill="#FFFFFF" stroke="' + COLOR25 + '" stroke-width="2"></circle>' +
-        '<circle cx="' + x + '" cy="' + py(cfg.b[i]).toFixed(1) + '" r="4.5" fill="#FFFFFF" stroke="' + COLOR26 + '" stroke-width="2"></circle>' +
+        seriesDe(cfg).map(function(serie){
+          return '<circle cx="' + x + '" cy="' + py(serie.vals[i]).toFixed(1) + '" r="4.5" ' +
+                 'fill="#FFFFFF" stroke="' + serie.color + '" stroke-width="2"></circle>';
+        }).join('') +
       '</g>';
     });
     etq.forEach(function(m,i){
@@ -992,21 +1081,27 @@
       var marcas = caja.querySelectorAll('.marca');
 
       function mostrar(i, zona){
-        var a = cfg.a[i], b = cfg.b[i];
-        var dif = b - a, pct = varTxt(a, b);
-        var flecha = dif < 0 ? '▼' : (dif > 0 ? '▲' : '—');
+        var series = seriesDe(cfg);
+        var html = '<div class="tip-mes">' + (cfg.nombres || nombresMes)[i] + '</div>' +
+          series.map(function(serie){
+            return '<div class="tip-fila"><span class="pt" style="background:' + serie.color + '"></span>' +
+                   serie.nombre + '<b>' + cfg.fmt(serie.vals[i]) + '</b></div>';
+          }).join('');
 
-        tip.innerHTML =
-          '<div class="tip-mes">' + (cfg.nombres || nombresMes)[i] + '</div>' +
-          '<div class="tip-fila"><span class="pt" style="background:' + COLOR25 + '"></span>2025<b>' + cfg.fmt(a) + '</b></div>' +
-          '<div class="tip-fila"><span class="pt" style="background:' + COLOR26 + '"></span>2026<b>' + cfg.fmt(b) + '</b></div>' +
-          '<div class="tip-dif"><span class="rot">Diferencia 2026 − 2025</span>' +
-            flecha + ' ' + cfg.fmtDif(dif) + ' · ' + pct.s +
-          '</div>';
+        if (series.length === 2 && cfg.fmtDif){
+          var a = series[0].vals[i], b = series[1].vals[i];
+          var dif = b - a, pct = varTxt(a, b);
+          var flecha = dif < 0 ? '▼' : (dif > 0 ? '▲' : '—');
+          html += '<div class="tip-dif"><span class="rot">Diferencia 2026 − 2025</span>' +
+                    flecha + ' ' + cfg.fmtDif(dif) + ' · ' + pct.s +
+                  '</div>';
+        }
+        tip.innerHTML = html;
 
         tip.hidden = false;
         var piso = cfg.base || 0;
-        tip.classList.toggle('abajo', Math.max(a, b) > piso + (cfg.escala - piso) * 0.55);
+        var tope = series.reduce(function(m,serie){ return Math.max(m, serie.vals[i]); }, -Infinity);
+        tip.classList.toggle('abajo', tope > piso + (cfg.escala - piso) * 0.55);
 
         var cajaBox = caja.getBoundingClientRect();
         var zonaBox = zona.getBoundingClientRect();
@@ -1274,8 +1369,6 @@
     {cat:'Short',      anio:2026, inv:21420474, compras:902, valor:214177066, roas:'10,0x', cpa:23748, pct:18.7, bench:10159, sem:'rojo'},
     {cat:'Cinturilla', anio:2025, inv:6727719,  compras:226, valor:51388677,  roas:'7,6x',  cpa:29769, pct:27.6, bench:8614,  sem:'rojo'},
     {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  valor:3452190,   roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
-    {cat:'Brasier',    anio:2025, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'},
-    {cat:'Brasier',    anio:2026, inv:0, compras:null, roas:null, cpa:null, pct:null, bench:null, sem:'na', nota:'no maneja campañas'}
   ];
 
   /* Meta mes a mes, ambos años cortados al 13 de septiembre.
@@ -1399,7 +1492,7 @@
       '<th class="wrap">Ticket promedio<span class="marca-amarilla">Estimado</span></th>' +
       '<th>ROAS</th>' +
       '<th>CPA real</th>' +
-      '<th class="wrap">CPA como % del ticket</th>' +
+      '<th class="wrap">CPA como % del ticket<span class="obj">objetivo 8%</span></th>' +
       '<th>Benchmark 8%</th>' +
       '<th class="lft">Semáforo</th>' +
     '</tr></thead>';
@@ -1408,23 +1501,21 @@
 
   pauta.forEach(function(p, i){
     var cierra = (i % 2 === 1) ? ' class="sep"' : '';
-    var esBrasier = (p.compras === null);
-    if (!esBrasier){
-      if (p.anio === 2025){ invT[0] += p.inv; compT[0] += p.compras; valT[0] += p.valor; }
-      else { invT[1] += p.inv; compT[1] += p.compras; valT[1] += p.valor; }
-    }
+    if (p.anio === 2025){ invT[0] += p.inv; compT[0] += p.compras; valT[0] += p.valor; }
+    else { invT[1] += p.inv; compT[1] += p.compras; valT[1] += p.valor; }
+
     html3 += '<tr' + cierra + '>' +
       '<td class="lft">' + (p.anio === 2025 ? p.cat : '') + '</td>' +
       '<td class="lft canal">' + p.anio + '</td>' +
-      '<td class="num' + (esBrasier ? ' pendiente' : '') + '">' + cop(p.inv) + '</td>' +
-      '<td class="num">' + (esBrasier ? '—' : u(p.compras)) + '</td>' +
-      '<td class="num estimado">' + (esBrasier ? '—' : cop(p.valor)) + '</td>' +
-      '<td class="num estimado">' + (esBrasier ? '—' : cop(Math.round(p.valor / p.compras))) + '</td>' +
-      '<td class="num">' + (esBrasier ? '—' : p.roas) + '</td>' +
-      '<td class="num">' + (esBrasier ? '—' : cop(p.cpa)) + '</td>' +
-      '<td class="num pct">' + (esBrasier ? '—' : nf1.format(p.pct) + '%') + '</td>' +
-      '<td class="num">' + (esBrasier ? '—' : cop(p.bench)) + '</td>' +
-      '<td class="lft">' + chips[p.sem] + (esBrasier ? '<span class="marca-amarilla">' + p.nota + '</span>' : '') + '</td>' +
+      '<td class="num">' + cop(p.inv) + '</td>' +
+      '<td class="num">' + u(p.compras) + '</td>' +
+      '<td class="num estimado">' + cop(p.valor) + '</td>' +
+      '<td class="num estimado">' + cop(Math.round(p.valor / p.compras)) + '</td>' +
+      '<td class="num">' + p.roas + '</td>' +
+      '<td class="num">' + cop(p.cpa) + '</td>' +
+      '<td class="num pct">' + nf1.format(p.pct) + '%</td>' +
+      '<td class="num">' + cop(p.bench) + '</td>' +
+      '<td class="lft">' + chips[p.sem] + '</td>' +
     '</tr>';
   });
 
@@ -1462,16 +1553,22 @@
     ['Agosto',     1211398, 5548367,  8289262, 67599844],
     ['Septiembre',  533168, 2500384,  7871349, 32807636]
   ];
-  var googleCostoTot = [2872323, 27355553];
+  var googleCostoTot = [2872323, 27355554];
   var googleValTot   = [28052136, 218148601];
 
-  /* Las conversiones y el costo por conversión siguen pendientes. */
-  var googleTotales = {
-    costo:        {a:googleCostoTot[0], b:googleCostoTot[1]},
-    valorConv:    {a:googleValTot[0],   b:googleValTot[1]},
-    conversiones: {a:null, b:null},
-    costoConv:    {a:null, b:null}
-  };
+  var googleMes = [
+    ['Enero',            0,  767663,        0,  5112128],
+    ['Febrero',          0,  957916,        0,  7640895],
+    ['Marzo',            0, 2327934,        0, 20551126],
+    ['Abril',            0, 2198206,        0, 19106898],
+    ['Mayo',             0, 2984869,        0, 16551195],
+    ['Junio',       184260, 4538867,  1848331, 20285431],
+    ['Julio',       943497, 5531348, 10043194, 28493448],
+    ['Agosto',     1211398, 5548367,  8289262, 67599844],
+    ['Septiembre',  533168, 2500384,  7871349, 32807636]
+  ];
+  var googleCostoTot = [2872323, 27355554];
+  var googleValTot   = [28052136, 218148601];
 
   document.getElementById('grafico-google').innerHTML =
     '<div class="grafico-b1">' +
@@ -1521,36 +1618,36 @@
       varTd(googleValTot[0], googleValTot[1]) +
     '</tr></tbody>';
 
-  var filasGoogle = [
-    ['Costo',                googleTotales.costo,        cop],
-    ['Valor de conversión',  googleTotales.valorConv,    cop],
-    ['Conversiones',         googleTotales.conversiones, u],
-    ['Costo por conversión', googleTotales.costoConv,    cop]
+  /* Resumen del periodo. Las conversiones solo existen a nivel de cuenta,
+     no por mes, así que van en su propia tabla. */
+  var googleResumen = [
+    ['2025', 2872323,   141.2,    20342, 198670],
+    ['2026', 27355554, 1659.97,   16479, 131417]
   ];
+  var nfConv = new Intl.NumberFormat('es-CO', {maximumFractionDigits:2});
 
   document.getElementById('t-google').innerHTML =
     '<thead><tr class="campos">' +
-      '<th class="lft">Indicador</th><th>2025</th><th>2026</th><th>Variación</th>' +
+      '<th class="lft">Año</th><th>Costo</th><th>Conversiones</th><th>Costo/conversión</th>' +
+      '<th class="wrap">Ticket promedio<span class="obj">valor conv. / conversiones</span></th>' +
     '</tr></thead><tbody>' +
-    filasGoogle.map(function(f){
-      var d = f[1], fmt = f[2];
-      var hay = d.a !== null && d.b !== null;
+    googleResumen.map(function(r){
       return '<tr>' +
-        '<td class="lft">' + f[0] + (hay ? '' : '<span class="marca-amarilla">Pendiente</span>') + '</td>' +
-        (hay
-          ? '<td class="num">' + fmt(d.a) + '</td><td class="num">' + fmt(d.b) + '</td>' + varTd(d.a, d.b)
-          : '<td class="num pendiente">—</td><td class="num pendiente">—</td><td class="num pendiente">—</td>') +
+        '<td class="lft">' + r[0] + '</td>' +
+        '<td class="num">' + cop(r[1]) + '</td>' +
+        '<td class="num">' + nfConv.format(r[2]) + '</td>' +
+        '<td class="num">' + cop(r[3]) + '</td>' +
+        '<td class="num">' + cop(r[4]) + '</td>' +
       '</tr>';
     }).join('') +
-    '</tbody>';
-
-  if (filasGoogle.some(function(f){ return f[1].a === null || f[1].b === null; })){
-    document.getElementById('nota-google').innerHTML =
-      '<div class="nota"><span class="etq">Pendiente</span><span>' +
-        'Faltan las conversiones de Google Ads y, con ellas, el costo por conversión de cada año. ' +
-        'Las dos filas se llenan con ese dato.' +
-      '</span></div>';
-  }
+    '<tr class="total">' +
+      '<td class="lft">Variación</td>' +
+      [1,2,3,4].map(function(k){
+        var a = googleResumen[0][k], b = googleResumen[1][k];
+        var r = varTxt(a, b);
+        return '<td class="num var"><span class="flecha">' + (r.v < 0 ? '▼' : '▲') + '</span>' + r.s + '</td>';
+      }).join('') +
+    '</tr></tbody>';
 
   /* ---------------- Bloque 4 ---------------- */
   document.getElementById('leads-total').textContent = u(5602);
@@ -1662,38 +1759,43 @@
     '</tr></tbody>';
 
   var descMes = [
-    ['Enero',   3.5,  6.9, 0.1, 4.1],
-    ['Febrero', 4.3,  7.6, 0.1, 3.2],
-    ['Marzo',  11.3, 12.7, 6.3, 6.4],
-    ['Abril',  15.0, 12.9, 5.7, 8.1],
+    ['Enero',   3.5,  6.9,  0.1, 4.1],
+    ['Febrero', 4.3,  7.6,  0.1, 3.2],
+    ['Marzo',  11.3, 12.7,  6.3, 6.4],
+    ['Abril',  15.0, 12.9,  5.7, 8.1],
     ['Mayo',    9.7, 14.6, 13.9, 9.0],
-    ['Junio',   7.6, 11.8, 4.9, 4.3],
-    ['Julio',  14.3,  6.4, 8.8, 1.1],
+    ['Junio',   7.6, 11.8,  4.9, 4.3],
+    ['Julio',  14.3,  6.4,  8.8, 1.1],
     ['Agosto',  8.4,  9.0, 11.7, 0.1]
   ];
   var pc = function(v){ return nf1.format(v) + '%'; };
 
-  document.getElementById('t-desc-mes').innerHTML =
-    '<thead>' +
-      '<tr class="grupos">' +
-        '<th class="lft" rowspan="2">Mes</th>' +
-        '<th class="gv" colspan="2">WhatsApp</th>' +
-        '<th class="gv" colspan="2">Ecommerce</th>' +
-      '</tr>' +
-      '<tr class="campos">' +
-        '<th>2025</th><th>2026</th><th>2025</th><th>2026</th>' +
-      '</tr>' +
-    '</thead><tbody>' +
-    descMes.map(function(m){
-      return '<tr>' +
-        '<td class="lft">' + m[0] + '</td>' +
-        '<td class="num">' + pc(m[1]) + '</td>' +
-        '<td class="num">' + pc(m[2]) + '</td>' +
-        '<td class="num">' + pc(m[3]) + '</td>' +
-        '<td class="num">' + pc(m[4]) + '</td>' +
-      '</tr>';
-    }).join('') +
-    '</tbody>';
+  var seriesDesc = [
+    {nombre:'WhatsApp 2025',  vals: descMes.map(function(m){ return m[1]; }), color:'#9C7A56'},
+    {nombre:'WhatsApp 2026',  vals: descMes.map(function(m){ return m[2]; }), color:'#4C1D6B'},
+    {nombre:'Ecommerce 2025', vals: descMes.map(function(m){ return m[3]; }), color:'#C9A87F', trazo:'6 4'},
+    {nombre:'Ecommerce 2026', vals: descMes.map(function(m){ return m[4]; }), color:'#8B5FB0', trazo:'6 4'}
+  ];
+
+  document.getElementById('leyenda-desc').innerHTML = seriesDesc.map(function(s){
+    return '<span><svg width="24" height="8" style="vertical-align:middle;margin-right:8px" aria-hidden="true">' +
+      '<line x1="0" y1="4" x2="24" y2="4" stroke="' + s.color + '" stroke-width="2.5"' +
+      (s.trazo ? ' stroke-dasharray="' + s.trazo + '"' : '') + '></line></svg>' + s.nombre + '</span>';
+  }).join('');
+
+  document.getElementById('grafico-desc').innerHTML =
+    '<div class="grafico-b1">' +
+      '<div class="rot">% de descuento sobre venta neta <span class="eje">eje desde 0</span></div>' +
+      bloqueGrafico('desc-pct', {
+        series: seriesDesc,
+        etiquetas: descMes.map(function(m){ return m[0].slice(0,3); }),
+        nombres: descMes.map(function(m){ return m[0]; }),
+        escala: 16, ticks: [0, 8, 16], geo: GEO_LARGO,
+        fmtEje: function(v){ return nf0.format(v) + '%'; },
+        fmt: pc,
+        titulo: 'Porcentaje de descuento sobre venta neta por mes, WhatsApp y Ecommerce, 2025 y 2026'
+      }) +
+    '</div>';
 
   /* ---------------- Bloque 7 · Auditoría del reporte de la agencia ---------------- */
   var chipOk = '<span class="sem verde"><span class="punto"></span>Verificado</span>';
@@ -1791,6 +1893,34 @@
 
     document.getElementById('torta-leads').innerHTML = svg + leyenda;
   })();
+
+  /* Tabla mensual por categoría, la misma serie que dibujan los paneles */
+  document.getElementById('t-cat-mes').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        ordenCat.map(function(c){ return '<th class="gv" colspan="2">' + c + '</th>'; }).join('') +
+      '</tr>' +
+      '<tr class="campos">' +
+        ordenCat.map(function(){ return '<th>2025</th><th>2026</th>'; }).join('') +
+      '</tr>' +
+    '</thead><tbody>' +
+    etiquetasMes.map(function(m, i){
+      return '<tr>' +
+        '<td class="lft">' + nombresMes[i] + '</td>' +
+        ordenCat.map(function(c){
+          return '<td class="num">' + u(serieMes[c].a2025[i]) + '</td>' +
+                 '<td class="num">' + u(serieMes[c].a2026[i]) + '</td>';
+        }).join('') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total Ene–Ago</td>' +
+      ordenCat.map(function(c){
+        var t = totalCategoria(c);
+        return '<td class="num">' + u(t[0]) + '</td><td class="num">' + u(t[1]) + '</td>';
+      }).join('') +
+    '</tr></tbody>';
 
   ligarGraficos();
 })();
