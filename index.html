@@ -228,6 +228,17 @@
     margin-top:2px;
   }
   td.pct{ font-weight:500; color:var(--negro); }
+  .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:7px;
+    vertical-align:1px;
+  }
+  .dot.verde{ background:var(--verde); }
+  .dot.amarillo{ background:#E0A800; }
+  .dot.rojo{ background:#D0342B; }
   td.estimado{ background:var(--amarillo-bg); color:var(--amarillo); }
   td.pendiente{
     background:var(--amarillo-bg);
@@ -787,6 +798,7 @@
     </div>
     <div id="grafico-meta"></div>
     <div class="scroll"><table id="t-meta-mes"></table></div>
+    <div id="nota-bench-mes"></div>
     <div class="nota info">
       <span class="etq">Lectura</span>
       <span>2025 tuvo mejor ROAS y CPA que 2026 en jul-ago-sep (9-11x vs 6-7x) — 2026 no es una mejora frente a 2025 en esos meses, solo frente al baseline de mayo-junio de la propia agencia.</span>
@@ -1388,6 +1400,27 @@
     return [a[0]+m[2], a[1]+m[3], a[2]+m[6], a[3]+m[7]];
   }, [0,0,0,0]);
 
+  /* Ticket promedio por canal, según el píxel de Meta */
+  var ticketCanal = [
+    ['Sitio web/otros', 3345, 233074, 2590, 252628],
+    ['WhatsApp',         244, 219731,  241, 229432]
+  ];
+
+  /* Ticket del año, ponderado por compras, con el que se calcula el
+     benchmark del 8%. No hay ticket mes a mes: se usa el del año. */
+  var ticketAnio = [
+    (ticketCanal[0][1]*ticketCanal[0][2] + ticketCanal[1][1]*ticketCanal[1][2]) / (ticketCanal[0][1] + ticketCanal[1][1]),
+    (ticketCanal[0][3]*ticketCanal[0][4] + ticketCanal[1][3]*ticketCanal[1][4]) / (ticketCanal[0][3] + ticketCanal[1][3])
+  ];
+  var benchAnio = [ticketAnio[0] * 0.08, ticketAnio[1] * 0.08];
+
+  /* Sobre el benchmark, rojo; en el objetivo o por debajo, verde. */
+  function celdaBench(cpa, idx){
+    var pct = cpa / ticketAnio[idx] * 100;
+    var color = pct <= 8 ? 'verde' : 'rojo';
+    return '<td class="num pct"><span class="dot ' + color + '"></span>' + nf1.format(pct) + '%</td>';
+  }
+
   document.getElementById('grafico-meta').innerHTML =
     '<div class="grafico-b1">' +
       '<div class="rot">Inversión por mes <span class="eje">eje desde 0 · incluye todas las campañas, también las que no se pueden categorizar por producto</span></div>' +
@@ -1407,12 +1440,12 @@
     '<thead>' +
       '<tr class="grupos">' +
         '<th class="lft" rowspan="2">Mes</th>' +
-        '<th class="g25" colspan="4">2025</th>' +
-        '<th class="g26" colspan="4">2026</th>' +
+        '<th class="g25" colspan="5">2025</th>' +
+        '<th class="g26" colspan="5">2026</th>' +
       '</tr>' +
       '<tr class="campos">' +
-        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th>' +
-        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th>' +
+        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th><th class="wrap">CPA % del ticket<span class="obj">objetivo 8%</span></th>' +
+        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th><th class="wrap">CPA % del ticket<span class="obj">objetivo 8%</span></th>' +
       '</tr>' +
     '</thead><tbody>' +
     metaMes.map(function(m){
@@ -1422,10 +1455,12 @@
         '<td class="num">' + u(m[3]) + '</td>' +
         '<td class="num">' + m[4] + '</td>' +
         '<td class="num">' + cop(m[5]) + '</td>' +
+        celdaBench(m[5], 0) +
         '<td class="num">' + cop(m[6]) + '</td>' +
         '<td class="num">' + u(m[7]) + '</td>' +
         '<td class="num">' + m[8] + '</td>' +
         '<td class="num">' + cop(m[9]) + '</td>' +
+        celdaBench(m[9], 1) +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
@@ -1434,17 +1469,21 @@
       '<td class="num">' + u(metaTot[1]) + '</td>' +
       '<td class="num">—</td>' +
       '<td class="num">' + cop(Math.round(metaTot[0]/metaTot[1])) + '</td>' +
+      celdaBench(metaTot[0]/metaTot[1], 0) +
       '<td class="num">' + cop(metaTot[2]) + '</td>' +
       '<td class="num">' + u(metaTot[3]) + '</td>' +
       '<td class="num">—</td>' +
       '<td class="num">' + cop(Math.round(metaTot[2]/metaTot[3])) + '</td>' +
+      celdaBench(metaTot[2]/metaTot[3], 1) +
     '</tr></tbody>';
 
-  /* Ticket promedio por canal, según el píxel de Meta */
-  var ticketCanal = [
-    ['Sitio web/otros', 3345, 233074, 2590, 252628],
-    ['WhatsApp',         244, 219731,  241, 229432]
-  ];
+  document.getElementById('nota-bench-mes').innerHTML =
+    '<div class="nota"><span class="etq">Supuesto</span><span>' +
+      'No hay ticket promedio mes a mes, así que el benchmark del 8% se calcula sobre el ticket del año ' +
+      'ponderado por compras según el píxel de Meta: ' + cop(Math.round(ticketAnio[0])) + ' en 2025 y ' +
+      cop(Math.round(ticketAnio[1])) + ' en 2026, es decir un CPA objetivo de ' + cop(Math.round(benchAnio[0])) +
+      ' y ' + cop(Math.round(benchAnio[1])) + '. Verde si el CPA queda en el objetivo o por debajo, rojo si lo supera.' +
+    '</span></div>';
 
   document.getElementById('t-ticket').innerHTML =
     '<thead>' +
