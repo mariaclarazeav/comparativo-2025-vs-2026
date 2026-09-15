@@ -258,6 +258,58 @@
     vertical-align:2px;
   }
 
+  /* ---------- Detalle plegable ---------- */
+  .plegable{
+    margin-top:26px;
+    border:1px solid var(--linea);
+  }
+  .plegable > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:14px 18px;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--morado);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    user-select:none;
+  }
+  .plegable > summary::-webkit-details-marker{ display:none; }
+  .plegable > summary::before{
+    content:"+";
+    font-family:var(--cifra);
+    font-size:15px;
+    line-height:1;
+    width:18px;
+    height:18px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--morado);
+    color:var(--morado);
+    flex:0 0 auto;
+  }
+  .plegable[open] > summary::before{ content:"−"; }
+  .plegable > summary:hover{ background:var(--lavado); }
+  .plegable > summary:focus-visible{ outline:2px solid var(--morado); outline-offset:-2px; }
+  .plegable .cuerpo{ padding:4px 18px 22px; }
+  .plegable h4{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:15.5px;
+    letter-spacing:-.01em;
+    margin:22px 0 8px;
+  }
+  .plegable h4:first-child{ margin-top:10px; }
+  td .val{
+    display:block;
+    font-size:11.5px;
+    color:var(--tinta-3);
+    margin-top:2px;
+  }
+
   /* ---------- Tendencia ---------- */
   .leyenda-lineas{
     display:flex;
@@ -768,6 +820,11 @@
     </div>
     <p class="sub">Unidades y valor por categoría en cada canal. Los subtotales y el total son la suma de las filas mostradas.</p>
     <div class="scroll"><table id="t-cat"></table></div>
+
+    <details class="plegable">
+      <summary>Ver detalle mes a mes</summary>
+      <div id="detalle-mes"></div>
+    </details>
   </section>
 
   <!-- TENDENCIA -->
@@ -1315,6 +1372,92 @@
     '</tr>';
 
   document.getElementById('t-cat').innerHTML = encab2 + '<tbody>' + html2 + '</tbody>';
+
+  /* Detalle mes a mes por categoría y canal.
+     [mes, WA u. 2025, WA $ 2025, WA u. 2026, WA $ 2026,
+           Web u. 2025, Web $ 2025, Web u. 2026, Web $ 2026] */
+  var detalleMes = {
+    Fajas: [
+      ['Enero',      221, 45891713, 221, 50044300,  72, 15592762, 170, 37496279],
+      ['Febrero',    295, 59808978, 219, 54412065,  88, 19242248, 108, 26066927],
+      ['Marzo',      294, 61737169, 240, 57466623,  72, 15030884, 120, 30813449],
+      ['Abril',      259, 56784453, 245, 57544495,  50, 10871711, 111, 26646107],
+      ['Mayo',       267, 58719054, 223, 51558157,  58, 12769488, 131, 30936149],
+      ['Junio',      262, 56688383, 207, 46471590,  63, 14481289, 103, 25025930],
+      ['Julio',      343, 68481800, 231, 52140744, 134, 27027313, 104, 24251162],
+      ['Agosto',     299, 66151144, 199, 45968511, 131, 25851833,  80, 20547759]
+    ],
+    Short: [
+      ['Enero',      228, 22460431, 195, 24790397, 160, 17248257, 194, 23778190],
+      ['Febrero',    156, 17520551, 162, 22382310,  99, 11377746, 146, 20342447],
+      ['Marzo',      215, 23507057, 185, 21604151,  77,  8626694, 217, 27519209],
+      ['Abril',      388, 39015835, 170, 22434590,  84, 10561873, 125, 16839828],
+      ['Mayo',       210, 23826144, 243, 30762243, 120, 14314699, 175, 22448160],
+      ['Junio',      209, 23686372, 188, 25144784, 104, 12327119, 189, 24258150],
+      ['Julio',      245, 27114667, 268, 31526267, 152, 17429123, 165, 20750658],
+      ['Agosto',     188, 22378009, 219, 26113011, 159, 18980364, 248, 31568997]
+    ],
+    Cinturilla: [
+      ['Enero',       32,  3680990,  43,  6765354,   9,  1109580,  20,  3483447],
+      ['Febrero',     26,  3239512,  26,  4478491,   8,   962271,  23,  3867866],
+      ['Marzo',       35,  4910367,  41,  6960156,  14,  1746895,  29,  4736653],
+      ['Abril',       49,  5366985,  22,  3597235,  44,  4414982,  29,  4648052],
+      ['Mayo',        92,  7555559,  19,  3553555,  89,  6859411,  12,  2119359],
+      ['Junio',       42,  5420427,  25,  3791730,  43,  4653369,  28,  4145359],
+      ['Julio',       51,  5817254,  27,  3863612,  15,  1434028,  21,  3314798],
+      ['Agosto',      30,  4910277,  27,  3739461,  67,  7476134,  20,  3221942]
+    ],
+    Brasier: [
+      ['Enero',       35,  2567570,  17,  1496961,   2,   145400,  22,  2049877],
+      ['Febrero',     42,  3141867,  21,  1969571,  13,   978400,  20,  1911760],
+      ['Marzo',       25,  1961834,  27,  2602084,  18,  1450800,  15,  1543606],
+      ['Abril',       63,  4913276,  37,  3297583,   9,   731700,  15,  1547500],
+      ['Mayo',        40,  3071462,   9,   870970,  26,  2219728,  10,   972480],
+      ['Junio',       29,  2530549,  26,  2528895,   6,   533529,  29,  2772795],
+      ['Julio',       22,  2155443,  26,  2554292,  13,  1254814,  15,  1496545],
+      ['Agosto',      28,  2650201,  17,  1695640,   4,   384600,  21,  2083514]
+    ]
+  };
+
+  (function(){
+    var orden = ['Fajas','Short','Cinturilla','Brasier'];
+    var celda = function(unid, valor){
+      return '<td class="num">' + u(unid) + '<span class="val">' + cop(valor) + '</span></td>';
+    };
+
+    document.getElementById('detalle-mes').innerHTML =
+      '<div class="cuerpo">' + orden.map(function(cat){
+        var filas = detalleMes[cat];
+        var tot = filas.reduce(function(a,f){
+          return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[4], a[4]+f[5], a[5]+f[6], a[6]+f[7], a[7]+f[8]];
+        }, [0,0,0,0,0,0,0,0]);
+
+        return '<h4>' + cat + '</h4>' +
+          '<div class="scroll"><table>' +
+            '<thead>' +
+              '<tr class="grupos">' +
+                '<th class="lft" rowspan="2">Mes</th>' +
+                '<th class="gv" colspan="2">WhatsApp</th>' +
+                '<th class="gv" colspan="2">Sitio Web</th>' +
+              '</tr>' +
+              '<tr class="campos">' +
+                '<th>2025</th><th>2026</th><th>2025</th><th>2026</th>' +
+              '</tr>' +
+            '</thead><tbody>' +
+            filas.map(function(f){
+              return '<tr>' +
+                '<td class="lft">' + f[0] + '</td>' +
+                celda(f[1], f[2]) + celda(f[3], f[4]) +
+                celda(f[5], f[6]) + celda(f[7], f[8]) +
+              '</tr>';
+            }).join('') +
+            '<tr class="total">' +
+              '<td class="lft">Total Ene–Ago</td>' +
+              celda(tot[0], tot[1]) + celda(tot[2], tot[3]) +
+              celda(tot[4], tot[5]) + celda(tot[6], tot[7]) +
+            '</tr></tbody></table></div>';
+      }).join('') + '</div>';
+  })();
 
   /* ---------------- Tendencia por categoría ---------------- */
   var ordenCat = ['Fajas','Cinturilla','Short','Brasier'];
