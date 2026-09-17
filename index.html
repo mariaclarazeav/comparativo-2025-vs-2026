@@ -1195,6 +1195,21 @@
       <span class="rot">Hallazgo propio</span>
       La agencia concluye que el cuello de botella es el cierre, no la demanda. Este dato dice lo contrario: 6 de cada 10 leads de pauta ni siquiera responden al saludo — un problema de calidad de audiencia, no de capacidad de cierre.
     </div>
+
+    <h3 class="sub-cab">LTGP:CAC — nuestra versión vs. la de la agencia</h3>
+    <p class="sub">El mismo cálculo con dos juegos de supuestos: el margen y la recompra que asume la agencia, y los nuestros medidos en Shopify.</p>
+    <div class="scroll"><table id="t-ltgp"></table></div>
+    <div class="conclusion">
+      <span class="rot">Hallazgo confirmado</span>
+      Con nuestro margen real (40%, no 55%) y nuestro comportamiento de compra real (Shopify), el LTGP:CAC da 2,93:1, no ~4:1. El umbral de industria para «invertir con confianza» es 3:1 — estamos justo debajo, en zona de sostener y vigilar, no de escalar presupuesto agresivamente como sugiere la agencia.
+    </div>
+
+    <h3 class="sub-cab">Zoom — frecuencia de recompra real vs. supuesto de la agencia</h3>
+    <div class="scroll"><table id="t-recompra"></table></div>
+    <div class="nota info">
+      <span class="etq">Hallazgo</span>
+      <span><b>El supuesto de recompra de la agencia (23% cada 43 días) extrapolado a un año predice ~10 veces más recompra de la que realmente ocurre.</b> El negocio se comporta como compra ocasional (1 de cada 5 clientas repite al año), no como el ritmo de recompra frecuente que asume su modelo.</span>
+    </div>
   </section>
 
   <!-- BLOQUE 8 -->
@@ -2370,6 +2385,55 @@
     {nom:'Transferido a asesor',             pct:1.3,  color:'#D4B8A3'},
     {nom:'Otros',                            pct:2.5,  color:'#B3AABF', det:'incluye venta exitosa: 0,12%, 4 de 3.245'}
   ], u(3245), 'CONVERSACIONES', 'Reparto de las 3.245 conversaciones desde pauta');
+
+  /* LTGP:CAC, los dos juegos de supuestos */
+  var ltgp = [
+    ['Pedido promedio',          cop(209006), 'sin explicar origen',              cop(231618), 'Shopify, 12 meses real'],
+    ['Beneficio por compra',     cop(114953), 'margen 55%',                       cop(92647),  'margen real 40%'],
+    ['Compras de por vida',      '1,29',      'supuesto: 23% recompra c/43 días', '1,19',      'real, Shopify 12 meses'],
+    ['LTV total',                cop(270248), '',                                 cop(275625), ''],
+    ['Beneficio de por vida',    cop(148636), '',                                 cop(110250), ''],
+    ['CAC (Meta)',               cop(37603),  '',                                 cop(37603),  'mismo dato, sí es correcto']
+  ];
+
+  document.getElementById('t-ltgp').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th>' +
+      '<th class="wrap">Agencia<span class="obj">margen 55%</span></th>' +
+      '<th class="wrap">Nuestra versión<span class="obj">margen real 40%</span></th>' +
+    '</tr></thead><tbody>' +
+    ltgp.map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + f[1] + (f[2] ? '<span class="val">' + f[2] + '</span>' : '') + '</td>' +
+        '<td class="num">' + f[3] + (f[4] ? '<span class="val">' + f[4] + '</span>' : '') + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">LTGP:CAC</td>' +
+      '<td class="num">3,95 : 1<span class="val">«casi 4:1»</span></td>' +
+      '<td class="num pct">2,93 : 1<span class="val">umbral de industria: 3:1</span></td>' +
+    '</tr></tbody>';
+
+  var recompra = [
+    ['Probabilidad de recompra',                                        '23% cada ~43 días',                '—'],
+    ['Recompra esperada en 12 meses (si el supuesto fuera cierto)',     '~1,95 compras adicionales/cliente', '—'],
+    ['Recompra real observada',                                         '—',                                '0,19 compras adicionales/cliente'],
+    ['Tasa de clientes que repiten',                                    'Implícita: muy alta',              '21,42% en todo el año']
+  ];
+
+  document.getElementById('t-recompra').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th><th class="lft">Modelo agencia</th>' +
+      '<th class="lft">Real (Shopify, 12 meses)</th>' +
+    '</tr></thead><tbody>' +
+    recompra.map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="lft canal">' + f[1] + '</td>' +
+        '<td class="lft canal">' + f[2] + '</td>' +
+      '</tr>';
+    }).join('') + '</tbody>';
 
   /* ---------------- Embudo Shopify (agosto) ---------------- */
   var shopFuentes = [
