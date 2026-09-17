@@ -585,6 +585,44 @@
     letter-spacing:-.02em;
     font-variant-numeric:tabular-nums;
   }
+  .rot-capa{
+    font-family:var(--cifra);
+    font-size:10.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+    margin-bottom:10px;
+  }
+  .entradas{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+    gap:12px;
+  }
+  .entrada{
+    border:1px solid var(--linea);
+    border-top:3px solid var(--linea);
+    padding:13px 15px 12px;
+  }
+  .entrada.destacada{ border-top-color:var(--morado); }
+  .entrada .nom{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:13.5px;
+  }
+  .entrada .cif{
+    font-family:var(--cifra);
+    font-size:19px;
+    font-weight:500;
+    font-variant-numeric:tabular-nums;
+    margin-top:5px;
+  }
+  .entrada .pct{
+    font-family:var(--cifra);
+    font-size:12px;
+    color:var(--tinta-3);
+    margin-top:2px;
+  }
+
   .conector{
     width:1px;
     height:26px;
@@ -936,9 +974,12 @@
       <span class="num-bloque">Bloque 04</span>
       <h2>Embudo WhatsApp</h2>
     </div>
-    <p class="sub">Agosto. Del total de leads que entran por WhatsApp, solo la rama de pauta Meta está desglosada.</p>
+    <p class="sub">Agosto. Cómo entraron los 5.582 leads de WhatsApp y qué pasó con los que vienen de pauta.</p>
 
     <div class="embudo">
+      <div class="rot rot-capa">Cómo entraron los leads</div>
+      <div class="entradas" id="entradas"></div>
+      <div class="conector"></div>
       <div class="nodo-top">
         <span class="rot">Total leads WhatsApp · agosto</span>
         <span class="cifra" id="leads-total"></span>
@@ -957,7 +998,7 @@
         <div class="torta" id="torta-leads"></div>
         <div class="nota info">
           <span class="etq">Cruce</span>
-          <span>B2Chat registra 3.245 conversaciones con ad_source=ad en este periodo — prácticamente la misma población que las 3.376 de pauta del embudo (96% de coincidencia).</span>
+          <span>B2Chat registra 3.245 conversaciones con ad_source=ad en este periodo — prácticamente la misma población que las 3.251 de pauta del embudo (99,8% de coincidencia).</span>
         </div>
         <div class="conclusion">
           <span class="rot">Hallazgo propio</span>
@@ -972,6 +1013,17 @@
     <div class="nota info">
       <span class="etq">Mismo dato</span>
       <span>Las 7 ventas de «Anuncio (pauta)» son exactamente las 7 ventas cerradas de la rama de pauta del embudo: es el mismo dato visto desde otro ángulo, no se suman.</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Lectura</span>
+      <span>Walink tiene la tasa de cierre más alta pero volumen mínimo; pauta tiene el volumen más alto pero la tasa de cierre más baja — confirma que el problema no es de capacidad, es de calidad del lead.</span>
+    </div>
+
+    <h3 class="sub-cab">Zoom — unidades y valor por categoría, agosto (WhatsApp)</h3>
+    <div class="scroll"><table id="t-zoom"></table></div>
+    <div class="nota">
+      <span class="etq">Alcance</span>
+      <span>Esta tabla es solo canal WhatsApp — coincide exacto con los datos de WhatsApp del Bloque 2. Falta el dato de Sitio Web para las 4 categorías nuevas (MQ Tablas, Accesorios, Comercializados, MQ Latex).</span>
     </div>
   </section>
 
@@ -1865,38 +1917,98 @@
     '</tr></tbody>';
 
   /* ---------------- Bloque 4 ---------------- */
-  document.getElementById('leads-total').textContent = u(5602);
-  document.getElementById('conv-pauta').textContent = u(3376) + ' conversaciones';
+  var nf2 = new Intl.NumberFormat('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+  var cop2 = function(n){ return '$' + nf2.format(n); };
+
+  var totalLeads = 5582;
+  var entradas = [
+    ['ad (pauta)',     3251, true ],
+    ['Direct',         2284, false],
+    ['post',             35, false],
+    ['Direct Walink',    12, false]
+  ];
+
+  document.getElementById('entradas').innerHTML = entradas.map(function(e){
+    return '<div class="entrada' + (e[2] ? ' destacada' : '') + '">' +
+      '<div class="nom">' + e[0] + '</div>' +
+      '<div class="cif">' + u(e[1]) + '</div>' +
+      '<div class="pct">' + nf1.format(e[1] / totalLeads * 100) + '% del total</div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('leads-total').textContent = u(totalLeads);
+  document.getElementById('conv-pauta').textContent = u(3251) + ' conversaciones';
   document.getElementById('dl-pauta').innerHTML =
     '<div class="fila"><dt>Inversión</dt><dd>' + cop(3488102) + '</dd></div>' +
     '<div class="fila"><dt>Ventas cerradas</dt><dd>' + u(7) + '</dd></div>' +
     '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' + cop(498300) + '</dd></div>' +
-    '<div class="fila"><dt>Venta aprox. por conversión</dt><dd>' + cop(840612) + '</dd></div>';
+    '<div class="fila"><dt>Ticket promedio real de agosto</dt><dd>' + cop2(242588.50) + '</dd></div>';
 
-  /* Ventas cerradas de agosto, por canal de origen del contacto */
+  /* Ventas cerradas de agosto por canal de origen, con los leads de cada uno */
   var canalesVenta = [
-    ['Botón WhatsApp sitio web', 86, '50,6%', false],
-    ['Orgánico',                 67, '39,4%', false],
-    ['Anuncio (pauta)',           7, '4,1%',  true ],
-    ['Walink correo',             7, '4,1%',  false],
-    ['SMS',                       3, '1,8%',  false]
+    ['Botón WhatsApp sitio web + Orgánico + SMS', 156, 2319, false,
+     'estos 3 canales no se pueden separar en el dato de leads, solo en el de ventas'],
+    ['Anuncio (pauta)',                             7, 3251, true,  ''],
+    ['Walink correo',                               7,   12, false, '']
   ];
-  var canalesTot = canalesVenta.reduce(function(a,c){ return a + c[1]; }, 0);
+  /* Bajo el 1% el redondeo a un decimal borra la diferencia, así que ahí van dos */
+  var pctCierre = function(v){ return (v < 1 ? nf2.format(v) : nf1.format(v)) + '%'; };
+  var ventasTot = canalesVenta.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
 
   document.getElementById('t-canales').innerHTML =
     '<thead><tr class="campos">' +
-      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% del total</th>' +
+      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% de ventas</th>' +
+      '<th class="wrap">Total leads del canal</th><th>Tasa de cierre</th>' +
     '</tr></thead><tbody>' +
     canalesVenta.map(function(c){
       return '<tr' + (c[3] ? ' class="enlazada"' : '') + '>' +
-        '<td class="lft">' + c[0] + (c[3] ? '<span class="marca-morada">= rama de pauta</span>' : '') + '</td>' +
+        '<td class="lft">' + c[0] +
+          (c[3] ? '<span class="marca-morada">= rama de pauta</span>' : '') +
+          (c[4] ? '<span class="val">' + c[4] + '</span>' : '') +
+        '</td>' +
         '<td class="num">' + u(c[1]) + '</td>' +
-        '<td class="num">' + c[2] + '</td>' +
+        '<td class="num">' + nf1.format(c[1] / ventasTot[0] * 100) + '%</td>' +
+        '<td class="num">' + u(c[2]) + '</td>' +
+        '<td class="num pct">' + pctCierre(c[1] / c[2] * 100) + '</td>' +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
       '<td class="lft">Total agosto</td>' +
-      '<td class="num">' + u(canalesTot) + '</td>' +
+      '<td class="num">' + u(ventasTot[0]) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + u(ventasTot[1]) + '</td>' +
+      '<td class="num pct">' + pctCierre(ventasTot[0] / ventasTot[1] * 100) + '</td>' +
+    '</tr></tbody>';
+
+  /* Zoom de agosto por categoría, solo canal WhatsApp */
+  var zoomAgosto = [
+    ['Short',            219, 26113011],
+    ['Fajas',            199, 45968511],
+    ['MQ Tablas',         53,  3187298],
+    ['Cinturilla',        27,  3739461],
+    ['Brasier',           17,  1695640],
+    ['Accesorios',        12,   612665],
+    ['Comercializados',    3,   194715],
+    ['MQ Latex',           2,   241025]
+  ];
+  var zoomTot = zoomAgosto.reduce(function(a,z){ return [a[0]+z[1], a[1]+z[2]]; }, [0,0]);
+
+  document.getElementById('t-zoom').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría</th><th>Unidades</th><th>Valor</th><th>% del valor</th>' +
+    '</tr></thead><tbody>' +
+    zoomAgosto.map(function(z){
+      return '<tr>' +
+        '<td class="lft">' + z[0] + '</td>' +
+        '<td class="num">' + u(z[1]) + '</td>' +
+        '<td class="num">' + cop(z[2]) + '</td>' +
+        '<td class="num">' + nf1.format(z[2] / zoomTot[1] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total agosto · WhatsApp</td>' +
+      '<td class="num">' + u(zoomTot[0]) + '</td>' +
+      '<td class="num">' + cop(zoomTot[1]) + '</td>' +
       '<td class="num">100%</td>' +
     '</tr></tbody>';
 
