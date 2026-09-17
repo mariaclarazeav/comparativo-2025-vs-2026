@@ -32,6 +32,9 @@ Cinco bloques, con los datos entregados tal cual:
 7. **Auditoría del reporte de la agencia (MLO Growth)** — lo verificado contra
    nuestros datos de Meta, lo contradictorio, y el reparto real de los leads de
    pauta según B2Chat.
+8. **Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)** — inversión,
+   clics, compras y ticket de cada canal, con el detalle mes a mes plegable.
+   2025 es año completo y 2026 llega al 13 de septiembre.
 
 Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
 Los totales, subtotales y porcentajes de variación se calculan a partir de las

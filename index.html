@@ -1037,6 +1037,34 @@
     </div>
   </section>
 
+  <!-- BLOQUE 8 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 08</span>
+      <h2>Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)</h2>
+    </div>
+    <p class="sub">Inversión, clics, compras atribuidas y ticket promedio de cada canal. 2025 cubre el año completo y 2026 va del 1 de enero al 13 de septiembre, así que las dos columnas de cada canal no se comparan directo sin ajustar el rango.</p>
+    <div class="scroll"><table id="t-atrib"></table></div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Clics es un proxy de sesiones, no el dato real de GA4 (no conectado todavía).</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Compras es el píxel de Meta, no B2Chat/Draft Orders — para WhatsApp esto probablemente subestima las ventas reales, que se cierran fuera del píxel.</span>
+    </div>
+
+    <details class="plegable">
+      <summary>Ver detalle mes a mes</summary>
+      <div id="detalle-atrib"></div>
+    </details>
+
+    <div class="nota info">
+      <span class="etq">Cruce</span>
+      <span>Agosto 2026 de WhatsApp aquí ($3.488.102) es el mismo número que la rama de pauta del embudo en el Bloque 4 — confirma consistencia entre bloques.</span>
+    </div>
+  </section>
+
   <footer>
     <span class="marca">Fajitex</span>
     <span>Cifras en pesos colombianos (COP). Unidades = unidades vendidas.</span>
@@ -2108,6 +2136,118 @@
         return '<td class="num">' + u(t[0]) + '</td><td class="num">' + u(t[1]) + '</td>';
       }).join('') +
     '</tr></tbody>';
+
+  /* ---------------- Bloque 8 · Atribución por canal ---------------- */
+  /* [mes, inv 2025, clics 2025, compras 2025, ticket 2025,
+           inv 2026, clics 2026, compras 2026, ticket 2026] */
+  var atribMes = {
+    'Sitio Web': [
+      ['Enero',      15884419, 50813, 389, 218578,  9918842, 37441, 432, 269941],
+      ['Febrero',    13379482, 49156, 321, 218884,  6987947, 25968, 288, 261514],
+      ['Marzo',      14790176, 47059, 357, 246521,  5764697, 23832, 251, 279838],
+      ['Abril',       6509855, 22718, 255, 226364,  4070955, 19791, 203, 241640],
+      ['Mayo',       12117176, 42483, 457, 219310,  5358160, 22334, 260, 278211],
+      ['Junio',      10147469, 59822, 354, 266576,  6981591, 22467, 285, 234051],
+      ['Julio',       6912693, 40529, 448, 254249,  7085591, 23413, 335, 249037],
+      ['Agosto',      8577030, 43804, 543, 225806, 10323947, 36937, 362, 221582],
+      ['Septiembre',  3486835, 17008, 221, 214947,  5059988, 16185, 174, 232203]
+    ],
+    'WhatsApp': [
+      ['Enero',       2661591, 11780,   9, 197567,  6065674, 18437,  37, 212834],
+      ['Febrero',     3348852, 15178,  20, 210105,  4848011, 15888,  24, 246860],
+      ['Marzo',       4757133, 17554,  20, 204999,  4564298, 16238,  26, 244631],
+      ['Abril',       4308249, 15912,  24, 253717,  3939191, 13434,  24, 245778],
+      ['Mayo',        3759021, 11451,  32, 221097,  4848266, 16795,  33, 230722],
+      ['Junio',       3642792, 14027,  45, 217461,  6261484, 17899,  36, 212933],
+      ['Julio',       4163924, 14702,  48, 215333,  6447498, 16929,  44, 234001],
+      ['Agosto',      4959875, 15073,  30, 206782,  3488102, 17447,  10, 221762],
+      ['Septiembre',  2065787,  5464,  16, 252797,  1761987, 10355,   7, 205920]
+    ]
+  };
+
+  var atribGeneral = [
+    ['Inversión',                         146438380, 61551650, 58441978, 42224511, cop],
+    ['Clics (proxy de sesiones)',            577569,   228367,   187702,   143422, u],
+    ['Compras atribuidas (píxel Meta)',        5473,     2590,      371,      241, u],
+    ['Ticket promedio',                      234894,   252708,   221127,   229432, cop]
+  ];
+
+  document.getElementById('t-atrib').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Indicador</th>' +
+        '<th class="gv" colspan="2">Sitio Web</th>' +
+        '<th class="gv" colspan="2">WhatsApp</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th class="wrap">2025<span class="obj">año completo</span></th>' +
+        '<th class="wrap">2026<span class="obj">1 ene – 13 sep</span></th>' +
+        '<th class="wrap">2025<span class="obj">año completo</span></th>' +
+        '<th class="wrap">2026<span class="obj">1 ene – 13 sep</span></th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    atribGeneral.map(function(f){
+      var fmt = f[5];
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + fmt(f[1]) + '</td>' +
+        '<td class="num">' + fmt(f[2]) + '</td>' +
+        '<td class="num">' + fmt(f[3]) + '</td>' +
+        '<td class="num">' + fmt(f[4]) + '</td>' +
+      '</tr>';
+    }).join('') + '</tbody>';
+
+  document.getElementById('detalle-atrib').innerHTML =
+    '<div class="cuerpo">' +
+      '<div class="nota"><span class="etq">Rango</span><span>' +
+        'El detalle llega hasta el 13 de septiembre en los dos años, así que la columna 2025 de aquí ' +
+        'no suma lo mismo que la tabla general de arriba, que en 2025 cubre el año completo.' +
+      '</span></div>' +
+      Object.keys(atribMes).map(function(canal){
+        var filas = atribMes[canal];
+        var tot = filas.reduce(function(a,f){
+          return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[5], a[4]+f[6], a[5]+f[7]];
+        }, [0,0,0,0,0,0]);
+
+        return '<h4>' + canal + '</h4>' +
+          '<div class="scroll"><table>' +
+            '<thead>' +
+              '<tr class="grupos">' +
+                '<th class="lft" rowspan="2">Mes</th>' +
+                '<th class="g25" colspan="4">2025</th>' +
+                '<th class="g26" colspan="4">2026</th>' +
+              '</tr>' +
+              '<tr class="campos">' +
+                '<th>Inversión</th><th>Clics</th><th>Compras</th><th>Ticket</th>' +
+                '<th>Inversión</th><th>Clics</th><th>Compras</th><th>Ticket</th>' +
+              '</tr>' +
+            '</thead><tbody>' +
+            filas.map(function(f){
+              return '<tr>' +
+                '<td class="lft">' + f[0] + '</td>' +
+                '<td class="num">' + cop(f[1]) + '</td>' +
+                '<td class="num">' + u(f[2]) + '</td>' +
+                '<td class="num">' + u(f[3]) + '</td>' +
+                '<td class="num">' + cop(f[4]) + '</td>' +
+                '<td class="num">' + cop(f[5]) + '</td>' +
+                '<td class="num">' + u(f[6]) + '</td>' +
+                '<td class="num">' + u(f[7]) + '</td>' +
+                '<td class="num">' + cop(f[8]) + '</td>' +
+              '</tr>';
+            }).join('') +
+            '<tr class="total">' +
+              '<td class="lft">Total Ene–13 sep</td>' +
+              '<td class="num">' + cop(tot[0]) + '</td>' +
+              '<td class="num">' + u(tot[1]) + '</td>' +
+              '<td class="num">' + u(tot[2]) + '</td>' +
+              '<td class="num">—</td>' +
+              '<td class="num">' + cop(tot[3]) + '</td>' +
+              '<td class="num">' + u(tot[4]) + '</td>' +
+              '<td class="num">' + u(tot[5]) + '</td>' +
+              '<td class="num">—</td>' +
+            '</tr></tbody></table></div>';
+      }).join('') +
+    '</div>';
 
   ligarGraficos();
 })();
