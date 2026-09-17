@@ -659,7 +659,15 @@
     border-top:1px solid var(--linea-suave);
     font-size:14px;
   }
-  .rama .fila dt{ color:var(--tinta-2); }
+  .rama .fila dt{ color:var(--tinta-2); padding-right:12px; }
+  .rama .fila .det{
+    display:block;
+    font-size:12px;
+    line-height:1.45;
+    color:var(--tinta-3);
+    margin-top:3px;
+  }
+  .rama #nota-venta-pauta .nota{ margin:16px 0 8px; }
   .rama .fila dd{
     margin:0;
     font-family:var(--cifra);
@@ -990,6 +998,7 @@
           <h3>Desde pauta (Meta)</h3>
           <p class="conv" id="conv-pauta"></p>
           <dl id="dl-pauta"></dl>
+          <div id="nota-venta-pauta"></div>
         </div>
       </div>
       <div class="conector"></div>
@@ -1940,9 +1949,22 @@
   document.getElementById('conv-pauta').textContent = u(3251) + ' conversaciones';
   document.getElementById('dl-pauta').innerHTML =
     '<div class="fila"><dt>Inversión</dt><dd>' + cop(3488102) + '</dd></div>' +
-    '<div class="fila"><dt>Ventas cerradas</dt><dd>' + u(7) + '</dd></div>' +
+    '<div class="fila"><dt>Ventas cerradas' +
+      '<span class="det">1 Faja (' + cop(285900) + ') + 6 Short (' + cop(796154) + ') = ' +
+      cop(1082054) + ' subtotal, con ' + cop(34433) + ' en descuentos → ' + cop(1047621) + ' neto</span>' +
+    '</dt><dd>' + u(7) + '</dd></div>' +
     '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' + cop(498300) + '</dd></div>' +
+    '<div class="fila"><dt>Venta total de esas 7 unidades' +
+      '<span class="det">antes de descuentos: ' + cop(1082054) + '</span>' +
+    '</dt><dd>' + cop(1047621) + ' neto</dd></div>' +
     '<div class="fila"><dt>Ticket promedio real de agosto</dt><dd>' + cop2(242588.50) + '</dd></div>';
+
+  document.getElementById('nota-venta-pauta').innerHTML =
+    '<div class="nota"><span class="etq">Fuente</span><span>' +
+      'Este dato (' + cop(1047621) + ') viene del detalle de producto (Shopify); el ' + cop(840612) +
+      ' usado antes era una aproximación de otra fuente para el mismo mes — la diferencia probablemente ' +
+      'es IVA o el momento del corte, no una contradicción real.' +
+    '</span></div>';
 
   /* Ventas cerradas de agosto por canal de origen, con los leads de cada uno */
   var canalesVenta = [
