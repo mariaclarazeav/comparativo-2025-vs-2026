@@ -523,6 +523,25 @@
     margin-top:16px;
   }
   .nota + .nota{ margin-top:8px; }
+  .nota.fuerte{
+    border-width:2px;
+    border-color:#D9A800;
+    background:#FFF3CC;
+    padding:18px 20px;
+    font-size:15px;
+    line-height:1.55;
+    color:#5E4400;
+    margin-top:20px;
+  }
+  .nota.fuerte .etq{
+    background:#D9A800;
+    color:#FFFFFF;
+    border-color:#D9A800;
+    font-size:10.5px;
+    padding:2px 8px;
+  }
+  .nota.fuerte b{ font-weight:600; }
+
   .nota.info{
     background:#F8F4FB;
     border-color:#DCCEE7;
@@ -1123,6 +1142,35 @@
     <div class="nota info">
       <span class="etq">Cruce</span>
       <span>Agosto 2026 de WhatsApp aquí ($3.488.102) es el mismo número que la rama de pauta del embudo en el Bloque 4 — confirma consistencia entre bloques.</span>
+    </div>
+  </section>
+
+  <!-- BLOQUE 9 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 09</span>
+      <h2>Embudo Shopify — Tráfico y conversión (agosto)</h2>
+    </div>
+    <p class="sub">De dónde llegaron las sesiones, cuántas avanzaron por el embudo y qué ventas quedaron atribuidas a cada fuente. Datos de Shopify.</p>
+
+    <h3 class="sub-cab">Sesiones por fuente de tráfico</h3>
+    <div class="scroll"><table id="t-shop-fuentes"></table></div>
+    <div class="nota">
+      <span class="etq">Nota</span>
+      <span>Shopify no devolvió valor para la fuente Referidos en este corte, no significa cero.</span>
+    </div>
+
+    <h3 class="sub-cab">Embudo de conversión (todas las fuentes)</h3>
+    <div class="scroll"><table id="t-shop-embudo"></table></div>
+
+    <h3 class="sub-cab">Ventas atribuidas por fuente</h3>
+    <div class="scroll"><table id="t-shop-ventas"></table></div>
+    <div class="nota fuerte">
+      <span class="etq">Limitación</span>
+      <span>
+        <b>El 74,3% de las ventas no tiene fuente asignada por Shopify.</b>
+        Las filas en $0 (Orgánico, Pago, Directo, Desconocida) NO significan que esos canales no vendieron — Shopify no logró atribuir esos pedidos y probablemente cayeron dentro del grupo «sin fuente». Esta tabla no es confiable para decisiones; hace falta GA4 conectado para tener atribución de ventas real por canal.
+      </span>
     </div>
   </section>
 
@@ -2382,6 +2430,99 @@
             '</tr></tbody></table></div>';
       }).join('') +
     '</div>';
+
+  /* ---------------- Bloque 9 · Embudo Shopify (agosto) ---------------- */
+  var shopFuentes = [
+    ['Social (redes sociales)',      21201],
+    ['Directo',                      17283],
+    ['Búsqueda (aprox. orgánico)',   16268],
+    ['Desconocida',                    917],
+    ['Pago',                           648],
+    ['Email',                          138],
+    ['Referidos',                     null]
+  ];
+  var shopSesiones = shopFuentes.reduce(function(a,f){ return a + (f[1] || 0); }, 0);
+
+  document.getElementById('t-shop-fuentes').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Fuente</th><th>Sesiones</th><th>% del total</th>' +
+    '</tr></thead><tbody>' +
+    shopFuentes.map(function(f){
+      if (f[1] === null){
+        return '<tr>' +
+          '<td class="lft">' + f[0] + '</td>' +
+          '<td class="num pendiente">No disponible</td>' +
+          '<td class="num pendiente">—</td>' +
+        '</tr>';
+      }
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + u(f[1]) + '</td>' +
+        '<td class="num">' + nf1.format(f[1] / shopSesiones * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total</td>' +
+      '<td class="num">' + u(shopSesiones) + '</td>' +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
+
+  var shopEmbudo = [
+    ['Sesiones totales',     56455],
+    ['Agregado al carrito',   1760],
+    ['Checkout iniciado',     1234],
+    ['Compra completada',      325]
+  ];
+
+  document.getElementById('t-shop-embudo').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Etapa</th><th>Sesiones</th><th class="wrap">% sobre etapa anterior</th>' +
+    '</tr></thead><tbody>' +
+    shopEmbudo.map(function(e, i){
+      var pct = i === 0 ? 100 : e[1] / shopEmbudo[i-1][1] * 100;
+      return '<tr>' +
+        '<td class="lft">' + e[0] + '</td>' +
+        '<td class="num">' + u(e[1]) + '</td>' +
+        '<td class="num">' + (i === 0 ? '100%' : nf2.format(pct) + '%') + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Tasa de conversión final</td>' +
+      '<td class="num">' + u(325) + ' / ' + u(56455) + '</td>' +
+      '<td class="num pct">' + nf2.format(325 / 56455 * 100) + '%</td>' +
+    '</tr></tbody>';
+
+  var shopVentas = [
+    ['Sin fuente registrada (null)', 127964741, 468],
+    ['Social',                        22451420, 125],
+    ['Búsqueda',                      21556200, 101],
+    ['Email',                           275800,   1],
+    ['Orgánico',                             0,   0],
+    ['Pago',                                 0,   0],
+    ['Directo',                              0,   0],
+    ['Desconocida',                          0,   0]
+  ];
+  var shopVentasTot = shopVentas.reduce(function(a,v){ return [a[0]+v[1], a[1]+v[2]]; }, [0,0]);
+
+  document.getElementById('t-shop-ventas').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Fuente</th><th>Ventas</th><th>Pedidos</th><th>% de ventas</th>' +
+    '</tr></thead><tbody>' +
+    shopVentas.map(function(v){
+      var cero = v[1] === 0;
+      return '<tr>' +
+        '<td class="lft">' + v[0] + (cero ? '<span class="marca-amarilla">Sin atribuir</span>' : '') + '</td>' +
+        '<td class="num' + (cero ? ' pendiente' : '') + '">' + cop(v[1]) + '</td>' +
+        '<td class="num' + (cero ? ' pendiente' : '') + '">' + u(v[2]) + '</td>' +
+        '<td class="num' + (cero ? ' pendiente' : '') + '">' + nf1.format(v[1] / shopVentasTot[0] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total</td>' +
+      '<td class="num">' + cop(shopVentasTot[0]) + '</td>' +
+      '<td class="num">' + u(shopVentasTot[1]) + '</td>' +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
 
   ligarGraficos();
 })();

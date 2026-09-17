@@ -35,6 +35,9 @@ Cinco bloques, con los datos entregados tal cual:
 8. **Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)** — inversión,
    clics, compras y ticket de cada canal, con el detalle mes a mes plegable.
    2025 es año completo y 2026 llega al 13 de septiembre.
+9. **Embudo Shopify — Tráfico y conversión (agosto)** — sesiones por fuente,
+   embudo de conversión y ventas atribuidas, con la advertencia de que el 74,3%
+   de las ventas quedó sin fuente asignada.
 
 Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
 Los totales, subtotales y porcentajes de variación se calculan a partir de las
