@@ -25,6 +25,9 @@ Cinco bloques, con los datos entregados tal cual:
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada. Debajo, las ventas
    cerradas por canal de origen, donde la fila de «Anuncio» es el mismo dato de
    la rama de pauta.
+   **Embudo Shopify (agosto)** — sesiones por fuente y ventas atribuidas en dos
+   donas, el embudo de conversión en trapecios, y las tablas de datos en
+   secciones plegables. La advertencia del 74,3% sin atribuir va siempre visible.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
 6. **Descuentos por canal (ERP, B2C)** — descuentos, neto y % sobre venta neta por
    canal, más la tendencia mensual del %. Sale del ERP de facturación, no de
@@ -35,9 +38,6 @@ Cinco bloques, con los datos entregados tal cual:
 8. **Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)** — inversión,
    clics, compras y ticket de cada canal, con el detalle mes a mes plegable.
    2025 es año completo y 2026 llega al 13 de septiembre.
-9. **Embudo Shopify — Tráfico y conversión (agosto)** — sesiones por fuente,
-   embudo de conversión y ventas atribuidas, con la advertencia de que el 74,3%
-   de las ventas quedó sin fuente asignada.
 
 Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
 Los totales, subtotales y porcentajes de variación se calculan a partir de las
