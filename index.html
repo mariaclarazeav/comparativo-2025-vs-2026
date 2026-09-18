@@ -1133,6 +1133,18 @@
         </div>
       </div>
     </details>
+
+    <h3 class="sub-cab">Reconciliación 325 vs. 695 pedidos — resuelto</h3>
+    <p class="sub">Por qué el embudo cierra en 325 compras mientras el informe de ventas reporta 695 pedidos en el mismo agosto.</p>
+    <div class="scroll"><table id="t-reconcilia"></table></div>
+    <div class="conclusion">
+      <span class="rot">Hallazgo confirmado</span>
+      328 pedidos con sesión web ≈ 325 «compra completada» del embudo (la diferencia es normal: una sesión puede generar más de un pedido). Los 367 pedidos restantes (52,8% del total, $110M+) no tienen ninguna sesión web asociada — consistente con ventas cerradas por WhatsApp, teléfono o cargadas manualmente a Shopify, que no pasan por el checkout online. Esto confirma que el sitio web y WhatsApp son, en la práctica, dos motores de venta distintos que hay que medir por separado, no un solo embudo.
+    </div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>$177,8M (totalPriceSet) vs. $172,2M (total_sales) del informe de ventas es una diferencia de definición contable, no un error — no usar las dos cifras juntas en el mismo total.</span>
+    </div>
   </section>
 
   <!-- BLOQUE 5 -->
@@ -2436,6 +2448,31 @@
     }).join('') + '</tbody>';
 
   /* ---------------- Embudo Shopify (agosto) ---------------- */
+  var reconcilia = [
+    ['Con sesión de tienda online asociada',  328,  67686782, true],
+    ['Sin sesión asociada',                   367, 110175147, false]
+  ];
+  var reconTot = reconcilia.reduce(function(a,r){ return [a[0]+r[1], a[1]+r[2]]; }, [0,0]);
+
+  document.getElementById('t-reconcilia').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Grupo</th><th>Pedidos</th><th>% de pedidos</th><th>Valor (COP)</th>' +
+    '</tr></thead><tbody>' +
+    reconcilia.map(function(r){
+      return '<tr' + (r[3] ? ' class="enlazada"' : '') + '>' +
+        '<td class="lft">' + r[0] + (r[3] ? '<span class="marca-morada">≈ 325 del embudo</span>' : '') + '</td>' +
+        '<td class="num">' + u(r[1]) + '</td>' +
+        '<td class="num">' + nf1.format(r[1] / reconTot[0] * 100) + '%</td>' +
+        '<td class="num">' + cop(r[2]) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total</td>' +
+      '<td class="num">' + u(reconTot[0]) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + cop(reconTot[1]) + '</td>' +
+    '</tr></tbody>';
+
   var shopFuentes = [
     ['Social (redes sociales)',    21201, '#4C1D6B'],
     ['Directo',                    17283, '#7A4E9A'],
