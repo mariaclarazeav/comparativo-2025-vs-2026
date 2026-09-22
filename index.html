@@ -1277,7 +1277,11 @@
 
     <div class="nota">
       <span class="etq">Pendiente</span>
-      <span>«Leads Pauta» ya está completo para los dos años (sale de Meta Ads). Falta el total de leads, los contactos de venta y el valor aproximado de la mayoría de los meses: llegan con los datos de B2Chat, y el % de pauta y la tasa de cierre se recalculan solos al llenarlos.</span>
+      <span>2025 queda completa salvo el valor aproximado de venta. De 2026 faltan el total de leads y los contactos de venta de enero a abril, y el valor aproximado de todos los meses menos julio y agosto. Llegan con B2Chat, y el % de pauta y la tasa de cierre se recalculan solos al llenarlos.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Rango</span>
+      <span>Septiembre de 2025 son solo los días 1 a 13, mientras octubre, noviembre y diciembre son meses completos: el total de esa tabla no es un año entero, le falta la segunda quincena de septiembre.</span>
     </div>
     <div class="nota">
       <span class="etq">Corte</span>
@@ -2845,7 +2849,8 @@
     ['Marzo',      null, 3878, null, null], ['Abril',      null, 3367, null, null],
     ['Mayo',       null, 2567, null, null], ['Junio',      null, 2920, null, null],
     ['Julio',      null, 2893, null, null], ['Agosto',     null, 2809, null, null],
-    ['Septiembre', null,  819, null, null]
+    ['Septiembre', null,  819, null, null], ['Octubre',    6332, 1993,   24, null],
+    ['Noviembre',  7592, 4234,   37, null], ['Diciembre',  7693, 4408,   31, null]
   ];
   var atribWA26 = [
     ['Enero',      null, 3826, null, null], ['Febrero',    null, 3043, null, null],
@@ -2856,7 +2861,7 @@
   ];
 
   var pend = '<td class="num pendiente">___</td>';
-  function tablaAtribWA(id, filas){
+  function tablaAtribWA(id, filas, rango){
     document.getElementById(id).innerHTML =
       '<thead><tr class="campos">' +
         '<th class="lft">Mes</th><th>Total de leads</th><th>Leads Pauta</th>' +
@@ -2865,10 +2870,9 @@
         '<th class="wrap">Tasa de cierre sobre pauta</th>' +
         '<th>Valor Aprox Venta</th>' +
       '</tr></thead><tbody>' +
-      filas.map(function(f, i){
-        var ultimo = i === filas.length - 1;
+      filas.map(function(f){
         return '<tr>' +
-          '<td class="lft">' + f[0] + (ultimo ? '<span class="val">1–13</span>' : '') + '</td>' +
+          '<td class="lft">' + f[0] + (f[0] === 'Septiembre' ? '<span class="val">1–13</span>' : '') + '</td>' +
           (f[1] === null ? pend : '<td class="num">' + u(f[1]) + '</td>') +
           '<td class="num">' + u(f[2]) + '</td>' +
           (f[1] === null ? pend : '<td class="num pct">' + nf1.format(f[2] / f[1] * 100) + '%</td>') +
@@ -2880,14 +2884,14 @@
       (function(){
         var totPauta = filas.reduce(function(a,f){ return a + f[2]; }, 0);
         return '<tr class="total">' +
-          '<td class="lft">Total Ene–13 sep</td>' + pend +
+          '<td class="lft">' + rango + '</td>' + pend +
           '<td class="num">' + u(totPauta) + '</td>' + pend + pend + pend + pend +
         '</tr>';
       })() +
       '</tbody>';
   }
-  tablaAtribWA('t-atrib-wa-25', atribWA25);
-  tablaAtribWA('t-atrib-wa-26', atribWA26);
+  tablaAtribWA('t-atrib-wa-25', atribWA25, 'Total Ene–Dic');
+  tablaAtribWA('t-atrib-wa-26', atribWA26, 'Total Ene–13 sep');
 
   /* ---------------- Resumen ejecutivo ---------------- */
   var hallazgos = [
