@@ -820,6 +820,14 @@
     letter-spacing:-.01em;
     margin-left:auto;
   }
+  .tabla-anio{
+    font-family:var(--cifra);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--morado);
+    margin:26px 0 8px;
+  }
   .pie-escala{
     font-size:12.5px;
     color:var(--tinta-3);
@@ -1145,6 +1153,27 @@
       <span class="etq">Definición</span>
       <span>$177,8M (totalPriceSet) vs. $172,2M (total_sales) del informe de ventas es una diferencia de definición contable, no un error — no usar las dos cifras juntas en el mismo total.</span>
     </div>
+
+    <h3 class="sub-cab">Salud del embudo, mes a mes — 2025 vs 2026</h3>
+    <p class="sub">Tasa de conversión total (sesión → compra) por mes y el detalle de cada etapa. 2026 llega hasta el 13 de septiembre.</p>
+    <div class="leyenda-lineas">
+      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
+      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
+    </div>
+    <div id="grafico-salud"></div>
+
+    <h4 class="tabla-anio">2025</h4>
+    <div class="scroll"><table id="t-salud-25"></table></div>
+    <h4 class="tabla-anio">2026</h4>
+    <div class="scroll"><table id="t-salud-26"></table></div>
+    <div class="nota">
+      <span class="etq">Corte</span>
+      <span>Agosto 2026 aquí (52.819 sesiones, 323 compras) difiere levemente del embudo principal de arriba (56.455 sesiones, 325 compras) — diferencia menor, probablemente de zona horaria o corte de consulta, no una contradicción real.</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Patrón</span>
+      <span><b>Jun-jul-ago 2025 muestra el mismo patrón que se repite en 2026:</b> la etapa Carrito→Checkout mejora fuerte a mitad de año (de ~42-55% a ~80-83% en 2025; de ~65% a ~74% en 2026), pero Checkout→Compra cae en esos mismos meses (de ~35% a ~18% en 2025). Vale la pena investigar si hay un cambio operativo o técnico que se repite cada año en esa época — podría ser estacional (rebajas, alto volumen) o un problema recurrente del checkout bajo carga.</span>
+    </div>
   </section>
 
   <!-- BLOQUE 5 -->
@@ -1325,8 +1354,11 @@
 
     seriesDe(cfg).forEach(function(serie){
       var vals = serie.vals, color = serie.color;
-      var pts = vals.map(function(v,i){ return px(i).toFixed(1) + ',' + py(v).toFixed(1); }).join(' ');
+      var pts = vals.map(function(v,i){
+        return v === null || v === undefined ? null : px(i).toFixed(1) + ',' + py(v).toFixed(1);
+      }).filter(function(x){ return x !== null; }).join(' ');
       var ult = vals.length - 1;
+      while (ult > 0 && (vals[ult] === null || vals[ult] === undefined)) { ult--; }
       svg += '<polyline points="' + pts + '" fill="none" stroke="' + color + '" stroke-width="2" ' +
                (serie.trazo ? 'stroke-dasharray="' + serie.trazo + '" ' : '') +
                'stroke-linejoin="round" stroke-linecap="round"></polyline>' +
@@ -1339,7 +1371,9 @@
       svg += '<g class="marca" data-m="' + i + '">' +
         '<line x1="' + x + '" y1="' + g.PT + '" x2="' + x + '" y2="' + (g.PT+alto) + '" stroke="#D8D2DE" stroke-width="1"></line>' +
         seriesDe(cfg).map(function(serie){
-          return '<circle cx="' + x + '" cy="' + py(serie.vals[i]).toFixed(1) + '" r="4.5" ' +
+          var v = serie.vals[i];
+          if (v === null || v === undefined) return '';
+          return '<circle cx="' + x + '" cy="' + py(v).toFixed(1) + '" r="4.5" ' +
                  'fill="#FFFFFF" stroke="' + serie.color + '" stroke-width="2"></circle>';
         }).join('') +
       '</g>';
@@ -1373,11 +1407,13 @@
         var series = seriesDe(cfg);
         var html = '<div class="tip-mes">' + (cfg.nombres || nombresMes)[i] + '</div>' +
           series.map(function(serie){
+            var v = serie.vals[i];
             return '<div class="tip-fila"><span class="pt" style="background:' + serie.color + '"></span>' +
-                   serie.nombre + '<b>' + cfg.fmt(serie.vals[i]) + '</b></div>';
+                   serie.nombre + '<b>' + (v === null || v === undefined ? 'sin dato' : cfg.fmt(v)) + '</b></div>';
           }).join('');
 
-        if (series.length === 2 && cfg.fmtDif){
+        if (series.length === 2 && cfg.fmtDif &&
+            series[0].vals[i] != null && series[1].vals[i] != null){
           var a = series[0].vals[i], b = series[1].vals[i];
           var dif = b - a, pct = varTxt(a, b);
           var flecha = dif < 0 ? '▼' : (dif > 0 ? '▲' : '—');
@@ -1389,7 +1425,10 @@
 
         tip.hidden = false;
         var piso = cfg.base || 0;
-        var tope = series.reduce(function(m,serie){ return Math.max(m, serie.vals[i]); }, -Infinity);
+        var tope = series.reduce(function(m,serie){
+          var v = serie.vals[i];
+          return (v === null || v === undefined) ? m : Math.max(m, v);
+        }, -Infinity);
         tip.classList.toggle('abajo', tope > piso + (cfg.escala - piso) * 0.55);
 
         var cajaBox = caja.getBoundingClientRect();
@@ -2446,6 +2485,84 @@
         '<td class="lft canal">' + f[2] + '</td>' +
       '</tr>';
     }).join('') + '</tbody>';
+
+  /* Salud del embudo mes a mes. [mes, sesiones, carrito, checkout, compra] */
+  var salud25 = [
+    ['Enero',      30213, 1426,  596, 205], ['Febrero',    26067, 1006,  465, 164],
+    ['Marzo',      25583, 1185,  495, 156], ['Abril',      22653,  909,  499, 139],
+    ['Mayo',       41056, 1578,  937, 255], ['Junio',      64880, 1627,  823, 193],
+    ['Julio',      53559, 1926, 1560, 284], ['Agosto',     51385, 2141, 1776, 321],
+    ['Septiembre', 49184, 1893, 1514, 333], ['Octubre',    49820, 2138, 1674, 381],
+    ['Noviembre',  64586, 2932, 2100, 523], ['Diciembre',  73412, 2668, 1775, 476]
+  ];
+  var salud26 = [
+    ['Enero',      43874, 1883, 1231, 317], ['Febrero',    36394, 1295,  840, 201],
+    ['Marzo',      43288, 1812, 1143, 251], ['Abril',      34289, 1445,  936, 228],
+    ['Mayo',       38168, 1499, 1011, 216], ['Junio',      34968, 1539, 1129, 256],
+    ['Julio',      42649, 1461, 1073, 270], ['Agosto',     52819, 1736, 1211, 323],
+    ['Septiembre', 23979,  611,  495, 148]
+  ];
+  var mesesAnio = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var nombresAnio = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+                     'Septiembre','Octubre','Noviembre','Diciembre'];
+  var tasaTotal = function(f){ return f[4] / f[1] * 100; };
+
+  document.getElementById('grafico-salud').innerHTML =
+    '<div class="grafico-b1">' +
+      '<div class="rot">Tasa de conversión sesión → compra <span class="eje">eje desde 0 · septiembre 2026 es parcial (1–13)</span></div>' +
+      bloqueGrafico('salud-conv', {
+        series: [
+          {nombre:'2025', color:COLOR25, vals: mesesAnio.map(function(m,i){
+            return salud25[i] ? tasaTotal(salud25[i]) : null; })},
+          {nombre:'2026', color:COLOR26, vals: mesesAnio.map(function(m,i){
+            return salud26[i] ? tasaTotal(salud26[i]) : null; })}
+        ],
+        etiquetas: mesesAnio, nombres: nombresAnio,
+        escala: 1, ticks: [0, 0.5, 1], geo: GEO_LARGO,
+        fmtEje: function(v){ return nf1.format(v) + '%'; },
+        fmt: function(v){ return nf2.format(v) + '%'; },
+        titulo: 'Tasa de conversión de sesión a compra por mes, 2025 y 2026'
+      }) +
+    '</div>';
+
+  function tablaSalud(id, filas, parcial){
+    document.getElementById(id).innerHTML =
+      '<thead><tr class="campos">' +
+        '<th class="lft">Mes</th><th>Sesiones</th><th>Carrito</th><th>Checkout</th><th>Compra</th>' +
+        '<th>Ses→Carr</th><th>Carr→Check</th><th>Check→Compra</th><th>Ses→Compra</th>' +
+      '</tr></thead><tbody>' +
+      filas.map(function(f, i){
+        var ultimo = parcial && i === filas.length - 1;
+        return '<tr>' +
+          '<td class="lft">' + f[0] + (ultimo ? '<span class="marca-amarilla">Parcial 1–13</span>' : '') + '</td>' +
+          '<td class="num">' + u(f[1]) + '</td>' +
+          '<td class="num">' + u(f[2]) + '</td>' +
+          '<td class="num">' + u(f[3]) + '</td>' +
+          '<td class="num">' + u(f[4]) + '</td>' +
+          '<td class="num">' + nf2.format(f[2]/f[1]*100) + '%</td>' +
+          '<td class="num">' + nf2.format(f[3]/f[2]*100) + '%</td>' +
+          '<td class="num">' + nf2.format(f[4]/f[3]*100) + '%</td>' +
+          '<td class="num pct">' + nf2.format(tasaTotal(f)) + '%</td>' +
+        '</tr>';
+      }).join('') +
+      (function(){
+        var t = filas.reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[4]]; }, [0,0,0,0]);
+        return '<tr class="total">' +
+          '<td class="lft">Total</td>' +
+          '<td class="num">' + u(t[0]) + '</td>' +
+          '<td class="num">' + u(t[1]) + '</td>' +
+          '<td class="num">' + u(t[2]) + '</td>' +
+          '<td class="num">' + u(t[3]) + '</td>' +
+          '<td class="num">' + nf2.format(t[1]/t[0]*100) + '%</td>' +
+          '<td class="num">' + nf2.format(t[2]/t[1]*100) + '%</td>' +
+          '<td class="num">' + nf2.format(t[3]/t[2]*100) + '%</td>' +
+          '<td class="num pct">' + nf2.format(t[3]/t[0]*100) + '%</td>' +
+        '</tr>';
+      })() +
+      '</tbody>';
+  }
+  tablaSalud('t-salud-25', salud25, false);
+  tablaSalud('t-salud-26', salud26, true);
 
   /* ---------------- Embudo Shopify (agosto) ---------------- */
   var reconcilia = [
