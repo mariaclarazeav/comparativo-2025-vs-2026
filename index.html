@@ -1276,16 +1276,20 @@
     <div class="scroll"><table id="t-atrib-wa-26"></table></div>
 
     <div class="nota">
+      <span class="etq">Enero 2025</span>
+      <span>Leads Pauta (2.548) supera el Total Leads de B2Chat (1.377) ese mes — B2Chat probablemente no estaba bien configurado en enero 2025 (ver el salto a 4.157 en febrero). No usar enero 2025 para ningún promedio o comparación.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Sep 1–13 *</span>
+      <span>En los dos «Septiembre», el Total Leads es del mes completo mientras Leads Pauta solo llega al día 13 — no son comparables directamente, el % y la tasa de cierre no son confiables con este corte desigual.</span>
+    </div>
+    <div class="nota">
       <span class="etq">Pendiente</span>
-      <span>2025 queda completa salvo el valor aproximado de venta. De 2026 faltan el total de leads y los contactos de venta de enero a abril, y el valor aproximado de todos los meses menos julio y agosto. Llegan con B2Chat, y el % de pauta y la tasa de cierre se recalculan solos al llenarlos.</span>
+      <span>Valor Aprox Venta sigue pendiente para todos los meses excepto julio y agosto de 2026.</span>
     </div>
-    <div class="nota">
-      <span class="etq">Rango</span>
-      <span>Septiembre de 2025 son solo los días 1 a 13, mientras octubre, noviembre y diciembre son meses completos: el total de esa tabla no es un año entero, le falta la segunda quincena de septiembre.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Corte</span>
-      <span>Agosto 2026 aquí (5.602 leads, 3.376 de pauta, $840.612) es el corte anterior; el embudo de arriba usa el corte más preciso (5.582, 3.251 y $1.047.621 netos del detalle de producto). Son la misma realidad medida dos veces, no dos cifras en conflicto.</span>
+    <div class="nota info">
+      <span class="etq">Hallazgo</span>
+      <span><b>Julio es consistentemente el mes con mejor tasa de cierre de pauta en los dos años</b> (1,07% en 2025, 1,63% en 2026) — vale la pena investigar qué tiene julio de distinto (campaña, oferta, audiencia) y si se puede replicar en otros meses.</span>
     </div>
   </section>
   </div>
@@ -2843,24 +2847,38 @@
     '</tr></tbody>';
 
   /* ---------------- Atribución mensual de pauta · WhatsApp ---------------- */
-  /* [mes, total leads, leads pauta, contactos venta, valor aprox]  null = pendiente */
+  /* [mes, total leads, leads pauta, contactos venta, valor aprox, aviso]
+     aviso: 'roto'    = el total de B2Chat no es creíble ese mes
+            'desigual'= total del mes completo contra pauta cortada al día 13 */
   var atribWA25 = [
-    ['Enero',      null, 2548, null, null], ['Febrero',    null, 2956, null, null],
-    ['Marzo',      null, 3878, null, null], ['Abril',      null, 3367, null, null],
-    ['Mayo',       null, 2567, null, null], ['Junio',      null, 2920, null, null],
-    ['Julio',      null, 2893, null, null], ['Agosto',     null, 2809, null, null],
-    ['Septiembre', null,  819, null, null], ['Octubre',    6332, 1993,   24, null],
-    ['Noviembre',  7592, 4234,   37, null], ['Diciembre',  7693, 4408,   31, null]
+    ['Enero',      1377, 2548,  0, null, 'roto'],
+    ['Febrero',    4157, 2956,  0, null, null],
+    ['Marzo',      4630, 3878,  1, null, null],
+    ['Abril',      4059, 3367,  1, null, null],
+    ['Mayo',       5124, 2567,  1, null, null],
+    ['Junio',      6292, 2920, 24, null, null],
+    ['Julio',      6938, 2893, 31, null, null],
+    ['Agosto',     7345, 2809, 11, null, null],
+    ['Septiembre', 5475,  819, 16, null, 'desigual'],
+    ['Octubre',    6332, 1993, 24, null, null],
+    ['Noviembre',  7592, 4234, 37, null, null],
+    ['Diciembre',  7693, 4408, 31, null, null]
   ];
   var atribWA26 = [
-    ['Enero',      null, 3826, null, null], ['Febrero',    null, 3043, null, null],
-    ['Marzo',      null, 2979, null, null], ['Abril',      null, 3210, null, null],
-    ['Mayo',       5193, 3588,   27, null], ['Junio',      5373, 3498,   28, null],
-    ['Julio',      4896, 1965,   32, 4773416], ['Agosto',  5602, 3376,    7, 840612],
-    ['Septiembre', 2800, 2216,    4, null]
+    ['Enero',      6864, 3826, 29, null, null],
+    ['Febrero',    5788, 3043, 10, null, null],
+    ['Marzo',      6440, 2979, 14, null, null],
+    ['Abril',      5549, 3210, 13, null, null],
+    ['Mayo',       5667, 3588, 26, null, null],
+    ['Junio',      5466, 3498, 22, null, null],
+    ['Julio',      5159, 1965, 32, 4773416, null],
+    ['Agosto',     5872, 3376,  7,  840612, null],
+    ['Septiembre', 4906, 2216,  6, null, 'desigual']
   ];
 
   var pend = '<td class="num pendiente">___</td>';
+  var tasaCierre = function(v){ return v === 0 ? '0%' : nf2.format(v) + '%'; };
+
   function tablaAtribWA(id, filas, rango){
     document.getElementById(id).innerHTML =
       '<thead><tr class="campos">' +
@@ -2871,21 +2889,34 @@
         '<th>Valor Aprox Venta</th>' +
       '</tr></thead><tbody>' +
       filas.map(function(f){
+        var roto = f[5] === 'roto', desigual = f[5] === 'desigual';
         return '<tr>' +
-          '<td class="lft">' + f[0] + (f[0] === 'Septiembre' ? '<span class="val">1–13</span>' : '') + '</td>' +
-          (f[1] === null ? pend : '<td class="num">' + u(f[1]) + '</td>') +
-          '<td class="num">' + u(f[2]) + '</td>' +
-          (f[1] === null ? pend : '<td class="num pct">' + nf1.format(f[2] / f[1] * 100) + '%</td>') +
-          (f[3] === null ? pend : '<td class="num">' + u(f[3]) + '</td>') +
-          (f[3] === null ? pend : '<td class="num pct">' + nf2.format(f[3] / f[2] * 100) + '%</td>') +
+          '<td class="lft">' + f[0] +
+            (desigual ? '<span class="val">pauta solo 1–13</span>' : '') +
+            (roto ? '<span class="marca-amarilla">Dato roto</span>' : '') +
+          '</td>' +
+          '<td class="num' + (roto ? ' pendiente' : '') + '">' + u(f[1]) + (desigual ? '*' : '') + '</td>' +
+          '<td class="num' + (roto ? ' pendiente' : '') + '">' + u(f[2]) + '</td>' +
+          (roto || desigual
+            ? '<td class="num pendiente">—</td>'
+            : '<td class="num pct">' + nf1.format(f[2] / f[1] * 100) + '%</td>') +
+          '<td class="num">' + u(f[3]) + '</td>' +
+          (roto
+            ? '<td class="num pendiente">—</td>'
+            : '<td class="num pct' + (desigual ? ' pendiente' : '') + '">' +
+              tasaCierre(f[3] / f[2] * 100) + (desigual ? '*' : '') + '</td>') +
           (f[4] === null ? pend : '<td class="num">' + cop(f[4]) + '</td>') +
         '</tr>';
       }).join('') +
       (function(){
-        var totPauta = filas.reduce(function(a,f){ return a + f[2]; }, 0);
+        var t = filas.reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2], a[2]+f[3]]; }, [0,0,0]);
         return '<tr class="total">' +
-          '<td class="lft">' + rango + '</td>' + pend +
-          '<td class="num">' + u(totPauta) + '</td>' + pend + pend + pend + pend +
+          '<td class="lft">' + rango + '</td>' +
+          '<td class="num">' + u(t[0]) + '</td>' +
+          '<td class="num">' + u(t[1]) + '</td>' +
+          '<td class="num">—</td>' +
+          '<td class="num">' + u(t[2]) + '</td>' +
+          '<td class="num pct">' + tasaCierre(t[2] / t[1] * 100) + '</td>' + pend +
         '</tr>';
       })() +
       '</tbody>';
