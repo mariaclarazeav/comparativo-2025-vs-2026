@@ -78,6 +78,98 @@
       var(--linea) 196px);
   }
 
+  /* ---------- Pestañas ---------- */
+  .tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:2px;
+    border-bottom:1px solid var(--linea);
+    margin-bottom:8px;
+  }
+  .tab{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:-.005em;
+    color:var(--tinta-2);
+    text-decoration:none;
+    padding:11px 16px;
+    border:1px solid transparent;
+    border-bottom:none;
+    margin-bottom:-1px;
+    white-space:nowrap;
+  }
+  .tab:hover{ color:var(--negro); background:var(--lavado); }
+  .tab:focus-visible{ outline:2px solid var(--morado); outline-offset:-2px; }
+  .tab[aria-selected="true"]{
+    color:var(--morado);
+    background:var(--paper);
+    border-color:var(--linea);
+    border-top:3px solid var(--morado);
+    padding-top:9px;
+  }
+  .panel-tab[hidden]{ display:none; }
+  .panel-tab > section:first-child{ margin-top:26px; }
+  section.sin-filete{ border-top:none; padding-top:0; }
+
+  /* ---------- Hallazgos del resumen ---------- */
+  .hallazgos{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    gap:16px;
+  }
+  .hallazgos li{
+    border:1px solid var(--linea);
+    border-top:3px solid var(--nude);
+    padding:16px 18px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .hallazgos .num{
+    font-family:var(--cifra);
+    font-size:11px;
+    letter-spacing:.12em;
+    color:var(--morado);
+  }
+  .hallazgos h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:15.5px;
+    letter-spacing:-.01em;
+    margin:0;
+    text-wrap:balance;
+  }
+  .hallazgos p{
+    margin:0;
+    font-size:14px;
+    line-height:1.5;
+    color:var(--tinta-2);
+  }
+  .hallazgos .cifra{
+    font-family:var(--cifra);
+    font-size:13px;
+    font-variant-numeric:tabular-nums;
+    color:var(--negro);
+  }
+  .hallazgos a{
+    margin-top:auto;
+    padding-top:8px;
+    font-size:12.5px;
+    color:var(--morado);
+    text-decoration:none;
+    font-weight:600;
+  }
+  .hallazgos a:hover{ text-decoration:underline; }
+
+  @media print{
+    .tabs{ display:none; }
+    .panel-tab[hidden]{ display:block !important; }
+  }
+
   /* ---------- Tiles de resumen ---------- */
   .tiles{
     display:grid;
@@ -900,11 +992,32 @@
     <h1>Comparativo 2025 vs 2026</h1>
     <p class="bajada">Ventas, pauta y generación de demanda de las 4 categorías (Brasier, Cinturilla, Fajas, Short) en los dos canales comerciales: WhatsApp y Sitio Web.</p>
     <div class="regla"></div>
-
-    <div class="tiles" id="tiles"></div>
-    <p class="pie-nota">Resumen del Bloque 1 — ventas generales enero a agosto, 4 categorías, ambos canales. Cada bloque indica su propio rango de tiempo.</p>
+    <nav class="tabs" role="tablist" aria-label="Secciones del tablero">
+      <a class="tab" role="tab" id="tab-resumen"    href="#resumen">Resumen ejecutivo</a>
+      <a class="tab" role="tab" id="tab-ventas"     href="#ventas">Ventas</a>
+      <a class="tab" role="tab" id="tab-pauta"      href="#pauta">Pauta paga</a>
+      <a class="tab" role="tab" id="tab-whatsapp"   href="#whatsapp">WhatsApp</a>
+      <a class="tab" role="tab" id="tab-sitio-web"  href="#sitio-web">Sitio web</a>
+      <a class="tab" role="tab" id="tab-descuentos" href="#descuentos">Descuentos</a>
+      <a class="tab" role="tab" id="tab-auditoria"  href="#auditoria">Auditoría agencia</a>
+    </nav>
   </header>
 
+  <div class="panel-tab" id="resumen" role="tabpanel" aria-labelledby="tab-resumen">
+    <section class="sin-filete">
+      <div class="tiles" id="tiles"></div>
+      <p class="pie-nota">Ventas generales de enero a agosto, 4 categorías, ambos canales. Cada bloque del tablero indica su propio rango de tiempo.</p>
+
+      <div class="cab">
+        <span class="num-bloque">Resumen ejecutivo</span>
+        <h2>Los 11 hallazgos</h2>
+      </div>
+      <p class="sub">Cada hallazgo enlaza a la pestaña donde está el dato que lo sustenta.</p>
+      <ol class="hallazgos" id="hallazgos"></ol>
+    </section>
+  </div>
+
+  <div class="panel-tab" id="ventas" role="tabpanel" aria-labelledby="tab-ventas">
   <!-- BLOQUE 1 -->
   <section>
     <div class="cab">
@@ -950,7 +1063,9 @@
     <div id="nota-tendencia"></div>
     <div class="scroll" style="margin-top:28px"><table id="t-cat-mes"></table></div>
   </section>
+  </div>
 
+  <div class="panel-tab" id="pauta" role="tabpanel" aria-labelledby="tab-pauta">
   <!-- BLOQUE 3 -->
   <section>
     <div class="cab">
@@ -1038,6 +1153,54 @@
     </div>
   </section>
 
+  <!-- BLOQUE 8 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 08</span>
+      <h2>Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)</h2>
+    </div>
+    <p class="sub">Inversión, clics, compras atribuidas y ticket promedio de cada canal. 2025 cubre el año completo y 2026 va del 1 de enero al 13 de septiembre, así que las dos columnas de cada canal no se comparan directo sin ajustar el rango.</p>
+    <div class="scroll"><table id="t-atrib"></table></div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Clics es un proxy de sesiones, no el dato real de GA4 (no conectado todavía).</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Compras es el píxel de Meta, no B2Chat/Draft Orders — para WhatsApp esto probablemente subestima las ventas reales, que se cierran fuera del píxel.</span>
+    </div>
+
+    <details class="plegable">
+      <summary>Ver detalle mes a mes</summary>
+      <div id="detalle-atrib"></div>
+    </details>
+
+    <div class="nota info">
+      <span class="etq">Cruce</span>
+      <span>Agosto 2026 de WhatsApp aquí ($3.488.102) es el mismo número que la rama de pauta del embudo en el Bloque 4 — confirma consistencia entre bloques.</span>
+    </div>
+  </section>
+
+  <!-- BLOQUE 5 -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Bloque 05</span>
+      <h2>Leads, conversaciones y sesiones desde pauta</h2>
+    </div>
+    <p class="sub">2025 corresponde al año completo (12 meses); 2026 va del 1 de enero al 13 de septiembre (8,4 meses).</p>
+    <div class="scroll"><table id="t-leads"></table></div>
+    <div class="nota">
+      <span class="etq">Proxy</span>
+      <span>Sesiones = clics de Meta, no dato real de GA4.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Rango</span>
+      <span>2026 es parcial (8,4 meses) vs 2025 completo (12 meses) — no comparar directo sin ajustar el rango.</span>
+    </div>
+  </section>
+  </div>
+
+  <div class="panel-tab" id="whatsapp" role="tabpanel" aria-labelledby="tab-whatsapp">
   <!-- BLOQUE 4 -->
   <section>
     <div class="cab">
@@ -1098,6 +1261,32 @@
     </div>
   </section>
 
+
+  <!-- ZOOM ATRIBUCIÓN MENSUAL WHATSAPP -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Zoom</span>
+      <h2>Atribución mensual de pauta — WhatsApp</h2>
+    </div>
+    <p class="sub">Cuántos leads de WhatsApp vienen de pauta cada mes y en cuántas ventas terminan. Los porcentajes se calculan solos en cuanto se llenen las celdas pendientes.</p>
+
+    <h4 class="tabla-anio">2025</h4>
+    <div class="scroll"><table id="t-atrib-wa-25"></table></div>
+    <h4 class="tabla-anio">2026</h4>
+    <div class="scroll"><table id="t-atrib-wa-26"></table></div>
+
+    <div class="nota">
+      <span class="etq">Pendiente</span>
+      <span>«Leads Pauta» ya está completo para los dos años (sale de Meta Ads). Falta el total de leads, los contactos de venta y el valor aproximado de la mayoría de los meses: llegan con los datos de B2Chat, y el % de pauta y la tasa de cierre se recalculan solos al llenarlos.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Corte</span>
+      <span>Agosto 2026 aquí (5.602 leads, 3.376 de pauta, $840.612) es el corte anterior; el embudo de arriba usa el corte más preciso (5.582, 3.251 y $1.047.621 netos del detalle de producto). Son la misma realidad medida dos veces, no dos cifras en conflicto.</span>
+    </div>
+  </section>
+  </div>
+
+  <div class="panel-tab" id="sitio-web" role="tabpanel" aria-labelledby="tab-sitio-web">
   <!-- EMBUDO SHOPIFY -->
   <section>
     <div class="cab">
@@ -1175,25 +1364,9 @@
       <span><b>Jun-jul-ago 2025 muestra el mismo patrón que se repite en 2026:</b> la etapa Carrito→Checkout mejora fuerte a mitad de año (de ~42-55% a ~80-83% en 2025; de ~65% a ~74% en 2026), pero Checkout→Compra cae en esos mismos meses (de ~35% a ~18% en 2025). Vale la pena investigar si hay un cambio operativo o técnico que se repite cada año en esa época — podría ser estacional (rebajas, alto volumen) o un problema recurrente del checkout bajo carga.</span>
     </div>
   </section>
+  </div>
 
-  <!-- BLOQUE 5 -->
-  <section>
-    <div class="cab">
-      <span class="num-bloque">Bloque 05</span>
-      <h2>Leads, conversaciones y sesiones desde pauta</h2>
-    </div>
-    <p class="sub">2025 corresponde al año completo (12 meses); 2026 va del 1 de enero al 13 de septiembre (8,4 meses).</p>
-    <div class="scroll"><table id="t-leads"></table></div>
-    <div class="nota">
-      <span class="etq">Proxy</span>
-      <span>Sesiones = clics de Meta, no dato real de GA4.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Rango</span>
-      <span>2026 es parcial (8,4 meses) vs 2025 completo (12 meses) — no comparar directo sin ajustar el rango.</span>
-    </div>
-  </section>
-
+  <div class="panel-tab" id="descuentos" role="tabpanel" aria-labelledby="tab-descuentos">
   <!-- BLOQUE 6 -->
   <section>
     <div class="cab">
@@ -1214,7 +1387,9 @@
       <span>Faltan los canales Dark Store, Merkaplace, Redes y No aplica para completar este bloque.</span>
     </div>
   </section>
+  </div>
 
+  <div class="panel-tab" id="auditoria" role="tabpanel" aria-labelledby="tab-auditoria">
   <!-- BLOQUE 7 -->
   <section>
     <div class="cab">
@@ -1252,34 +1427,7 @@
       <span><b>El supuesto de recompra de la agencia (23% cada 43 días) extrapolado a un año predice ~10 veces más recompra de la que realmente ocurre.</b> El negocio se comporta como compra ocasional (1 de cada 5 clientas repite al año), no como el ritmo de recompra frecuente que asume su modelo.</span>
     </div>
   </section>
-
-  <!-- BLOQUE 8 -->
-  <section>
-    <div class="cab">
-      <span class="num-bloque">Bloque 08</span>
-      <h2>Atribución por canal — Sitio Web vs WhatsApp (Meta Ads)</h2>
-    </div>
-    <p class="sub">Inversión, clics, compras atribuidas y ticket promedio de cada canal. 2025 cubre el año completo y 2026 va del 1 de enero al 13 de septiembre, así que las dos columnas de cada canal no se comparan directo sin ajustar el rango.</p>
-    <div class="scroll"><table id="t-atrib"></table></div>
-    <div class="nota">
-      <span class="etq">Proxy</span>
-      <span>Clics es un proxy de sesiones, no el dato real de GA4 (no conectado todavía).</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Proxy</span>
-      <span>Compras es el píxel de Meta, no B2Chat/Draft Orders — para WhatsApp esto probablemente subestima las ventas reales, que se cierran fuera del píxel.</span>
-    </div>
-
-    <details class="plegable">
-      <summary>Ver detalle mes a mes</summary>
-      <div id="detalle-atrib"></div>
-    </details>
-
-    <div class="nota info">
-      <span class="etq">Cruce</span>
-      <span>Agosto 2026 de WhatsApp aquí ($3.488.102) es el mismo número que la rama de pauta del embudo en el Bloque 4 — confirma consistencia entre bloques.</span>
-    </div>
-  </section>
+  </div>
 
   <footer>
     <span class="marca">Fajitex</span>
@@ -2689,6 +2837,130 @@
       '<td class="num">' + u(shopVentasTot[1]) + '</td>' +
       '<td class="num">100%</td>' +
     '</tr></tbody>';
+
+  /* ---------------- Atribución mensual de pauta · WhatsApp ---------------- */
+  /* [mes, total leads, leads pauta, contactos venta, valor aprox]  null = pendiente */
+  var atribWA25 = [
+    ['Enero',      null, 2548, null, null], ['Febrero',    null, 2956, null, null],
+    ['Marzo',      null, 3878, null, null], ['Abril',      null, 3367, null, null],
+    ['Mayo',       null, 2567, null, null], ['Junio',      null, 2920, null, null],
+    ['Julio',      null, 2893, null, null], ['Agosto',     null, 2809, null, null],
+    ['Septiembre', null,  819, null, null]
+  ];
+  var atribWA26 = [
+    ['Enero',      null, 3826, null, null], ['Febrero',    null, 3043, null, null],
+    ['Marzo',      null, 2979, null, null], ['Abril',      null, 3210, null, null],
+    ['Mayo',       5193, 3588,   27, null], ['Junio',      5373, 3498,   28, null],
+    ['Julio',      4896, 1965,   32, 4773416], ['Agosto',  5602, 3376,    7, 840612],
+    ['Septiembre', 2800, 2216,    4, null]
+  ];
+
+  var pend = '<td class="num pendiente">___</td>';
+  function tablaAtribWA(id, filas){
+    document.getElementById(id).innerHTML =
+      '<thead><tr class="campos">' +
+        '<th class="lft">Mes</th><th>Total de leads</th><th>Leads Pauta</th>' +
+        '<th class="wrap">% leads que vienen de pauta</th>' +
+        '<th class="wrap">Contactos Venta (pauta)</th>' +
+        '<th class="wrap">Tasa de cierre sobre pauta</th>' +
+        '<th>Valor Aprox Venta</th>' +
+      '</tr></thead><tbody>' +
+      filas.map(function(f, i){
+        var ultimo = i === filas.length - 1;
+        return '<tr>' +
+          '<td class="lft">' + f[0] + (ultimo ? '<span class="val">1–13</span>' : '') + '</td>' +
+          (f[1] === null ? pend : '<td class="num">' + u(f[1]) + '</td>') +
+          '<td class="num">' + u(f[2]) + '</td>' +
+          (f[1] === null ? pend : '<td class="num pct">' + nf1.format(f[2] / f[1] * 100) + '%</td>') +
+          (f[3] === null ? pend : '<td class="num">' + u(f[3]) + '</td>') +
+          (f[3] === null ? pend : '<td class="num pct">' + nf2.format(f[3] / f[2] * 100) + '%</td>') +
+          (f[4] === null ? pend : '<td class="num">' + cop(f[4]) + '</td>') +
+        '</tr>';
+      }).join('') +
+      (function(){
+        var totPauta = filas.reduce(function(a,f){ return a + f[2]; }, 0);
+        return '<tr class="total">' +
+          '<td class="lft">Total Ene–13 sep</td>' + pend +
+          '<td class="num">' + u(totPauta) + '</td>' + pend + pend + pend + pend +
+        '</tr>';
+      })() +
+      '</tbody>';
+  }
+  tablaAtribWA('t-atrib-wa-25', atribWA25);
+  tablaAtribWA('t-atrib-wa-26', atribWA26);
+
+  /* ---------------- Resumen ejecutivo ---------------- */
+  var hallazgos = [
+    ['Las unidades caen, el valor sube',
+     'De enero a agosto se vendieron 183 unidades menos que en 2025 (−2,7%), pero el valor subió $101.580.405 (+9,9%). El negocio vende menos cantidad a mayor precio.',
+     'ventas', 'Ventas'],
+    ['Cinturilla se desploma y Short sostiene el volumen',
+     'Cinturilla cae −36,2% en unidades y Fajas −6,7%, mientras Short crece +10,6%. La caída se concentra en dos categorías, no es generalizada.',
+     'ventas', 'Ventas'],
+    ['Ninguna categoría cumple el objetivo de CPA',
+     'Las seis combinaciones de categoría y año están en rojo contra el benchmark de 8% del ticket, y los 18 meses de Meta también. El mejor mes, julio 2025, llegó a 9,6%.',
+     'pauta', 'Pauta paga'],
+    ['2026 no es una mejora frente a 2025 en pauta',
+     'En jul-ago-sep 2025 el ROAS fue de 9 a 11x con CPA de $22.000 a $23.000; en los mismos meses de 2026 fue de 6 a 7x con CPA sobre $35.000. La mejora que reporta la agencia es contra su propio baseline de mayo-junio.',
+     'pauta', 'Pauta paga'],
+    ['La mitad del gasto de Meta no se puede atribuir a producto',
+     'El 45% del gasto en 2025 y el 32% en 2026 quedó en campañas Advantage+/Catálogo sin desglose por producto, así que el detalle por categoría es parcial.',
+     'pauta', 'Pauta paga'],
+    ['En Google Ads el retorno por peso bajó',
+     'El costo creció +852,4% y el valor de conversión +677,7%: el retorno pasó de 9,8x a 8,0x. Se invirtió mucho más y cada peso rinde menos.',
+     'pauta', 'Pauta paga'],
+    ['6 de cada 10 leads de pauta no responden al saludo',
+     'De 3.245 conversaciones que entraron desde pauta en agosto, el 62,7% nunca contestó y solo 4 terminaron en venta (0,12%). Es un problema de calidad de audiencia, no de capacidad de cierre.',
+     'whatsapp', 'WhatsApp'],
+    ['La pauta es el canal con peor tasa de cierre',
+     'Pauta cierra 0,22% de sus leads, contra 6,7% de los canales propios y 58,3% de Walink. Tiene el mayor volumen y el peor rendimiento.',
+     'whatsapp', 'WhatsApp'],
+    ['El sitio web y WhatsApp son dos motores separados',
+     'El 52,8% de los pedidos de Shopify ($110M) no tiene ninguna sesión web asociada: se cierran fuera del checkout online. No son un solo embudo y no se pueden medir como tal.',
+     'sitio-web', 'Sitio web'],
+    ['La atribución de ventas de Shopify no sirve para decidir',
+     'El 74,3% de las ventas no tiene fuente asignada, y cuatro canales aparecen en $0 sin que eso signifique que no vendieron. Hace falta GA4 conectado.',
+     'sitio-web', 'Sitio web'],
+    ['El LTGP:CAC real es 2,93:1, no «casi 4:1»',
+     'Con el margen real (40%, no 55%) y la recompra real de Shopify, la razón queda debajo del umbral de 3:1. El supuesto de recompra de la agencia sobreestima unas 10 veces lo que ocurre.',
+     'auditoria', 'Auditoría agencia']
+  ];
+
+  document.getElementById('hallazgos').innerHTML = hallazgos.map(function(h, i){
+    return '<li>' +
+      '<span class="num">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span>' +
+      '<h3>' + h[0] + '</h3>' +
+      '<p>' + h[1] + '</p>' +
+      '<a href="#' + h[2] + '">Ver en ' + h[3] + ' →</a>' +
+    '</li>';
+  }).join('');
+
+  /* ---------------- Pestañas ---------------- */
+  (function(){
+    var pestanas = ['resumen','ventas','pauta','whatsapp','sitio-web','descuentos','auditoria'];
+
+    function mostrar(id, hacerScroll){
+      if (pestanas.indexOf(id) === -1) { id = pestanas[0]; }
+      pestanas.forEach(function(k){
+        var panel = document.getElementById(k);
+        var tab = document.getElementById('tab-' + k);
+        var activo = k === id;
+        if (panel) { panel.hidden = !activo; }
+        if (tab) {
+          tab.setAttribute('aria-selected', activo ? 'true' : 'false');
+          tab.setAttribute('tabindex', activo ? '0' : '-1');
+        }
+      });
+      if (hacerScroll) { window.scrollTo(0, 0); }
+    }
+
+    function desdeHash(hacerScroll){
+      mostrar((location.hash || '').replace(/^#/, ''), hacerScroll);
+    }
+
+    window.addEventListener('hashchange', function(){ desdeHash(true); });
+    desdeHash(false);
+  })();
 
   ligarGraficos();
 })();
