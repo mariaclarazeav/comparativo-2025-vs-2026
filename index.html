@@ -912,6 +912,42 @@
     letter-spacing:-.01em;
     margin-left:auto;
   }
+  .metas{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px 22px;
+    border:1px solid var(--linea);
+    border-left:3px solid var(--morado);
+    padding:13px 18px;
+    margin-top:22px;
+    font-size:13.5px;
+  }
+  .metas .rot{
+    font-family:var(--cifra);
+    font-size:10.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--tinta-3);
+  }
+  .metas .meta{ font-family:var(--cifra); font-size:13px; color:var(--negro); }
+  .metas .meta b{ font-family:var(--texto); font-weight:600; margin-right:5px; }
+  .metas .sem-leyenda{
+    margin-left:auto;
+    font-size:12.5px;
+    color:var(--tinta-2);
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .metas .sem-leyenda .dot{ margin-left:9px; }
+  .metas .sem-leyenda .dot:first-child{ margin-left:0; }
+  td.falta{
+    font-family:var(--cifra);
+    font-size:12.5px;
+    color:var(--tinta-3);
+    font-variant-numeric:tabular-nums;
+  }
   .tabla-anio{
     font-family:var(--cifra);
     font-size:11px;
@@ -1359,6 +1395,19 @@
     </div>
     <div id="grafico-salud"></div>
 
+    <div class="metas">
+      <span class="rot">Metas por etapa</span>
+      <span class="meta"><b>Sesión→Carrito</b> 8%</span>
+      <span class="meta"><b>Carrito→Checkout</b> 65%</span>
+      <span class="meta"><b>Checkout→Compra</b> 45%</span>
+      <span class="meta"><b>Total sesión→compra</b> 1,5%</span>
+      <span class="sem-leyenda">
+        <span class="dot verde"></span>cumple
+        <span class="dot amarillo"></span>75% o más de la meta
+        <span class="dot rojo"></span>por debajo
+      </span>
+    </div>
+
     <h4 class="tabla-anio">2025</h4>
     <div class="scroll"><table id="t-salud-25"></table></div>
     <h4 class="tabla-anio">2026</h4>
@@ -1366,6 +1415,10 @@
     <div class="nota">
       <span class="etq">Corte</span>
       <span>Agosto 2026 aquí (52.819 sesiones, 323 compras) difiere levemente del embudo principal de arriba (56.455 sesiones, 325 compras) — diferencia menor, probablemente de zona horaria o corte de consulta, no una contradicción real.</span>
+    </div>
+    <div class="conclusion">
+      <span class="rot">Hallazgo confirmado</span>
+      De 21 meses medidos, ninguno alcanzó la meta en «Sesión→Carrito» ni en «Checkout→Compra» — 0% de cumplimiento en año y medio. La única etapa que sí cumple de forma consistente es «Carrito→Checkout» (verde desde julio 2025). Esto no es un mes malo, es un problema estructural sostenido en las dos puntas del embudo.
     </div>
     <div class="nota info">
       <span class="etq">Patrón</span>
@@ -2681,38 +2734,60 @@
       }) +
     '</div>';
 
+  /* Metas por etapa y regla del semáforo: verde si cumple, amarillo desde el
+     75% de la meta, rojo por debajo. */
+  var metasEmbudo = [
+    ['Sesión→Carrito',       8],
+    ['Carrito→Checkout',    65],
+    ['Checkout→Compra',     45],
+    ['Total sesión→compra', 1.5]
+  ];
+
+  function celdaMeta(valor, meta){
+    var color = valor >= meta ? 'verde' : (valor >= meta * 0.75 ? 'amarillo' : 'rojo');
+    var falta = meta - valor;
+    return '<td class="num pct"><span class="dot ' + color + '"></span>' + nf2.format(valor) + '%</td>' +
+           '<td class="falta">' + (falta <= 0 ? '—' : nf2.format(falta) + ' pp') + '</td>';
+  }
+
   function tablaSalud(id, filas, parcial){
     document.getElementById(id).innerHTML =
-      '<thead><tr class="campos">' +
-        '<th class="lft">Mes</th><th>Sesiones</th><th>Carrito</th><th>Checkout</th><th>Compra</th>' +
-        '<th>Ses→Carr</th><th>Carr→Check</th><th>Check→Compra</th><th>Ses→Compra</th>' +
-      '</tr></thead><tbody>' +
+      '<thead>' +
+        '<tr class="grupos">' +
+          '<th class="lft" rowspan="2">Mes</th>' +
+          '<th rowspan="2">Sesiones</th><th rowspan="2">Carrito</th>' +
+          '<th rowspan="2">Checkout</th><th rowspan="2">Compra</th>' +
+          metasEmbudo.map(function(m){
+            return '<th class="gv" colspan="2">' + m[0] +
+                   '<span class="obj">meta ' + (m[1] % 1 === 0 ? nf0.format(m[1]) : nf1.format(m[1])) + '%</span></th>';
+          }).join('') +
+        '</tr>' +
+        '<tr class="campos">' +
+          metasEmbudo.map(function(){ return '<th>%</th><th>Falta</th>'; }).join('') +
+        '</tr>' +
+      '</thead><tbody>' +
       filas.map(function(f, i){
         var ultimo = parcial && i === filas.length - 1;
+        var etapas = [f[2]/f[1]*100, f[3]/f[2]*100, f[4]/f[3]*100, tasaTotal(f)];
         return '<tr>' +
           '<td class="lft">' + f[0] + (ultimo ? '<span class="marca-amarilla">Parcial 1–13</span>' : '') + '</td>' +
           '<td class="num">' + u(f[1]) + '</td>' +
           '<td class="num">' + u(f[2]) + '</td>' +
           '<td class="num">' + u(f[3]) + '</td>' +
           '<td class="num">' + u(f[4]) + '</td>' +
-          '<td class="num">' + nf2.format(f[2]/f[1]*100) + '%</td>' +
-          '<td class="num">' + nf2.format(f[3]/f[2]*100) + '%</td>' +
-          '<td class="num">' + nf2.format(f[4]/f[3]*100) + '%</td>' +
-          '<td class="num pct">' + nf2.format(tasaTotal(f)) + '%</td>' +
+          etapas.map(function(v, k){ return celdaMeta(v, metasEmbudo[k][1]); }).join('') +
         '</tr>';
       }).join('') +
       (function(){
         var t = filas.reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[4]]; }, [0,0,0,0]);
+        var etapas = [t[1]/t[0]*100, t[2]/t[1]*100, t[3]/t[2]*100, t[3]/t[0]*100];
         return '<tr class="total">' +
           '<td class="lft">Total</td>' +
           '<td class="num">' + u(t[0]) + '</td>' +
           '<td class="num">' + u(t[1]) + '</td>' +
           '<td class="num">' + u(t[2]) + '</td>' +
           '<td class="num">' + u(t[3]) + '</td>' +
-          '<td class="num">' + nf2.format(t[1]/t[0]*100) + '%</td>' +
-          '<td class="num">' + nf2.format(t[2]/t[1]*100) + '%</td>' +
-          '<td class="num">' + nf2.format(t[3]/t[2]*100) + '%</td>' +
-          '<td class="num pct">' + nf2.format(t[3]/t[0]*100) + '%</td>' +
+          etapas.map(function(v, k){ return celdaMeta(v, metasEmbudo[k][1]); }).join('') +
         '</tr>';
       })() +
       '</tbody>';
