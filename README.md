@@ -28,6 +28,11 @@ Cinco bloques, con los datos entregados tal cual:
    **Embudo Shopify (agosto)** — sesiones por fuente y ventas atribuidas en dos
    donas, el embudo de conversión en trapecios, y las tablas de datos en
    secciones plegables. La advertencia del 74,3% sin atribuir va siempre visible.
+   **Auditoría de walinks** — las cinco puertas de entrada a WhatsApp (home,
+   anuncios Meta, Facebook, bio de Instagram y TikTok), cada una con su captura,
+   el mensaje que llega hoy al chat y el mensaje sugerido. Debajo, las plantillas
+   de campaña para Email y SMS. Las capturas viven en `img/` y se abren en grande
+   al hacer clic.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
 6. **Descuentos por canal (ERP, B2C)** — descuentos, neto y % sobre venta neta por
    canal, más la tendencia mensual del %. Sale del ERP de facturación, no de
@@ -39,7 +44,8 @@ Cinco bloques, con los datos entregados tal cual:
    clics, compras y ticket de cada canal, con el detalle mes a mes plegable.
    2025 es año completo y 2026 llega al 13 de septiembre.
 
-Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto.
+Todo dato pendiente o proxy se muestra en amarillo con su nota, nunca oculto —
+incluidas las capturas que faltan (las dos de la bio de Instagram).
 Los totales, subtotales y porcentajes de variación se calculan a partir de las
 cifras entregadas; no se agregó ningún dato nuevo.
 
