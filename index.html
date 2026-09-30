@@ -289,6 +289,9 @@
   }
   td.lft{ font-weight:600; }
   td.canal{ font-weight:400; color:var(--tinta-2); }
+  tr.hija td{ background:var(--lavado); color:var(--tinta-2); font-size:13px; }
+  tr.hija td.lft{ padding-left:30px; }
+  tr.hija td.lft::before{ content:"↳"; color:var(--tinta-3); margin-right:7px; }
   .var .flecha{ color:var(--tinta-3); margin-right:5px; font-size:11px; }
   tr.sub-total td{
     background:var(--lavado);
@@ -1259,13 +1262,17 @@
       <span class="num-bloque">Bloque 01</span>
       <h2>Ventas generales por mes</h2>
     </div>
-    <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año. Pase el mouse sobre cualquier mes del gráfico para ver el detalle.</p>
+    <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año, más septiembre de 2026, que viene de otra fuente. Pase el mouse sobre cualquier mes del gráfico para ver el detalle.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
     </div>
     <div class="graficos-b1" id="graficos-b1"></div>
     <div class="scroll"><table id="t-mes"></table></div>
+    <div class="nota">
+      <span class="etq">Otra fuente</span>
+      <span>Septiembre sale de <b>categoria_tipo_producto de Shopify</b>, no del pivote de canal comercial que alimenta los demás meses. No tiene equivalente en 2025 y no entra en el total Ene–Ago: es un dato nuevo puesto al lado, no una continuación de la misma serie.</span>
+    </div>
   </section>
 
   <!-- BLOQUE 2 -->
@@ -1281,6 +1288,18 @@
       <summary>Ver detalle mes a mes</summary>
       <div id="detalle-mes"></div>
     </details>
+
+    <h3 class="sub-cab">Septiembre 2026 — por categoría</h3>
+    <p class="sub">Las categorías vienen como las nombra Shopify, sin agrupar. No hay corte por canal en esta fuente, así que no se puede comparar columna a columna con la tabla de arriba.</p>
+    <div class="scroll"><table id="t-cat-sep"></table></div>
+    <div class="nota">
+      <span class="etq">Etiquetas</span>
+      <span>«Faja» y «Fajas» aparecen como categorías separadas en Shopify — probablemente el mismo producto mal etiquetado. Pendiente unificar con el equipo de catálogo.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Fuente</span>
+      <span>Septiembre viene de <b>categoria_tipo_producto de Shopify</b>, no del pivote de canal comercial de los meses anteriores. No mezclar estas filas con las columnas de WhatsApp y Sitio Web de arriba sin aclarar de dónde sale cada una.</span>
+    </div>
   </section>
 
   <!-- TENDENCIA -->
@@ -1307,7 +1326,7 @@
       <span class="num-bloque">Bloque 03</span>
       <h2>Pauta Meta</h2>
     </div>
-    <p class="sub">Inversión mensual y detalle por categoría. Los dos años van cortados al 13 de septiembre, así que septiembre es parcial en ambos y la comparación es pareja.</p>
+    <p class="sub">Inversión mensual y detalle por categoría. De enero a agosto la comparación es pareja; en septiembre, 2026 ya tiene el mes completo y 2025 sigue cortado al día 13, así que esa fila no se compara entre columnas.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -1346,6 +1365,15 @@
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
     </div>
 
+    <h3 class="sub-cab">Septiembre 2026 — por categoría</h3>
+    <p class="sub">Solo lo que se puede atribuir a una categoría. Las filas sin inversión rastreable se dejan marcadas, no en cero.</p>
+    <div class="scroll"><table id="t-pauta-sep"></table></div>
+
+    <div class="conclusion">
+      <span class="rot">Hallazgo confirmado</span>
+      En septiembre, 78,1% de la inversión de Meta no se puede atribuir a categoría — el peor mes registrado (antes 32-45%). Ninguna campaña con gasto relevante nombra «Faja» en septiembre; Fajas es la categoría que más factura en Shopify este mes ($70,2 M) pero no tiene inversión de Meta rastreable.
+    </div>
+
     <div class="acciones">
       <h4>Qué falta para mejorar</h4>
       <ol>
@@ -1371,7 +1399,7 @@
       <span class="num-bloque">Pauta · Google Ads</span>
       <h2>Costo y valor de conversión</h2>
     </div>
-    <p class="sub">Costo y valor de conversión mes a mes, 2025 vs 2026, por mes calendario y con ambos años cortados al 13 de septiembre. Cifras reportadas por Google.</p>
+    <p class="sub">Costo y valor de conversión mes a mes, 2025 vs 2026, por mes calendario. Cifras reportadas por Google. Septiembre de 2026 ya está completo; el de 2025 sigue cortado al día 13.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -1379,9 +1407,18 @@
     <div id="grafico-google"></div>
     <div class="scroll"><table id="t-google-mes"></table></div>
 
+    <h3 class="sub-cab">Septiembre 2026 — por campaña</h3>
+    <p class="sub">El único mes con detalle por campaña. Los porcentajes y los totales se suman de las filas.</p>
+    <div class="scroll"><table id="t-google-sep"></table></div>
+    <div id="nota-google-sep"></div>
+
     <h3 class="sub-cab">Resumen del periodo (1 ene – 13 sep)</h3>
     <p class="sub">Las conversiones solo están disponibles a nivel de cuenta completa, no por mes, así que van aparte de la tabla mensual.</p>
     <div class="scroll"><table id="t-google"></table></div>
+    <div class="nota">
+      <span class="etq">Rango</span>
+      <span>Este resumen sigue cortado al 13 de septiembre en los dos años, así que su costo de 2026 no coincide con el total de la tabla mensual, que ya trae septiembre completo.</span>
+    </div>
     <div class="nota">
       <span class="etq">Ojo</span>
       <span>Conversiones mezcla objetivos distintos en al menos una campaña (Web y WA) — no comparar el costo/conversión de Google 1 a 1 contra el CPA de Meta.</span>
@@ -1621,6 +1658,17 @@
       </div>
     </details>
 
+    <h3 class="sub-cab">Atribución por fuente — septiembre</h3>
+    <p class="sub">Mes completo. Debajo del bloque sin fuente van las filas que sí se pudieron recuperar mirando traffic_type, y lo que queda sin explicar después de esa recuperación.</p>
+    <div class="scroll"><table id="t-fuente-sep"></table></div>
+    <div class="nota fuerte">
+      <span class="etq">Limitación</span>
+      <span>
+        <b>74,8% del valor de septiembre entra sin fuente registrada.</b>
+        Rascando el traffic_type se recupera una parte, pero <b>62,2% del mes sigue sin poder atribuirse a ningún canal</b>. El problema no mejoró frente a agosto (74,3%): es el mismo hueco de atribución, y sigue haciendo falta GA4 conectado para cerrarlo.
+      </span>
+    </div>
+
     <h3 class="sub-cab">Reconciliación 325 vs. 695 pedidos — resuelto</h3>
     <p class="sub">Por qué el embudo cierra en 325 compras mientras el informe de ventas reporta 695 pedidos en el mismo agosto.</p>
     <div class="scroll"><table id="t-reconcilia"></table></div>
@@ -1634,7 +1682,7 @@
     </div>
 
     <h3 class="sub-cab">Salud del embudo, mes a mes — 2025 vs 2026</h3>
-    <p class="sub">Tasa de conversión total (sesión → compra) por mes y el detalle de cada etapa. 2026 llega hasta el 13 de septiembre.</p>
+    <p class="sub">Tasa de conversión total (sesión → compra) por mes y el detalle de cada etapa. 2026 llega hasta septiembre, ya con el mes completo.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -1661,6 +1709,10 @@
     <div class="nota">
       <span class="etq">Corte</span>
       <span>Agosto 2026 aquí (52.819 sesiones, 323 compras) difiere levemente del embudo principal de arriba (56.455 sesiones, 325 compras) — diferencia menor, probablemente de zona horaria o corte de consulta, no una contradicción real.</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Septiembre</span>
+      <span><b>Las sesiones casi se duplicaron frente a agosto</b> (103.420 contra 52.819 en esta misma tabla, 56.455 según el embudo principal) pero Sesión→Carrito cayó a 1,44%, la más baja en año y medio de datos — patrón de dilución: mucho más tráfico, menor intención. En la otra punta, Carrito→Checkout marcó su mejor mes registrado (84,48%).</span>
     </div>
     <div class="conclusion">
       <span class="rot">Hallazgo confirmado</span>
@@ -1725,6 +1777,21 @@
     <div class="conclusion">
       <span class="rot">Hallazgo confirmado</span>
       Con nuestro margen real (40%, no 55%) y nuestro comportamiento de compra real (Shopify), el LTGP:CAC da 2,93:1, no ~4:1. El umbral de industria para «invertir con confianza» es 3:1 — estamos justo debajo, en zona de sostener y vigilar, no de escalar presupuesto agresivamente como sugiere la agencia.
+    </div>
+
+    <h3 class="sub-cab">LTGP:CAC de septiembre 2026</h3>
+    <p class="sub">El mismo cálculo con los datos del mes: CPA de Meta y ticket de Shopify de septiembre, la frecuencia de compra medida (1,19) y un margen bruto de 60%.</p>
+    <div class="scroll"><table id="t-ltgp-sep"></table></div>
+    <div class="nota info">
+      <span class="etq">Lectura</span>
+      <span>Prácticamente igual al ~3,95:1 que reporta la agencia para el trimestre completo — confirma que con el margen real (60%) sí hay espacio para invertir más, no menos.</span>
+    </div>
+    <div class="nota fuerte">
+      <span class="etq">Contradicción</span>
+      <span>
+        <b>Este cálculo usa margen bruto 60%; la tabla de arriba usa 40%.</b>
+        Con 40% el resultado es 2,93:1 y contradice a la agencia; con 60% da 3,95:1 y le da la razón. Las dos lecturas no pueden ser ciertas a la vez, y de cuál sea el margen bruto real depende el hallazgo del resumen ejecutivo. Pendiente confirmarlo con finanzas antes de decidir si se escala la inversión.
+      </span>
     </div>
 
     <h3 class="sub-cab">Zoom — frecuencia de recompra real vs. supuesto de la agencia</h3>
@@ -1926,6 +1993,14 @@
     ['Agosto',    906, 148782562, 831, 134938835]
   ];
 
+  /* Septiembre 2026 sale de otra fuente (categoria_tipo_producto de Shopify),
+     así que va aparte: no entra en el total comparable Ene–Ago y no tiene
+     equivalente en 2025. */
+  var mesSep = ['Septiembre', null, null, 1145, 166988522];
+  var mesesG = meses.concat([mesSep]);
+  var etqMesesG = etiquetasMes.concat(['Sep']);
+  var nomMesesG = nombresMes.concat(['Septiembre']);
+
   var tot = meses.reduce(function(a,m){
     return [a[0]+m[1], a[1]+m[2], a[2]+m[3], a[3]+m[4]];
   }, [0,0,0,0]);
@@ -1945,14 +2020,19 @@
       '</tr>' +
     '</thead>';
 
-  var cuerpo = meses.map(function(m){
+  var cuerpo = mesesG.map(function(m){
+    var falta25 = m[1] === null;
     return '<tr>' +
-      '<td class="lft">' + m[0] + '</td>' +
-      '<td class="num">' + u(m[1]) + '</td>' +
-      '<td class="num">' + cop(m[2]) + '</td>' +
+      '<td class="lft">' + m[0] +
+        (falta25 ? '<span class="marca-amarilla">Otra fuente</span>' : '') + '</td>' +
+      (falta25
+        ? '<td class="num pendiente">___</td><td class="num pendiente">___</td>'
+        : '<td class="num">' + u(m[1]) + '</td><td class="num">' + cop(m[2]) + '</td>') +
       '<td class="num">' + u(m[3]) + '</td>' +
       '<td class="num">' + cop(m[4]) + '</td>' +
-      varTd(m[1], m[3]) + varTd(m[2], m[4]) +
+      (falta25
+        ? '<td class="num pendiente">—</td><td class="num pendiente">—</td>'
+        : varTd(m[1], m[3]) + varTd(m[2], m[4])) +
     '</tr>';
   }).join('');
 
@@ -1961,7 +2041,7 @@
 
   var pie =
     '<tr class="total">' +
-      '<td class="lft">Total Ene–Ago</td>' +
+      '<td class="lft">Total Ene–Ago<span class="val">sin septiembre, que viene de otra fuente</span></td>' +
       '<td class="num">' + u(TOTAL.u25) + '</td>' +
       '<td class="num">' + cop(TOTAL.v25) + '</td>' +
       '<td class="num">' + u(TOTAL.u26) + '</td>' +
@@ -1971,21 +2051,23 @@
 
   document.getElementById('graficos-b1').innerHTML =
     '<div class="grafico-b1">' +
-      '<div class="rot">Unidades por mes <span class="eje">eje desde 700</span></div>' +
+      '<div class="rot">Unidades por mes <span class="eje">eje desde 700 · septiembre solo 2026, de otra fuente</span></div>' +
       bloqueGrafico('b1-und', {
-        a: meses.map(function(m){ return m[1]; }),
-        b: meses.map(function(m){ return m[3]; }),
-        base: 700, escala: 1000, ticks: [700, 850, 1000], geo: GEO_MEDIO,
+        a: mesesG.map(function(m){ return m[1]; }),
+        b: mesesG.map(function(m){ return m[3]; }),
+        etiquetas: etqMesesG, nombres: nomMesesG,
+        base: 700, escala: 1200, ticks: [700, 950, 1200], geo: GEO_MEDIO,
         fmtEje: u, fmt: u, fmtDif: difU,
         titulo: 'Unidades vendidas por mes, 2025 y 2026'
       }) +
     '</div>' +
     '<div class="grafico-b1">' +
-      '<div class="rot">Valor por mes <span class="eje">eje desde $100 M</span></div>' +
+      '<div class="rot">Valor por mes <span class="eje">eje desde $100 M · septiembre solo 2026, de otra fuente</span></div>' +
       bloqueGrafico('b1-val', {
-        a: meses.map(function(m){ return m[2]; }),
-        b: meses.map(function(m){ return m[4]; }),
-        base: 100000000, escala: 160000000, ticks: [100000000, 130000000, 160000000], geo: GEO_MEDIO,
+        a: mesesG.map(function(m){ return m[2]; }),
+        b: mesesG.map(function(m){ return m[4]; }),
+        etiquetas: etqMesesG, nombres: nomMesesG,
+        base: 100000000, escala: 170000000, ticks: [100000000, 135000000, 170000000], geo: GEO_MEDIO,
         fmtEje: function(v){ return '$' + u(v/1000000) + ' M'; },
         fmt: cop, fmtDif: difCop,
         titulo: 'Valor vendido por mes, 2025 y 2026'
@@ -2081,6 +2163,43 @@
     '</tr>';
 
   document.getElementById('t-cat').innerHTML = encab2 + '<tbody>' + html2 + '</tbody>';
+
+  /* Septiembre 2026 por categoría, tal como las nombra Shopify.
+     [categoría, unidades, valor, marca] */
+  var catSep = [
+    ['Faja',            317, 70166836, 'duplicado'],
+    ['Short',           455, 56833820, null],
+    ['Accesorios',       95,  6201098, null],
+    ['Cinturilla',       39,  5811887, null],
+    ['Fajas',            10,  1704214, 'duplicado'],
+    ['Vestido de baño',   1,    82319, null],
+    ['Sin categoría',   228, 26188348, 'null']
+  ];
+  var catSepTot = catSep.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
+
+  document.getElementById('t-cat-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría (Shopify)</th><th>Unidades</th><th>Valor</th>' +
+      '<th>% de las unidades</th><th>% del valor</th>' +
+    '</tr></thead><tbody>' +
+    catSep.map(function(c){
+      var flojo = c[3] !== null;
+      return '<tr>' +
+        '<td class="lft">' + c[0] +
+          (c[3] === 'duplicado' ? '<span class="marca-amarilla">Posible duplicado</span>' : '') +
+          (c[3] === 'null' ? '<span class="marca-amarilla">Sin etiqueta</span>' : '') + '</td>' +
+        '<td class="num' + (flojo ? ' pendiente' : '') + '">' + u(c[1]) + '</td>' +
+        '<td class="num' + (flojo ? ' pendiente' : '') + '">' + cop(c[2]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / catSepTot[0] * 100) + '%</td>' +
+        '<td class="num pct">' + nf1.format(c[2] / catSepTot[1] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + u(catSepTot[0]) + '</td>' +
+      '<td class="num">' + cop(catSepTot[1]) + '</td>' +
+      '<td class="num">100%</td><td class="num">100%</td>' +
+    '</tr></tbody>';
 
   /* Detalle mes a mes por categoría y canal.
      [mes, WA u. 2025, WA $ 2025, WA u. 2026, WA $ 2026,
@@ -2240,8 +2359,9 @@
     {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  valor:3452190,   roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
   ];
 
-  /* Meta mes a mes, ambos años cortados al 13 de septiembre.
-     [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26, cpa26] */
+  /* Meta mes a mes. 2026 llega al mes completo de septiembre; 2025 se quedó
+     cortado al día 13, así que ese mes no es comparable entre columnas.
+     [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26, cpa26, aviso] */
   var metaMes = [
     ['Enero',      'Ene', 18546010, 398, '4,68x',  46598, 15984516, 469, '7,79x', 34082],
     ['Febrero',    'Feb', 16728334, 341, '4,45x',  49057, 11835958, 312, '6,86x', 37936],
@@ -2251,7 +2371,7 @@
     ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321, '5,62x', 41256],
     ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379, '6,93x', 35707],
     ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372, '5,97x', 37129],
-    ['Septiembre', 'Sep',  5552622, 237, '9,28x',  23429,  6821975, 181, '6,13x', 37690]
+    ['Septiembre', 'Sep',  5552622, 237, '9,28x',  23429, 16389164, 428, '6,01x', 38292, 'desigual']
   ];
   var metaTot = metaMes.reduce(function(a,m){
     return [a[0]+m[2], a[1]+m[3], a[2]+m[6], a[3]+m[7]];
@@ -2307,7 +2427,8 @@
     '</thead><tbody>' +
     metaMes.map(function(m){
       return '<tr>' +
-        '<td class="lft">' + m[0] + '</td>' +
+        '<td class="lft">' + m[0] +
+          (m[10] === 'desigual' ? '<span class="marca-amarilla">2025 solo 1–13</span>' : '') + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
         '<td class="num">' + u(m[3]) + '</td>' +
         '<td class="num">' + m[4] + '</td>' +
@@ -2321,7 +2442,7 @@
       '</tr>';
     }).join('') +
     '<tr class="total">' +
-      '<td class="lft">Total Ene–13 sep</td>' +
+      '<td class="lft">Total Ene–Sep<span class="val">2025 llega al 13 de septiembre; 2026, al mes completo</span></td>' +
       '<td class="num">' + cop(metaTot[0]) + '</td>' +
       '<td class="num">' + u(metaTot[1]) + '</td>' +
       '<td class="num">—</td>' +
@@ -2434,6 +2555,46 @@
 
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
+  /* Septiembre 2026 en Meta, por categoría. Solo Short y el bloque sin
+     clasificar tienen inversión rastreable; el resto se marca, no se pone en
+     cero. Las compras del gasto sin clasificar no se pueden repartir, así que
+     quedan pendientes. [categoría, inversión, compras, roas, cpa, estado] */
+  var pautaSep = [
+    ['Short',                  3588454,  119, '6,91x', 30155, null],
+    ['Fajas',                     null, null, null,     null, 'Sin inversión rastreable este mes'],
+    ['Cinturilla',                null, null, null,     null, 'Sin inversión rastreable este mes'],
+    ['Sin clasificar',        12800710, null, null,     null, 'Campañas que no nombran categoría']
+  ];
+  var invSepMes = 16389164;
+
+  document.getElementById('t-pauta-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría</th><th>Inversión</th><th>% del gasto del mes</th>' +
+      '<th>Compras (#)</th><th>ROAS</th><th>CPA real</th>' +
+    '</tr></thead><tbody>' +
+    pautaSep.map(function(p){
+      var sinInv = p[1] === null;
+      return '<tr>' +
+        '<td class="lft">' + p[0] +
+          (p[5] ? '<span class="marca-amarilla">' + p[5] + '</span>' : '') + '</td>' +
+        (sinInv
+          ? '<td class="num pendiente">___</td><td class="num pendiente">—</td>'
+          : '<td class="num">' + cop(p[1]) + '</td>' +
+            '<td class="num pct">' + nf1.format(p[1] / invSepMes * 100) + '%</td>') +
+        (p[2] === null ? '<td class="num pendiente">___</td>' : '<td class="num">' + u(p[2]) + '</td>') +
+        (p[3] === null ? '<td class="num pendiente">—</td>' : '<td class="num">' + p[3] + '</td>') +
+        (p[4] === null ? '<td class="num pendiente">—</td>' : '<td class="num">' + cop(p[4]) + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + cop(invSepMes) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + u(428) + '</td>' +
+      '<td class="num">6,01x</td>' +
+      '<td class="num">' + cop(Math.round(invSepMes / 428)) + '</td>' +
+    '</tr></tbody>';
+
   /* ---------------- Pauta Google Ads ---------------- */
   /* Costo y valor de conversión por mes, reportados por Google.
      Mes calendario, ambos años cortados al 13 de septiembre.
@@ -2447,24 +2608,15 @@
     ['Junio',       184260, 4538867,  1848331, 20285431],
     ['Julio',       943497, 5531348, 10043194, 28493448],
     ['Agosto',     1211398, 5548367,  8289262, 67599844],
-    ['Septiembre',  533168, 2500384,  7871349, 32807636]
+    ['Septiembre',  533168, 5418321,  7871349, 71809639, 'desigual']
   ];
-  var googleCostoTot = [2872323, 27355554];
-  var googleValTot   = [28052136, 218148601];
-
-  var googleMes = [
-    ['Enero',            0,  767663,        0,  5112128],
-    ['Febrero',          0,  957916,        0,  7640895],
-    ['Marzo',            0, 2327934,        0, 20551126],
-    ['Abril',            0, 2198206,        0, 19106898],
-    ['Mayo',             0, 2984869,        0, 16551195],
-    ['Junio',       184260, 4538867,  1848331, 20285431],
-    ['Julio',       943497, 5531348, 10043194, 28493448],
-    ['Agosto',     1211398, 5548367,  8289262, 67599844],
-    ['Septiembre',  533168, 2500384,  7871349, 32807636]
-  ];
-  var googleCostoTot = [2872323, 27355554];
-  var googleValTot   = [28052136, 218148601];
+  /* Los totales se suman de la tabla, no se copian. */
+  var googleCostoTot = [0,1].map(function(k){
+    return googleMes.reduce(function(a,m){ return a + m[1+k]; }, 0);
+  });
+  var googleValTot = [0,1].map(function(k){
+    return googleMes.reduce(function(a,m){ return a + m[3+k]; }, 0);
+  });
 
   document.getElementById('grafico-google').innerHTML =
     '<div class="grafico-b1">' +
@@ -2495,7 +2647,8 @@
     '</thead><tbody>' +
     googleMes.map(function(m){
       return '<tr>' +
-        '<td class="lft">' + m[0] + '</td>' +
+        '<td class="lft">' + m[0] +
+          (m[5] === 'desigual' ? '<span class="marca-amarilla">2025 solo 1–13</span>' : '') + '</td>' +
         '<td class="num">' + cop(m[1]) + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
         varTd(m[1], m[2]) +
@@ -2505,7 +2658,7 @@
       '</tr>';
     }).join('') +
     '<tr class="total">' +
-      '<td class="lft">Total Ene–13 sep</td>' +
+      '<td class="lft">Total Ene–Sep<span class="val">2025 llega al 13 de septiembre; 2026, al mes completo</span></td>' +
       '<td class="num">' + cop(googleCostoTot[0]) + '</td>' +
       '<td class="num">' + cop(googleCostoTot[1]) + '</td>' +
       varTd(googleCostoTot[0], googleCostoTot[1]) +
@@ -2514,13 +2667,60 @@
       varTd(googleValTot[0], googleValTot[1]) +
     '</tr></tbody>';
 
+  var nfConv = new Intl.NumberFormat('es-CO', {maximumFractionDigits:2});
+
+  /* Septiembre 2026 en Google, por campaña. [campaña, costo, valor conv., conv.] */
+  var googleSep = [
+    ['PMAX_Shopping_Sub-Categorias',      1698195, 15740514,  54.12],
+    ['TL | Tiendas | Medellín',            304811,        0,   0],
+    ['TL | Search/Conversión | Web y WA',  1422735,  7049223,  30.61],
+    ['Ecore-PMax-Shorts-Mayo26',           828835, 11072395,  54.08],
+    ['Branded Search_FAJITEX',             511749, 33588946, 131.55],
+    ['Ecore-PMax-Otros-Mayo26',            651996,  4358561,  16.58]
+  ];
+  var googleSepTot = googleSep.reduce(function(a,c){
+    return [a[0]+c[1], a[1]+c[2], a[2]+c[3]];
+  }, [0,0,0]);
+
+  document.getElementById('t-google-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Campaña</th><th>Costo</th><th>% del costo</th>' +
+      '<th>Valor de conversión</th><th>Conversiones</th><th>ROAS</th>' +
+    '</tr></thead><tbody>' +
+    googleSep.map(function(c){
+      var sinRetorno = c[2] === 0;
+      return '<tr>' +
+        '<td class="lft">' + c[0] +
+          (sinRetorno ? '<span class="marca-amarilla">Sin conversiones</span>' : '') + '</td>' +
+        '<td class="num">' + cop(c[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / googleSepTot[0] * 100) + '%</td>' +
+        '<td class="num' + (sinRetorno ? ' pendiente' : '') + '">' + cop(c[2]) + '</td>' +
+        '<td class="num' + (sinRetorno ? ' pendiente' : '') + '">' + nfConv.format(c[3]) + '</td>' +
+        '<td class="num">' + (sinRetorno ? '—' : nf1.format(c[2] / c[1]) + 'x') + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + cop(googleSepTot[0]) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + cop(googleSepTot[1]) + '</td>' +
+      '<td class="num">' + nfConv.format(googleSepTot[2]) + '</td>' +
+      '<td class="num">' + nf1.format(googleSepTot[1] / googleSepTot[0]) + 'x</td>' +
+    '</tr></tbody>';
+
+  document.getElementById('nota-google-sep').innerHTML =
+    '<div class="nota"><span class="etq">Cuadre</span><span>' +
+      'Las seis campañas suman ' + cop(googleSepTot[0]) + ' de costo, igual al septiembre de la tabla mensual. ' +
+      'En conversiones suman ' + nfConv.format(googleSepTot[2]) + ', no las 287,04 reportadas aparte: ' +
+      'quedan ' + nfConv.format(287.04 - googleSepTot[2]) + ' conversiones sin campaña que las explique.' +
+    '</span></div>';
+
   /* Resumen del periodo. Las conversiones solo existen a nivel de cuenta,
      no por mes, así que van en su propia tabla. */
   var googleResumen = [
     ['2025', 2872323,   141.2,    20342, 198670],
     ['2026', 27355554, 1659.97,   16479, 131417]
   ];
-  var nfConv = new Intl.NumberFormat('es-CO', {maximumFractionDigits:2});
 
   document.getElementById('t-google').innerHTML =
     '<thead><tr class="campos">' +
@@ -2921,6 +3121,35 @@
       '<td class="num pct">2,93 : 1<span class="val">umbral de industria: 3:1</span></td>' +
     '</tr></tbody>';
 
+  /* LTGP:CAC de septiembre 2026. Solo el CPA, el ticket, la frecuencia y el
+     margen son datos; lo demás se calcula. */
+  var sepCPA = 38292, sepAOV = 211646, sepFreq = 1.19, sepMargen = 0.60;
+  var sepLTV = sepAOV * sepFreq;
+  var sepBruto = sepLTV * sepMargen;
+
+  document.getElementById('t-ltgp-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th><th>Septiembre 2026</th><th class="lft">De dónde sale</th>' +
+    '</tr></thead><tbody>' +
+    [
+      ['CPA Meta',                 cop(sepCPA),               'inversión / compras del mes'],
+      ['Ticket promedio (AOV)',    cop(sepAOV),               'Shopify, septiembre'],
+      ['Compras de por vida',      nf2.format(sepFreq),       'real, Shopify 12 meses'],
+      ['LTV total',                cop(Math.round(sepLTV)),   'ticket × frecuencia'],
+      ['Beneficio bruto',          cop(Math.round(sepBruto)), 'margen 60% sobre el LTV']
+    ].map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + f[1] + '</td>' +
+        '<td class="lft canal">' + f[2] + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">LTGP:CAC</td>' +
+      '<td class="num pct">' + nf2.format(sepBruto / sepCPA) + ' : 1</td>' +
+      '<td class="lft canal">umbral de industria: 3:1</td>' +
+    '</tr></tbody>';
+
   var recompra = [
     ['Probabilidad de recompra',                                        '23% cada ~43 días',                '—'],
     ['Recompra esperada en 12 meses (si el supuesto fuera cierto)',     '~1,95 compras adicionales/cliente', '—'],
@@ -2955,7 +3184,7 @@
     ['Marzo',      43288, 1812, 1143, 251], ['Abril',      34289, 1445,  936, 228],
     ['Mayo',       38168, 1499, 1011, 216], ['Junio',      34968, 1539, 1129, 256],
     ['Julio',      42649, 1461, 1073, 270], ['Agosto',     52819, 1736, 1211, 323],
-    ['Septiembre', 23979,  611,  495, 148]
+    ['Septiembre', 103420, 1488, 1257, 459]
   ];
   var mesesAnio = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   var nombresAnio = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
@@ -2964,7 +3193,7 @@
 
   document.getElementById('grafico-salud').innerHTML =
     '<div class="grafico-b1">' +
-      '<div class="rot">Tasa de conversión sesión → compra <span class="eje">eje desde 0 · septiembre 2026 es parcial (1–13)</span></div>' +
+      '<div class="rot">Tasa de conversión sesión → compra <span class="eje">eje desde 0 · los dos años tienen septiembre completo</span></div>' +
       bloqueGrafico('salud-conv', {
         series: [
           {nombre:'2025', color:COLOR25, vals: mesesAnio.map(function(m,i){
@@ -3039,7 +3268,7 @@
       '</tbody>';
   }
   tablaSalud('t-salud-25', salud25, false);
-  tablaSalud('t-salud-26', salud26, true);
+  tablaSalud('t-salud-26', salud26, false);
 
   /* ---------------- Embudo Shopify (agosto) ---------------- */
   var reconcilia = [
@@ -3165,6 +3394,49 @@
       '<td class="num">' + cop(shopVentasTot[0]) + '</td>' +
       '<td class="num">' + u(shopVentasTot[1]) + '</td>' +
       '<td class="num">100%</td>' +
+    '</tr></tbody>';
+
+  /* Atribución por fuente de septiembre (mes completo).
+     [fuente, valor, pedidos, hija] */
+  var fuenteSep = [
+    ['Sin fuente registrada (null)', 124896740, 570, false],
+    ['Directo',                       12366866,  62, true],
+    ['Orgánico',                       3770723,  17, true],
+    ['Pago',                           3500563,  18, true],
+    ['Desconocida',                    1430403,  10, true],
+    ['Sin explicar después de recuperar', null,  null, true],
+    ['Búsqueda',                      23576496, 109, false],
+    ['Social',                        18114605, 108, false],
+    ['Email',                           400681,   2, false]
+  ];
+  /* El residual sale de restar, no se copia: así cuadra con las filas hijas. */
+  var recuperado = fuenteSep.filter(function(f){ return f[3] && f[1] !== null; })
+    .reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2]]; }, [0,0]);
+  fuenteSep[5][1] = fuenteSep[0][1] - recuperado[0];
+  fuenteSep[5][2] = fuenteSep[0][2] - recuperado[1];
+
+  var fuenteSepTot = fuenteSep.filter(function(f){ return !f[3]; })
+    .reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2]]; }, [0,0]);
+
+  document.getElementById('t-fuente-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Fuente</th><th>Valor</th><th>% del valor</th><th>Pedidos</th>' +
+    '</tr></thead><tbody>' +
+    fuenteSep.map(function(f){
+      var residual = f[0].indexOf('Sin explicar') === 0;
+      return '<tr' + (f[3] ? ' class="hija"' : '') + '>' +
+        '<td class="lft">' + f[0] +
+          (residual ? '<span class="marca-amarilla">Sin atribuir</span>' : '') + '</td>' +
+        '<td class="num' + (residual ? ' pendiente' : '') + '">' + cop(f[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(f[1] / fuenteSepTot[0] * 100) + '%</td>' +
+        '<td class="num' + (residual ? ' pendiente' : '') + '">' + u(f[2]) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + cop(fuenteSepTot[0]) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + u(fuenteSepTot[1]) + '</td>' +
     '</tr></tbody>';
 
   /* ---------------- Atribución mensual de pauta · WhatsApp ---------------- */

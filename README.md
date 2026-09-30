@@ -5,11 +5,14 @@ fuentes de Google. Se abre directamente en el navegador.
 
 Cinco bloques, con los datos entregados tal cual:
 
-1. **Ventas generales por mes** — 4 categorías, ambos canales, enero–agosto.
+1. **Ventas generales por mes** — 4 categorías, ambos canales, enero–agosto,
+   más septiembre de 2026, que sale de otra fuente (categoria_tipo_producto de
+   Shopify) y por eso queda fuera del total comparable y sin dato en 2025.
    Arriba, dos gráficos mensuales (unidades y valor) con eje ajustado al rango
    de los datos; debajo, la tabla.
 2. **Categoría × canal comercial** — unidades y valor, con subtotales por categoría.
-   Debajo, una sección plegable con el detalle mes a mes de cada categoría por canal.
+   Debajo, una sección plegable con el detalle mes a mes de cada categoría por canal,
+   y la tabla de septiembre 2026 por categoría de Shopify, con las etiquetas sin agrupar.
    Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto), cada uno
    con el gráfico arriba y sus totales abajo, y eje vertical compartido desde cero: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
    Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
@@ -21,7 +24,8 @@ Cinco bloques, con los datos entregados tal cual:
    promedio por canal según el píxel de Meta.
    **Pauta Google Ads** — gráfico de costo mensual y tabla con costo y valor de
    conversión mes a mes (datos reales de Google), más los totales del periodo.
-   Las conversiones y el costo por conversión siguen pendientes.
+   Las conversiones y el costo por conversión del periodo siguen pendientes;
+   septiembre 2026 sí tiene detalle por campaña.
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada. Debajo, las ventas
    cerradas por canal de origen, donde la fila de «Anuncio» es el mismo dato de
    la rama de pauta.
