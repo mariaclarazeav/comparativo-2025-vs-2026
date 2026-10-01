@@ -1349,9 +1349,22 @@
       <span class="etq">Hallazgo</span>
       <span>El 7% del presupuesto que va a B2B genera el costo por resultado más barato de toda la cuenta (~$5.163 por lead, frente a $27.000-$37.700 de CPA en las categorías B2C) — pero esos 175 leads siguen 100% sin avanzar de «CREATED» en el CRM (ver hallazgo del archivo de leads B2B).</span>
     </div>
+    <h4 class="tabla-anio">Detalle del gasto B2C</h4>
+    <div class="scroll"><table id="t-b2c-det"></table></div>
+    <div class="nota info">
+      <span class="etq">Hallazgo</span>
+      <span>B2C concentra el 93% del presupuesto de Meta en septiembre, con un CPA que pesa entre 12% y 30% del ticket en las tres categorías medibles, cuando el umbral de rentabilidad es 8% — entre 1,5 y 3,8 veces por encima. Contrasta con el 7% que va a B2B, que corre muy por debajo de su propio umbral de costo.</span>
+    </div>
     <div class="nota">
       <span class="etq">Periodo</span>
-      <span>Las dos filas suman $16.845.861, que no coincide con ningún periodo ya cargado en este bloque: son $456.697 más que la inversión de Meta de septiembre ($16.389.164). Falta confirmar qué rango cubre este corte antes de cruzarlo con las demás tablas.</span>
+      <span>Este corte se declara de septiembre, pero B2C y B2B suman $16.845.861: $456.697 más que la inversión de Meta de septiembre en la tabla mensual ($16.389.164). Dentro del propio corte, el detalle B2C suma $15.363.729 y deja $295.896 sin asignar frente a la fila de B2C. Falta cuadrar las dos fuentes antes de cruzar estas cifras con las demás tablas.</span>
+    </div>
+    <div class="nota fuerte">
+      <span class="etq">Contradicción</span>
+      <span>
+        <b>Esta tabla y la de <a href="#meta-sep-categoria">Septiembre 2026 — por categoría</a> dicen cosas opuestas sobre el mismo mes.</b>
+        Allá, Fajas y Cinturilla aparecen sin inversión rastreable y el 78,1% del gasto queda sin clasificar; aquí, Fajas tiene $5.273.012, Cinturilla $283.087 y solo $1.479.301 (9%) queda sin producto. Short también cambia: $3.588.454 y 119 compras allá, $8.328.329 y 221 compras aquí. Una de las dos lecturas está mal, y el hallazgo confirmado de ese bloque depende de cuál sea: hay que resolverlo antes de usar cualquiera de las dos para decidir presupuesto.
+      </span>
     </div>
 
     <h3 class="sub-cab">Pauta por categoría</h3>
@@ -1380,7 +1393,7 @@
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
     </div>
 
-    <h3 class="sub-cab">Septiembre 2026 — por categoría</h3>
+    <h3 class="sub-cab" id="meta-sep-categoria">Septiembre 2026 — por categoría</h3>
     <p class="sub">Solo lo que se puede atribuir a una categoría. Las filas sin inversión rastreable se dejan marcadas, no en cero.</p>
     <div class="scroll"><table id="t-pauta-sep"></table></div>
 
@@ -2567,6 +2580,51 @@
     rojo:     '<span class="sem rojo"><span class="punto"></span>Rojo</span>',
     na:       '<span class="sem na"><span class="punto"></span>No aplica</span>'
   };
+
+  /* Detalle del gasto B2C de ese mismo corte.
+     El CPA y el semáforo se calculan; el % del ticket y el benchmark vienen
+     dados. [categoría, inversión, compras, % del ticket, benchmark 8%] */
+  var detalleB2C = [
+    ['Fajas',                            5273012, 195, 12.3, 17578],
+    ['Short',                            8328329, 221, 30.2,  9993],
+    ['Cinturilla',                        283087,   8, 23.8, 11922],
+    ['WhatsApp/Mensajes (sin producto)', 1479301, null, null, null]
+  ];
+  var detB2CTot = detalleB2C.reduce(function(a,d){ return a + d[1]; }, 0);
+
+  document.getElementById('t-b2c-det').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría</th><th>Inversión</th><th>% del B2C</th>' +
+      '<th>Compras</th><th>CPA real</th>' +
+      '<th class="wrap">CPA como % del ticket<span class="obj">objetivo 8%</span></th>' +
+      '<th>Benchmark 8%</th><th class="lft">Semáforo</th>' +
+    '</tr></thead><tbody>' +
+    detalleB2C.map(function(d){
+      var medible = d[2] !== null;
+      return '<tr>' +
+        '<td class="lft">' + d[0] +
+          (medible ? '' : '<span class="marca-amarilla">Sin producto asignado</span>') + '</td>' +
+        '<td class="num">' + cop(d[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(d[1] / detB2CTot * 100) + '%</td>' +
+        (medible
+          ? '<td class="num">' + u(d[2]) + '</td>' +
+            '<td class="num">' + cop(Math.round(d[1] / d[2])) + '</td>' +
+            '<td class="num pct"><span class="dot ' + (d[3] <= 8 ? 'verde' : 'rojo') + '"></span>' +
+              nf1.format(d[3]) + '%</td>' +
+            '<td class="num">' + cop(d[4]) + '</td>' +
+            '<td class="lft">' + (d[3] <= 8 ? chips.verde : chips.rojo) + '</td>'
+          : '<td class="num pendiente">—</td><td class="num pendiente">—</td>' +
+            '<td class="num pendiente">—</td><td class="num pendiente">—</td>' +
+            '<td class="lft">' + chips.na + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total B2C detallado</td>' +
+      '<td class="num">' + cop(detB2CTot) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + u(detalleB2C.reduce(function(a,d){ return a + (d[2]||0); }, 0)) + '</td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+    '</tr></tbody>';
 
   var encab3 =
     '<thead><tr class="campos">' +
