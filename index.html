@@ -1339,6 +1339,21 @@
       <span>2025 tuvo mejor ROAS y CPA que 2026 en jul-ago-sep (9-11x vs 6-7x) — 2026 no es una mejora frente a 2025 en esos meses, solo frente al baseline de mayo-junio de la propia agencia.</span>
     </div>
 
+    <h3 class="sub-cab">Inversión por canal: B2B vs. B2C</h3>
+    <p class="sub">Cómo se reparte el gasto de la cuenta entre los dos negocios. Los porcentajes se calculan sobre la suma de las dos filas.</p>
+    <div class="scroll"><table id="t-b2b"></table></div>
+
+    <h4 class="tabla-anio">Detalle del gasto B2B</h4>
+    <div class="scroll"><table id="t-b2b-det"></table></div>
+    <div class="nota info">
+      <span class="etq">Hallazgo</span>
+      <span>El 7% del presupuesto que va a B2B genera el costo por resultado más barato de toda la cuenta (~$5.163 por lead, frente a $27.000-$37.700 de CPA en las categorías B2C) — pero esos 175 leads siguen 100% sin avanzar de «CREATED» en el CRM (ver hallazgo del archivo de leads B2B).</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Periodo</span>
+      <span>Las dos filas suman $16.845.861, que no coincide con ningún periodo ya cargado en este bloque: son $456.697 más que la inversión de Meta de septiembre ($16.389.164). Falta confirmar qué rango cubre este corte antes de cruzarlo con las demás tablas.</span>
+    </div>
+
     <h3 class="sub-cab">Pauta por categoría</h3>
     <p class="sub">Inversión, compras atribuidas y CPA real frente al benchmark de 8%. El semáforo marca el cumplimiento del CPA contra ese benchmark.</p>
     <div class="nota info">
@@ -2489,6 +2504,60 @@
       '<td class="num">' + u(ticketCanal[0][1] + ticketCanal[1][1]) + '</td>' +
       '<td class="num">—</td>' +
       '<td class="num">' + u(ticketCanal[0][3] + ticketCanal[1][3]) + '</td>' +
+      '<td class="num">—</td>' +
+    '</tr></tbody>';
+
+  /* Inversión por canal de negocio. [canal, inversión] */
+  var canalNegocio = [
+    ['B2C', 15659625],
+    ['B2B',  1186236]
+  ];
+  var canalNegTot = canalNegocio.reduce(function(a,c){ return a + c[1]; }, 0);
+
+  document.getElementById('t-b2b').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal</th><th>Inversión</th><th>% del gasto</th>' +
+    '</tr></thead><tbody>' +
+    canalNegocio.map(function(c){
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + cop(c[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / canalNegTot * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total</td>' +
+      '<td class="num">' + cop(canalNegTot) + '</td>' +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
+
+  /* Detalle del gasto B2B. [tipo, inversión, cantidad, unidad] */
+  var detalleB2B = [
+    ['Leads (formulario: Distribuidores + Marca Blanca)', 903578, 175, 'leads'],
+    ['Mensajes WA (Sector médico y estético)',            248289, 182, 'conversaciones'],
+    ['Otro (residual)',                                    34369, 394, 'clics']
+  ];
+  var detB2BTot = detalleB2B.reduce(function(a,d){ return a + d[1]; }, 0);
+
+  document.getElementById('t-b2b-det').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Tipo</th><th>Inversión</th><th>% del B2B</th>' +
+      '<th class="lft">Resultados</th><th>Costo por resultado</th>' +
+    '</tr></thead><tbody>' +
+    detalleB2B.map(function(d){
+      return '<tr>' +
+        '<td class="lft">' + d[0] + '</td>' +
+        '<td class="num">' + cop(d[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(d[1] / detB2BTot * 100) + '%</td>' +
+        '<td class="lft canal">' + u(d[2]) + ' ' + d[3] + '</td>' +
+        '<td class="num">' + cop(Math.round(d[1] / d[2])) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total B2B</td>' +
+      '<td class="num">' + cop(detB2BTot) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="lft canal">resultados de distinta naturaleza, no se suman</td>' +
       '<td class="num">—</td>' +
     '</tr></tbody>';
 
