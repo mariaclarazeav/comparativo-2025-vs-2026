@@ -674,6 +674,39 @@
     background:#FFFDF4;
   }
 
+  /* ---------- Pestañas de mes dentro de un bloque ---------- */
+  .sub-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    margin:2px 0 24px;
+  }
+  .sub-tab{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:-.005em;
+    color:var(--tinta-2);
+    background:var(--paper);
+    border:1px solid var(--linea);
+    padding:7px 18px;
+    cursor:pointer;
+  }
+  .sub-tab:hover{ background:var(--lavado); color:var(--negro); }
+  .sub-tab:focus-visible{ outline:2px solid var(--morado); outline-offset:2px; }
+  .sub-tab[aria-selected="true"]{
+    background:var(--morado);
+    border-color:var(--morado);
+    color:#FFFFFF;
+  }
+  .sub-panel[hidden]{ display:none; }
+  .sub-panel > .sub-cab:first-child{ margin-top:0; padding-top:0; border-top:none; }
+
+  @media print{
+    .sub-tabs{ display:none; }
+    .sub-panel[hidden]{ display:block !important; }
+  }
+
   /* ---------- Embudo ---------- */
   .embudo{ display:flex; flex-direction:column; align-items:stretch; }
   .nodo-top{
@@ -1507,8 +1540,66 @@
       <span class="num-bloque">Bloque 04</span>
       <h2>Embudo WhatsApp</h2>
     </div>
-    <p class="sub">Agosto. Cómo entraron los 5.582 leads de WhatsApp y qué pasó con los que vienen de pauta.</p>
+    <p class="sub">Cómo entraron los leads de WhatsApp y qué pasó con los que vienen de pauta. Un mes por pestaña; el más reciente abre primero.</p>
 
+    <!-- Las pestañas se arman solas con los paneles que haya: para sumar un mes
+         nuevo basta con agregar otro .sub-panel con su data-mes y su render. -->
+    <div class="sub-tabs" id="tabs-mes" role="tablist"></div>
+
+    <div class="sub-panel" data-mes="Septiembre">
+      <div class="embudo">
+        <div class="rot rot-capa">Cómo entraron los leads</div>
+        <div class="entradas" id="entradas-sep"></div>
+        <div class="conector"></div>
+        <div class="nodo-top">
+          <span class="rot">Total leads WhatsApp · septiembre</span>
+          <span class="cifra" id="leads-total-sep"></span>
+        </div>
+        <div class="conector"></div>
+        <div class="ramas">
+          <div class="rama">
+            <h3>Desde pauta (Meta, B2C)</h3>
+            <p class="conv" id="conv-pauta-sep"></p>
+            <dl id="dl-pauta-sep"></dl>
+            <div class="nota">
+              <span class="etq">Estimado</span>
+              <span>El valor de las 9 ventas de pauta (≈ $1.666.485) es un estimado con el ticket promedio de WhatsApp de septiembre ($185.165). Pendiente el detalle real de producto de esas 9 ventas.</span>
+            </div>
+            <div class="nota">
+              <span class="etq">Alcance</span>
+              <span>Las 3.084 conversaciones excluyen la campaña de prueba B2B de Sector Médico y Estético (182), para que sea comparable con agosto.</span>
+            </div>
+          </div>
+        </div>
+        <div class="conector"></div>
+        <div class="rama-hija">
+          <div class="rot">Qué pasó con esas conversaciones · B2Chat, septiembre</div>
+          <div class="nota">
+            <span class="etq">Pendiente</span>
+            <span>El gráfico de torta de tags de B2Chat (qué pasó con los leads de pauta) está pendiente: aún no llega el desglose de tags de septiembre.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nota">
+        <span class="etq">Por resta</span>
+        <span>«Resto de otros canales» (≈589) se calcula por resta (4.821 − 3.084 − 1.148); la pauta viene de Meta y el total de B2Chat, por lo que es aproximado.</span>
+      </div>
+
+      <h3 class="sub-cab">Ventas cerradas por canal de origen</h3>
+      <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba.</p>
+      <div class="scroll"><table id="t-canales-sep"></table></div>
+      <div class="nota info">
+        <span class="etq">Mismo dato</span>
+        <span>Las 9 ventas de «Anuncio (pauta)» son exactamente las 9 ventas cerradas de la rama de pauta del embudo: es el mismo dato visto desde otro ángulo, no se suman.</span>
+      </div>
+
+      <h4 class="tabla-anio">Tasa de cierre por origen</h4>
+      <div class="scroll"><table id="t-cierre-sep"></table></div>
+      <div id="nota-cierre-sep"></div>
+    </div>
+
+    <div class="sub-panel" data-mes="Agosto" hidden>
     <div class="embudo">
       <div class="rot rot-capa">Cómo entraron los leads</div>
       <div class="entradas" id="entradas"></div>
@@ -1542,7 +1633,7 @@
     </div>
 
     <h3 class="sub-cab">Ventas cerradas por canal de origen</h3>
-    <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba. Septiembre separa tres orígenes que agosto reportaba juntos, así que la fila comparable entre los dos meses es el subtotal.</p>
+    <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba.</p>
     <div class="scroll"><table id="t-canales"></table></div>
     <div class="nota info">
       <span class="etq">Mismo dato</span>
@@ -1553,15 +1644,12 @@
       <span>Walink tiene la tasa de cierre más alta pero volumen mínimo; pauta tiene el volumen más alto pero la tasa de cierre más baja — confirma que el problema no es de capacidad, es de calidad del lead.</span>
     </div>
 
-    <h4 class="tabla-anio">Tasa de cierre por origen, septiembre</h4>
-    <div class="scroll"><table id="t-cierre-sep"></table></div>
-    <div id="nota-cierre-sep"></div>
-
     <h3 class="sub-cab">Zoom — unidades y valor por categoría, agosto (WhatsApp)</h3>
     <div class="scroll"><table id="t-zoom"></table></div>
     <div class="nota">
       <span class="etq">Alcance</span>
       <span>Esta tabla es solo canal WhatsApp — coincide exacto con los datos de WhatsApp del Bloque 2. Falta el dato de Sitio Web para las 4 categorías nuevas (MQ Tablas, Accesorios, Comercializados, MQ Latex).</span>
+    </div>
     </div>
   </section>
 
@@ -1593,7 +1681,7 @@
     </div>
     <div class="nota">
       <span class="etq">Refresco</span>
-      <span>Leads Pauta de septiembre 2026 viene del primer export de Meta (3.266); el export más reciente muestra 3.320, una diferencia de 1,6% por refresco de datos.</span>
+      <span>Leads Pauta de septiembre 2026 son 3.084: los 3.266 del primer export de Meta menos las 182 conversaciones de la campaña de prueba B2B (Sector Médico y Estético), que se excluyen para que el mes sea comparable con agosto. Sobre ese primer export, el más reciente muestra 3.320 en vez de 3.266, una diferencia de 1,6% por refresco de datos.</span>
     </div>
     <div class="nota info">
       <span class="etq">Hallazgo</span>
@@ -2939,78 +3027,114 @@
       'es IVA o el momento del corte, no una contradicción real.' +
     '</span></div>';
 
-  /* Ventas cerradas por canal de origen. Agosto trae además los leads del
-     canal; septiembre separa los tres orígenes que agosto reportaba juntos,
-     así que esos tres van arriba y su subtotal es la fila comparable. */
+  /* Ventas cerradas de agosto por canal de origen, con los leads de cada uno */
   var canalesVenta = [
-    {nom:'Botón WhatsApp sitio web', ago:null, leads:null, sep:95,  grupo:true},
-    {nom:'Orgánico',                 ago:null, leads:null, sep:83,  grupo:true},
-    {nom:'Walink SMS',               ago:null, leads:null, sep:1,   grupo:true},
-    {nom:'Los tres de arriba, juntos', sub:true, ago:156, leads:2319, sep:null,
-     det:'agosto no los separa en el dato de ventas'},
-    {nom:'Anuncio (pauta)',          ago:7, leads:3251, sep:9, pauta:true},
-    {nom:'Walink correo / Mail',     ago:7, leads:12,   sep:5},
-    {nom:'Walink Beacons',           ago:null, leads:null, sep:6, nuevo:true}
+    ['Botón WhatsApp sitio web + Orgánico + SMS', 156, 2319, false,
+     'estos 3 canales no se pueden separar en el dato de leads, solo en el de ventas'],
+    ['Anuncio (pauta)',                             7, 3251, true,  ''],
+    ['Walink correo',                               7,   12, false, '']
   ];
   /* Bajo el 1% el redondeo a un decimal borra la diferencia, así que ahí van dos */
   var pctCierre = function(v){ return (v < 1 ? nf2.format(v) : nf1.format(v)) + '%'; };
-
-  var agoTot = canalesVenta.reduce(function(a,c){
-    return c.grupo ? a : [a[0] + (c.ago || 0), a[1] + (c.leads || 0)];
-  }, [0,0]);
-  var sepTot = canalesVenta.reduce(function(a,c){ return c.sub ? a : a + c.sep; }, 0);
-  canalesVenta[3].sep = canalesVenta.filter(function(c){ return c.grupo; })
-    .reduce(function(a,c){ return a + c.sep; }, 0);
-
-  var vacio = '<td class="num pendiente">—</td>';
+  var ventasTot = canalesVenta.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
 
   document.getElementById('t-canales').innerHTML =
-    '<thead>' +
-      '<tr class="grupos">' +
-        '<th class="lft" rowspan="2">Canal de origen</th>' +
-        '<th class="gv" colspan="4">Agosto</th>' +
-        '<th class="g26" colspan="2">Septiembre</th>' +
-      '</tr>' +
-      '<tr class="campos">' +
-        '<th>Ventas</th><th>% de ventas</th>' +
-        '<th class="wrap">Leads del canal</th><th>Tasa de cierre</th>' +
-        '<th>Ventas</th><th>% de ventas</th>' +
-      '</tr>' +
-    '</thead><tbody>' +
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% de ventas</th>' +
+      '<th class="wrap">Total leads del canal</th><th>Tasa de cierre</th>' +
+    '</tr></thead><tbody>' +
     canalesVenta.map(function(c){
-      var clase = c.pauta ? ' class="enlazada"' : (c.sub ? ' class="sub-total"' : (c.grupo ? ' class="hija"' : ''));
-      return '<tr' + clase + '>' +
-        '<td class="lft">' + c.nom +
-          (c.pauta ? '<span class="marca-morada">= rama de pauta</span>' : '') +
-          (c.nuevo ? '<span class="marca-amarilla">No existía en agosto</span>' : '') +
-          (c.det ? '<span class="val">' + c.det + '</span>' : '') +
+      return '<tr' + (c[3] ? ' class="enlazada"' : '') + '>' +
+        '<td class="lft">' + c[0] +
+          (c[3] ? '<span class="marca-morada">= rama de pauta</span>' : '') +
+          (c[4] ? '<span class="val">' + c[4] + '</span>' : '') +
         '</td>' +
-        (c.ago === null
-          ? vacio + vacio + vacio + vacio
-          : '<td class="num">' + u(c.ago) + '</td>' +
-            '<td class="num">' + nf1.format(c.ago / agoTot[0] * 100) + '%</td>' +
-            '<td class="num">' + u(c.leads) + '</td>' +
-            '<td class="num pct">' + pctCierre(c.ago / c.leads * 100) + '</td>') +
-        '<td class="num">' + u(c.sep) + '</td>' +
-        '<td class="num">' + nf1.format(c.sep / sepTot * 100) + '%</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + nf1.format(c[1] / ventasTot[0] * 100) + '%</td>' +
+        '<td class="num">' + u(c[2]) + '</td>' +
+        '<td class="num pct">' + pctCierre(c[1] / c[2] * 100) + '</td>' +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
-      '<td class="lft">Total</td>' +
-      '<td class="num">' + u(agoTot[0]) + '</td>' +
+      '<td class="lft">Total agosto</td>' +
+      '<td class="num">' + u(ventasTot[0]) + '</td>' +
       '<td class="num">100%</td>' +
-      '<td class="num">' + u(agoTot[1]) + '</td>' +
-      '<td class="num pct">' + pctCierre(agoTot[0] / agoTot[1] * 100) + '</td>' +
-      '<td class="num">' + u(sepTot) +
-        '<span class="val">' + varTxt(agoTot[0], sepTot).s + ' vs agosto</span></td>' +
+      '<td class="num">' + u(ventasTot[1]) + '</td>' +
+      '<td class="num pct">' + pctCierre(ventasTot[0] / ventasTot[1] * 100) + '</td>' +
+    '</tr></tbody>';
+
+  /* ---------------- Bloque 4 · septiembre ---------------- */
+  var totalLeadsSep = 4821;
+  var pautaSepConv  = 3084;
+  var botonSepChats = 1148;
+  var invPautaSep   = 3142272;
+  var ventasPautaSep = 9;
+  var ticketWaSep   = 185165;
+
+  var entradasSep = [
+    ['Pauta (Meta)',                     pautaSepConv,  true ],
+    ['Botón WhatsApp sitio web',         botonSepChats, false],
+    ['Resto de otros canales (aprox.)',
+     totalLeadsSep - pautaSepConv - botonSepChats,      false]
+  ];
+
+  document.getElementById('entradas-sep').innerHTML = entradasSep.map(function(e){
+    return '<div class="entrada' + (e[2] ? ' destacada' : '') + '">' +
+      '<div class="nom">' + e[0] + '</div>' +
+      '<div class="cif">' + u(e[1]) + '</div>' +
+      '<div class="pct">' + nf1.format(e[1] / totalLeadsSep * 100) + '% del total</div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('leads-total-sep').textContent = u(totalLeadsSep);
+  document.getElementById('conv-pauta-sep').textContent = u(pautaSepConv) + ' conversaciones';
+  document.getElementById('dl-pauta-sep').innerHTML =
+    '<div class="fila"><dt>Inversión</dt><dd>' + cop(invPautaSep) + '</dd></div>' +
+    '<div class="fila"><dt>Ventas cerradas</dt><dd>' + u(ventasPautaSep) + '</dd></div>' +
+    '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' +
+      cop(Math.round(invPautaSep / ventasPautaSep)) + '</dd></div>' +
+    '<div class="fila"><dt>Valor de esas 9 ventas' +
+      '<span class="det">estimado: ' + u(ventasPautaSep) + ' × ticket promedio de WhatsApp de septiembre (' +
+      cop(ticketWaSep) + ')</span>' +
+    '</dt><dd>≈ ' + cop(ventasPautaSep * ticketWaSep) + '</dd></div>';
+
+  /* Ventas cerradas de septiembre por canal de origen */
+  var canalesSep = [
+    ['Botón WhatsApp sitio web', 95, false],
+    ['Orgánico',                 83, false],
+    ['Anuncio (pauta)',           9, true ],
+    ['Walink Beacons',            6, false],
+    ['Walink Mail',               5, false],
+    ['Walink SMS',                1, false]
+  ];
+  var canalesSepTot = canalesSep.reduce(function(a,c){ return a + c[1]; }, 0);
+  var ventasAgoTot  = ventasTot[0];
+
+  document.getElementById('t-canales-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% de ventas</th>' +
+    '</tr></thead><tbody>' +
+    canalesSep.map(function(c){
+      return '<tr' + (c[2] ? ' class="enlazada"' : '') + '>' +
+        '<td class="lft">' + c[0] +
+          (c[2] ? '<span class="marca-morada">= rama de pauta</span>' : '') + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + nf1.format(c[1] / canalesSepTot * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + u(canalesSepTot) +
+        '<span class="val">' + varTxt(ventasAgoTot, canalesSepTot).s + ' vs agosto (' +
+        u(ventasAgoTot) + ')</span></td>' +
       '<td class="num">100%</td>' +
     '</tr></tbody>';
 
   /* Tasa de cierre por origen en septiembre. Solo dos orígenes tienen el
      denominador de conversaciones. [origen, conversaciones, ventas] */
   var cierreSep = [
-    ['Botón WhatsApp sitio web', 1148, 95],
-    ['Pauta (Meta)',             3266,  9]
+    ['Botón WhatsApp sitio web', botonSepChats, 95],
+    ['Pauta (Meta, B2C)',        pautaSepConv,  ventasPautaSep]
   ];
 
   document.getElementById('t-cierre-sep').innerHTML =
@@ -3750,7 +3874,7 @@
     ['Junio',      5466, 3498, 22, null, null],
     ['Julio',      5159, 1965, 32, 4773416, null],
     ['Agosto',     5872, 3376,  7,  840612, null],
-    ['Septiembre', 4821, 3266,  9, null, null]
+    ['Septiembre', 4821, 3084,  9, null, null]
   ];
 
   var pend = '<td class="num pendiente">___</td>';
@@ -3873,6 +3997,39 @@
     window.addEventListener('hashchange', function(){ desdeHash(true); });
     desdeHash(false);
   })();
+
+  /* ---------------- Pestañas de mes dentro de un bloque ----------------
+     Cada contenedor .sub-tabs arma sus botones con los .sub-panel que haya
+     dentro de la misma sección, en el orden en que estén escritos. El primero
+     abre por defecto. Para sumar un mes nuevo basta con escribir otro panel. */
+  Array.prototype.forEach.call(document.querySelectorAll('.sub-tabs'), function(barra){
+    var seccion = barra.closest('section');
+    var paneles = Array.prototype.slice.call(seccion.querySelectorAll('.sub-panel'));
+    if (!paneles.length) { return; }
+
+    barra.innerHTML = paneles.map(function(p, i){
+      return '<button type="button" class="sub-tab" role="tab" ' +
+             'aria-selected="' + (i === 0 ? 'true' : 'false') + '" ' +
+             'data-i="' + i + '">' + p.getAttribute('data-mes') + '</button>';
+    }).join('');
+
+    var botones = barra.querySelectorAll('.sub-tab');
+
+    function mostrarMes(i){
+      paneles.forEach(function(p, k){ p.hidden = k !== i; });
+      Array.prototype.forEach.call(botones, function(b, k){
+        b.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+    }
+
+    Array.prototype.forEach.call(botones, function(b){
+      b.addEventListener('click', function(){
+        mostrarMes(parseInt(b.getAttribute('data-i'), 10));
+      });
+    });
+
+    mostrarMes(0);
+  });
 
   /* ---------------- Atribución por canal (Meta Ads) ---------------- */
   /* [mes, inv 2025, clics 2025, compras 2025, ticket 2025,
