@@ -1542,7 +1542,7 @@
     </div>
 
     <h3 class="sub-cab">Ventas cerradas por canal de origen</h3>
-    <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba.</p>
+    <p class="sub">La venta ya cerrada, clasificada por el canal del que vino el contacto. No es lo mismo que las conversaciones del embudo de arriba. Septiembre separa tres orígenes que agosto reportaba juntos, así que la fila comparable entre los dos meses es el subtotal.</p>
     <div class="scroll"><table id="t-canales"></table></div>
     <div class="nota info">
       <span class="etq">Mismo dato</span>
@@ -1552,6 +1552,10 @@
       <span class="etq">Lectura</span>
       <span>Walink tiene la tasa de cierre más alta pero volumen mínimo; pauta tiene el volumen más alto pero la tasa de cierre más baja — confirma que el problema no es de capacidad, es de calidad del lead.</span>
     </div>
+
+    <h4 class="tabla-anio">Tasa de cierre por origen, septiembre</h4>
+    <div class="scroll"><table id="t-cierre-sep"></table></div>
+    <div id="nota-cierre-sep"></div>
 
     <h3 class="sub-cab">Zoom — unidades y valor por categoría, agosto (WhatsApp)</h3>
     <div class="scroll"><table id="t-zoom"></table></div>
@@ -1581,11 +1585,15 @@
     </div>
     <div class="nota">
       <span class="etq">Sep 1–13 *</span>
-      <span>En los dos «Septiembre», el Total Leads es del mes completo mientras Leads Pauta solo llega al día 13 — no son comparables directamente, el % y la tasa de cierre no son confiables con este corte desigual.</span>
+      <span>En el «Septiembre» de 2025, el Total Leads es del mes completo mientras Leads Pauta solo llega al día 13 — no son comparables directamente, el % y la tasa de cierre no son confiables con ese corte desigual. El de 2026 ya está completo en las dos columnas.</span>
     </div>
     <div class="nota">
       <span class="etq">Pendiente</span>
       <span>Valor Aprox Venta sigue pendiente para todos los meses excepto julio y agosto de 2026.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Refresco</span>
+      <span>Leads Pauta de septiembre 2026 viene del primer export de Meta (3.266); el export más reciente muestra 3.320, una diferencia de 1,6% por refresco de datos.</span>
     </div>
     <div class="nota info">
       <span class="etq">Hallazgo</span>
@@ -1606,6 +1614,10 @@
     <div class="nota info">
       <span class="etq">Cómo leer</span>
       <span>El color del estado es una lectura de la columna «Estado», no una métrica medida: amarillo = el mensaje existe pero no identifica el origen; rojo = no hay mensaje y la conversación entra en blanco.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Septiembre</span>
+      <span>Se registran ventas desde Walink Beacons (6), Mail (5) y SMS (1) en septiembre. Pendiente confirmar si usan ya el mensaje nuevo.</span>
     </div>
 
     <h3 class="sub-cab">Plantillas de campaña — Email y SMS</h3>
@@ -1763,16 +1775,30 @@
     </div>
     <p class="sub">Sale del ERP de facturación, que es un sistema distinto a Shopify, y por ahora solo cubre B2C. No mezclar estas cifras con las de los Bloques 1 y 2, que vienen de Shopify.</p>
     <div class="scroll"><table id="t-desc"></table></div>
+    <div class="nota">
+      <span class="etq">Alcance</span>
+      <span>Esta tabla de los dos años sigue teniendo solo WhatsApp y Ecommerce. Los otros tres canales (Redes, Dark Store, Merkaplace) solo existen por ahora en el corte de septiembre que está más abajo.</span>
+    </div>
+
+    <h3 class="sub-cab">Septiembre 2026 — los cinco canales</h3>
+    <p class="sub">Primer mes con el reparto completo. Los porcentajes y el total se calculan de las filas.</p>
+    <div class="scroll"><table id="t-desc-sep"></table></div>
+    <div class="nota info">
+      <span class="etq">Hallazgo</span>
+      <span><b>El descuento en WhatsApp subió de 9,0% en agosto a 13,2% en septiembre</b>, el más alto de todos los canales — y 3 puntos por encima del promedio del mes (10,1%).</span>
+    </div>
+
+    <h3 class="sub-cab">Ticket promedio por canal, septiembre</h3>
+    <div class="scroll"><table id="t-ticket-sep"></table></div>
+    <div class="nota">
+      <span class="etq">Otra fuente</span>
+      <span>Sale del ERP/B2Chat y suma $192,6 M, distinto de los $167,0 M que reporta Shopify para el mismo septiembre. No sumar ni comparar peso a peso con las tablas de Shopify.</span>
+    </div>
 
     <h3 class="sub-cab">Tendencia mensual del % de descuento sobre venta neta</h3>
-    <p class="sub">Enero – agosto. El color distingue el año y el trazo el canal: línea continua para WhatsApp, punteada para Ecommerce.</p>
+    <p class="sub">Enero – septiembre. El color distingue el año y el trazo el canal: línea continua para WhatsApp, punteada para Ecommerce. Septiembre solo tiene dato de 2026.</p>
     <div class="leyenda-lineas" id="leyenda-desc"></div>
     <div id="grafico-desc"></div>
-
-    <div class="nota">
-      <span class="etq">Pendiente</span>
-      <span>Faltan los canales Dark Store, Merkaplace, Redes y No aplica para completar este bloque.</span>
-    </div>
   </section>
   </div>
 
@@ -2913,41 +2939,100 @@
       'es IVA o el momento del corte, no una contradicción real.' +
     '</span></div>';
 
-  /* Ventas cerradas de agosto por canal de origen, con los leads de cada uno */
+  /* Ventas cerradas por canal de origen. Agosto trae además los leads del
+     canal; septiembre separa los tres orígenes que agosto reportaba juntos,
+     así que esos tres van arriba y su subtotal es la fila comparable. */
   var canalesVenta = [
-    ['Botón WhatsApp sitio web + Orgánico + SMS', 156, 2319, false,
-     'estos 3 canales no se pueden separar en el dato de leads, solo en el de ventas'],
-    ['Anuncio (pauta)',                             7, 3251, true,  ''],
-    ['Walink correo',                               7,   12, false, '']
+    {nom:'Botón WhatsApp sitio web', ago:null, leads:null, sep:95,  grupo:true},
+    {nom:'Orgánico',                 ago:null, leads:null, sep:83,  grupo:true},
+    {nom:'Walink SMS',               ago:null, leads:null, sep:1,   grupo:true},
+    {nom:'Los tres de arriba, juntos', sub:true, ago:156, leads:2319, sep:null,
+     det:'agosto no los separa en el dato de ventas'},
+    {nom:'Anuncio (pauta)',          ago:7, leads:3251, sep:9, pauta:true},
+    {nom:'Walink correo / Mail',     ago:7, leads:12,   sep:5},
+    {nom:'Walink Beacons',           ago:null, leads:null, sep:6, nuevo:true}
   ];
   /* Bajo el 1% el redondeo a un decimal borra la diferencia, así que ahí van dos */
   var pctCierre = function(v){ return (v < 1 ? nf2.format(v) : nf1.format(v)) + '%'; };
-  var ventasTot = canalesVenta.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
+
+  var agoTot = canalesVenta.reduce(function(a,c){
+    return c.grupo ? a : [a[0] + (c.ago || 0), a[1] + (c.leads || 0)];
+  }, [0,0]);
+  var sepTot = canalesVenta.reduce(function(a,c){ return c.sub ? a : a + c.sep; }, 0);
+  canalesVenta[3].sep = canalesVenta.filter(function(c){ return c.grupo; })
+    .reduce(function(a,c){ return a + c.sep; }, 0);
+
+  var vacio = '<td class="num pendiente">—</td>';
 
   document.getElementById('t-canales').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% de ventas</th>' +
-      '<th class="wrap">Total leads del canal</th><th>Tasa de cierre</th>' +
-    '</tr></thead><tbody>' +
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Canal de origen</th>' +
+        '<th class="gv" colspan="4">Agosto</th>' +
+        '<th class="g26" colspan="2">Septiembre</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Ventas</th><th>% de ventas</th>' +
+        '<th class="wrap">Leads del canal</th><th>Tasa de cierre</th>' +
+        '<th>Ventas</th><th>% de ventas</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
     canalesVenta.map(function(c){
-      return '<tr' + (c[3] ? ' class="enlazada"' : '') + '>' +
-        '<td class="lft">' + c[0] +
-          (c[3] ? '<span class="marca-morada">= rama de pauta</span>' : '') +
-          (c[4] ? '<span class="val">' + c[4] + '</span>' : '') +
+      var clase = c.pauta ? ' class="enlazada"' : (c.sub ? ' class="sub-total"' : (c.grupo ? ' class="hija"' : ''));
+      return '<tr' + clase + '>' +
+        '<td class="lft">' + c.nom +
+          (c.pauta ? '<span class="marca-morada">= rama de pauta</span>' : '') +
+          (c.nuevo ? '<span class="marca-amarilla">No existía en agosto</span>' : '') +
+          (c.det ? '<span class="val">' + c.det + '</span>' : '') +
         '</td>' +
-        '<td class="num">' + u(c[1]) + '</td>' +
-        '<td class="num">' + nf1.format(c[1] / ventasTot[0] * 100) + '%</td>' +
-        '<td class="num">' + u(c[2]) + '</td>' +
-        '<td class="num pct">' + pctCierre(c[1] / c[2] * 100) + '</td>' +
+        (c.ago === null
+          ? vacio + vacio + vacio + vacio
+          : '<td class="num">' + u(c.ago) + '</td>' +
+            '<td class="num">' + nf1.format(c.ago / agoTot[0] * 100) + '%</td>' +
+            '<td class="num">' + u(c.leads) + '</td>' +
+            '<td class="num pct">' + pctCierre(c.ago / c.leads * 100) + '</td>') +
+        '<td class="num">' + u(c.sep) + '</td>' +
+        '<td class="num">' + nf1.format(c.sep / sepTot * 100) + '%</td>' +
       '</tr>';
     }).join('') +
     '<tr class="total">' +
-      '<td class="lft">Total agosto</td>' +
-      '<td class="num">' + u(ventasTot[0]) + '</td>' +
+      '<td class="lft">Total</td>' +
+      '<td class="num">' + u(agoTot[0]) + '</td>' +
       '<td class="num">100%</td>' +
-      '<td class="num">' + u(ventasTot[1]) + '</td>' +
-      '<td class="num pct">' + pctCierre(ventasTot[0] / ventasTot[1] * 100) + '</td>' +
+      '<td class="num">' + u(agoTot[1]) + '</td>' +
+      '<td class="num pct">' + pctCierre(agoTot[0] / agoTot[1] * 100) + '</td>' +
+      '<td class="num">' + u(sepTot) +
+        '<span class="val">' + varTxt(agoTot[0], sepTot).s + ' vs agosto</span></td>' +
+      '<td class="num">100%</td>' +
     '</tr></tbody>';
+
+  /* Tasa de cierre por origen en septiembre. Solo dos orígenes tienen el
+     denominador de conversaciones. [origen, conversaciones, ventas] */
+  var cierreSep = [
+    ['Botón WhatsApp sitio web', 1148, 95],
+    ['Pauta (Meta)',             3266,  9]
+  ];
+
+  document.getElementById('t-cierre-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Origen</th><th>Conversaciones</th><th>Ventas</th><th>Tasa de cierre</th>' +
+    '</tr></thead><tbody>' +
+    cierreSep.map(function(c){
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + u(c[2]) + '</td>' +
+        '<td class="num pct">' + nf2.format(c[2] / c[1] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') + '</tbody>';
+
+  document.getElementById('nota-cierre-sep').innerHTML =
+    '<div class="nota info"><span class="etq">Hallazgo</span><span>' +
+      'Los chats del botón del sitio cierran <b>~' +
+      nf0.format(Math.round((cierreSep[0][2]/cierreSep[0][1]) / (cierreSep[1][2]/cierreSep[1][1]))) +
+      ' veces más</b> que los de pauta. La comparación no es pareja (el botón es tráfico con ' +
+      'intención previa), pero confirma el hallazgo de calidad de lead de pauta.' +
+    '</span></div>';
 
   /* Zoom de agosto por categoría, solo canal WhatsApp */
   var zoomAgosto = [
@@ -3054,6 +3139,76 @@
       '<td class="num pct">' + pctDesc(descTot[2], descTot[3]) + '</td>' +
     '</tr></tbody>';
 
+  /* Septiembre 2026 con los cinco canales. [canal, descuentos, neto] */
+  var descSep = [
+    ['WhatsApp',   13360901, 101288452],
+    ['Redes',       2128693,  18591124],
+    ['Ecommerce',   5522730,  72716486],
+    ['Dark Store',   534937,   8283575],
+    ['Merkaplace',   222054,  13613178]
+  ];
+  var descSepTot = descSep.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
+
+  document.getElementById('t-desc-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal</th><th>Descuentos</th><th>Neto</th>' +
+      '<th>% desc.</th><th>% del neto del mes</th>' +
+    '</tr></thead><tbody>' +
+    descSep.map(function(c){
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + cop(c[1]) + '</td>' +
+        '<td class="num">' + cop(c[2]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / c[2] * 100) + '%</td>' +
+        '<td class="num">' + nf1.format(c[2] / descSepTot[1] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + cop(descSepTot[0]) + '</td>' +
+      '<td class="num">' + cop(descSepTot[1]) + '</td>' +
+      '<td class="num pct">' + nf1.format(descSepTot[0] / descSepTot[1] * 100) + '%</td>' +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
+
+  /* Ticket promedio por canal en septiembre, misma fuente ERP/B2Chat.
+     [canal, unidades, transacciones, ticket] */
+  var ticketSep = [
+    ['WhatsApp',   600, 493, 185165],
+    ['Redes',       92,  92, 184432],
+    ['Merkaplace',  70,  69, 177036],
+    ['Dark Store',  50,  47, 158742],
+    ['Ecommerce',  454, 428, 151180]
+  ];
+  var ticketSepTot = ticketSep.reduce(function(a,t){
+    return [a[0]+t[1], a[1]+t[2], a[2] + t[2]*t[3]];
+  }, [0,0,0]);
+
+  document.getElementById('t-ticket-sep').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Canal</th><th>Unidades</th><th>Transacciones</th>' +
+      '<th>Ticket promedio</th><th class="wrap">Unidades por transacción</th>' +
+      '<th>Valor implícito</th>' +
+    '</tr></thead><tbody>' +
+    ticketSep.map(function(t){
+      return '<tr>' +
+        '<td class="lft">' + t[0] + '</td>' +
+        '<td class="num">' + u(t[1]) + '</td>' +
+        '<td class="num">' + u(t[2]) + '</td>' +
+        '<td class="num">' + cop(t[3]) + '</td>' +
+        '<td class="num">' + nf2.format(t[1] / t[2]) + '</td>' +
+        '<td class="num">' + cop(t[2] * t[3]) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total septiembre</td>' +
+      '<td class="num">' + u(ticketSepTot[0]) + '</td>' +
+      '<td class="num">' + u(ticketSepTot[1]) + '</td>' +
+      '<td class="num">' + cop(Math.round(ticketSepTot[2] / ticketSepTot[1])) + '</td>' +
+      '<td class="num">' + nf2.format(ticketSepTot[0] / ticketSepTot[1]) + '</td>' +
+      '<td class="num">' + cop(ticketSepTot[2]) + '</td>' +
+    '</tr></tbody>';
+
   var descMes = [
     ['Enero',   3.5,  6.9,  0.1, 4.1],
     ['Febrero', 4.3,  7.6,  0.1, 3.2],
@@ -3062,7 +3217,9 @@
     ['Mayo',    9.7, 14.6, 13.9, 9.0],
     ['Junio',   7.6, 11.8,  4.9, 4.3],
     ['Julio',  14.3,  6.4,  8.8, 1.1],
-    ['Agosto',  8.4,  9.0, 11.7, 0.1]
+    ['Agosto',  8.4,  9.0, 11.7, 0.1],
+    /* Septiembre sale de la tabla de los cinco canales; 2025 no tiene dato. */
+    ['Septiembre', null, descSep[0][1]/descSep[0][2]*100, null, descSep[2][1]/descSep[2][2]*100]
   ];
   var pc = function(v){ return nf1.format(v) + '%'; };
 
@@ -3593,7 +3750,7 @@
     ['Junio',      5466, 3498, 22, null, null],
     ['Julio',      5159, 1965, 32, 4773416, null],
     ['Agosto',     5872, 3376,  7,  840612, null],
-    ['Septiembre', 4906, 2216,  6, null, 'desigual']
+    ['Septiembre', 4821, 3266,  9, null, null]
   ];
 
   var pend = '<td class="num pendiente">___</td>';
@@ -3642,7 +3799,7 @@
       '</tbody>';
   }
   tablaAtribWA('t-atrib-wa-25', atribWA25, 'Total Ene–Dic');
-  tablaAtribWA('t-atrib-wa-26', atribWA26, 'Total Ene–13 sep');
+  tablaAtribWA('t-atrib-wa-26', atribWA26, 'Total Ene–Sep');
 
   /* ---------------- Resumen ejecutivo ---------------- */
   var hallazgos = [

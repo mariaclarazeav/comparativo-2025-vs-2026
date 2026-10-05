@@ -39,7 +39,8 @@ Cinco bloques, con los datos entregados tal cual:
    al hacer clic.
 5. **Leads / conversaciones / sesiones desde pauta** — 2025 completo vs 2026 parcial.
 6. **Descuentos por canal (ERP, B2C)** — descuentos, neto y % sobre venta neta por
-   canal, más la tendencia mensual del %. Sale del ERP de facturación, no de
+   canal, más la tendencia mensual del %. Septiembre 2026 trae por primera vez
+   los cinco canales y el ticket promedio de cada uno. Sale del ERP de facturación, no de
    Shopify, así que no se mezcla con los Bloques 1 y 2.
 7. **Auditoría del reporte de la agencia (MLO Growth)** — lo verificado contra
    nuestros datos de Meta, lo contradictorio, y el reparto real de los leads de
