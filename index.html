@@ -289,6 +289,7 @@
   }
   td.lft{ font-weight:600; }
   td.canal{ font-weight:400; color:var(--tinta-2); }
+  td.no-aplica{ color:var(--tinta-3); }
   tr.hija td{ background:var(--lavado); color:var(--tinta-2); font-size:13px; }
   tr.hija td.lft{ padding-left:30px; }
   tr.hija td.lft::before{ content:"↳"; color:var(--tinta-3); margin-right:7px; }
@@ -1335,6 +1336,42 @@
     </div>
   </section>
 
+  <!-- VENTA ONLINE POR SUBCANAL -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Venta online</span>
+      <h2>Venta online por subcanal</h2>
+      <span class="marca-morada">Dashboard operativo</span>
+    </div>
+    <p class="sub">En modo foco: WhatsApp (todos sus orígenes juntos, como un solo canal) y E-commerce, que son los dos que mueven el negocio online. Los otros tres subcanales quedan en «ver más».</p>
+    <div class="scroll"><table id="t-foco"></table></div>
+    <div class="nota">
+      <span class="etq">Placeholder</span>
+      <span>El presupuesto de agosto es un placeholder, así que el 77,6% de cumplimiento de ese mes no es comparable con el de septiembre.</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Lectura</span>
+      <span>La recuperación de septiembre viene de WhatsApp (de -22,9% a +16,6%); E-commerce crece menos que en agosto (+4,8% contra +7,0%). Redes y Marketplace explican la diferencia entre el +17,6% del total online y el +11,4% del foco.</span>
+    </div>
+    <div class="nota fuerte">
+      <span class="etq">Dos fuentes</span>
+      <span>
+        <b>Estas cifras son del dashboard operativo y no coinciden con las del ERP que están en la pestaña Descuentos</b>, para el mismo septiembre: WhatsApp aparece aquí con $92.788.381 y 408 tickets, y allá con $101.288.452 netos y 493 transacciones; el ticket promedio pasa de $227.423 aquí a $185.165 allá. El descuento sobre lista sí es el mismo dato del ERP. Falta decidir cuál de las dos fuentes manda antes de usar estas cifras para medir cumplimiento.
+      </span>
+    </div>
+
+    <details class="plegable">
+      <summary>Ver más — Darkstore, Marketplace y Redes</summary>
+      <div class="cuerpo">
+        <div class="scroll"><table id="t-otros-sub"></table></div>
+        <div class="nota">
+          <span class="etq">Alcance</span>
+          <span>De estos tres subcanales solo está cargado lo que vino del ERP en septiembre (neto, descuento, unidades y ticket). No hay venta vs 2025, ni cumplimiento de presupuesto, ni dato de agosto.</span>
+        </div>
+      </div>
+    </details>
+  </section>
+
   <!-- TENDENCIA -->
   <section class="ancha">
     <div class="cab">
@@ -1514,6 +1551,20 @@
     </div>
   </section>
 
+  <!-- PLATAFORMAS VS VENTA REAL -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Contraste</span>
+      <h2>Lo que reclaman las plataformas vs. lo que se vendió (septiembre)</h2>
+    </div>
+    <p class="sub">Sumar el valor de conversión que reporta cada plataforma y compararlo contra la venta que realmente ocurrió en el mes.</p>
+    <div class="scroll"><table id="t-reclamado"></table></div>
+    <div class="conclusion">
+      <span class="rot">Hallazgo confirmado</span>
+      Las plataformas reclaman más ventas de las que hubo: no pueden ser todas incrementales. Solo 9 de las 199 ventas de WhatsApp con origen etiquetado vienen de pauta. Para decisiones de presupuesto usar la venta real sobre la inversión total, no el ROAS de cada plataforma.
+    </div>
+  </section>
+
   <!-- BLOQUE 5 -->
   <section>
     <div class="cab">
@@ -1563,7 +1614,7 @@
             <dl id="dl-pauta-sep"></dl>
             <div class="nota">
               <span class="etq">Estimado</span>
-              <span>El valor de las 9 ventas de pauta (≈ $1.666.485) es un estimado con el ticket promedio de WhatsApp de septiembre ($185.165). Pendiente el detalle real de producto de esas 9 ventas.</span>
+              <span>El valor de las 9 ventas de pauta es un rango, no una cifra: <b>≈ $1,67M – $2,05M</b>, según se use el ticket promedio de WhatsApp del ERP ($185.165) o el del dashboard operativo ($227.423). Pendiente el detalle real de producto de esas 9 ventas.</span>
             </div>
             <div class="nota">
               <span class="etq">Alcance</span>
@@ -1592,6 +1643,10 @@
       <div class="nota info">
         <span class="etq">Mismo dato</span>
         <span>Las 9 ventas de «Anuncio (pauta)» son exactamente las 9 ventas cerradas de la rama de pauta del embudo: es el mismo dato visto desde otro ángulo, no se suman.</span>
+      </div>
+      <div class="nota">
+        <span class="etq">Piso</span>
+        <span>La tasa de cierre de pauta (0,29%) se calcula sobre las ventas etiquetadas: es un piso. Más de la mitad de las facturas del mes no tiene origen, así que la cifra real solo puede ser igual o mayor.</span>
       </div>
 
       <h4 class="tabla-anio">Tasa de cierre por origen</h4>
@@ -1653,6 +1708,24 @@
     </div>
   </section>
 
+
+  <!-- CONVERSIÓN DE WHATSAPP -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Conversión</span>
+      <h2>Tasa de conversión de WhatsApp</h2>
+    </div>
+    <p class="sub">Una sola definición: facturas de WhatsApp dividido entre los chats totales de B2Chat. Todos los orígenes juntos, arriba y abajo de la división.</p>
+    <div class="scroll"><table id="t-conv-wa"></table></div>
+    <div class="nota info">
+      <span class="etq">Contraste</span>
+      <span>Con la serie mensual del gráfico de B2Chat (5.872 y 4.906) da 5,6% y 8,3%: misma conclusión. El 10,2% → 13,2% del dashboard operativo divide facturas de todos los orígenes entre leads solo de pauta; no usar.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Definiciones</span>
+      <span>El total de leads tiene definiciones distintas según de dónde se saque (agosto: 5.602 / 5.582 / 5.872; septiembre: 4.821 / 4.906). Definir una oficial antes de publicar esta tasa fuera del equipo.</span>
+    </div>
+  </section>
 
   <!-- ZOOM ATRIBUCIÓN MENSUAL WHATSAPP -->
   <section>
@@ -1802,7 +1875,11 @@
     <div class="scroll"><table id="t-reconcilia"></table></div>
     <div class="conclusion">
       <span class="rot">Hallazgo confirmado</span>
-      328 pedidos con sesión web ≈ 325 «compra completada» del embudo (la diferencia es normal: una sesión puede generar más de un pedido). Los 367 pedidos restantes (52,8% del total, $110M+) no tienen ninguna sesión web asociada — consistente con ventas cerradas por WhatsApp, teléfono o cargadas manualmente a Shopify, que no pasan por el checkout online. Esto confirma que el sitio web y WhatsApp son, en la práctica, dos motores de venta distintos que hay que medir por separado, no un solo embudo.
+      Shopify (695 pedidos en agosto, 789 en septiembre) ≈ WhatsApp + E-commerce del dashboard operativo (697 y 800): Shopify recoge ambos canales. El corte con/sin sesión de agosto (328 / 367) se parece numéricamente a WhatsApp/E-commerce (331 / 366), pero no está confirmado a cuál corresponde cada uno. Se retira la afirmación de que los 367 pedidos sin sesión son de WhatsApp.
+    </div>
+    <div class="nota">
+      <span class="etq">Pendiente</span>
+      <span>Pedidos por canal de venta de Shopify (web / borrador / POS) de agosto y septiembre.</span>
     </div>
     <div class="nota">
       <span class="etq">Definición</span>
@@ -1955,8 +2032,10 @@
 (function(){
   var nf0 = new Intl.NumberFormat('es-CO', {maximumFractionDigits:0});
   var nf1 = new Intl.NumberFormat('es-CO', {minimumFractionDigits:1, maximumFractionDigits:1});
-  var u   = function(n){ return nf0.format(n); };
-  var cop = function(n){ return '$' + nf0.format(n); };
+  var nf2 = new Intl.NumberFormat('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
+  var u    = function(n){ return nf0.format(n); };
+  var cop  = function(n){ return '$' + nf0.format(n); };
+  var cop2 = function(n){ return '$' + nf2.format(n); };
 
   function varTxt(a,b){
     var v = (b/a - 1) * 100;
@@ -2428,6 +2507,75 @@
             '</tr></tbody></table></div>';
       }).join('') + '</div>';
   })();
+
+  /* ---------------- Venta online por subcanal (dashboard operativo) ----------------
+     El foco son WhatsApp y E-commerce; los demás subcanales van en «ver más»
+     con lo único que hay de ellos, que es el corte de septiembre del ERP. */
+  var foco = {
+    wa:  {venta:92788381, var25:16.6, ppto:92.8, tickets:408, upt:1.72, desc:13.2},
+    ec:  {venta:66204275, var25: 4.8, ppto:94.6, tickets:392, upt:1.46, desc: 7.6},
+    sep: {var25:11.4, ppto:93.5},
+    ago: {venta:135269304, var25:-12.5, ppto:77.6, tickets:697,
+          ticketWa:235315, ticketEc:156776}
+  };
+  var focoSepVenta   = foco.wa.venta + foco.ec.venta;
+  var focoSepTickets = foco.wa.tickets + foco.ec.tickets;
+  /* Margen tras descuento, suponiendo 60% de margen sobre precio de lista */
+  var margenTrasDesc = function(d){ return (1 - d/100 - 0.4) / (1 - d/100) * 100; };
+  var pp = function(v){ return (v > 0 ? '+' : '') + nf1.format(v) + '%'; };
+  var raya = '<td class="num no-aplica">—</td>';
+
+  var filasFoco = [
+    {rot:'Venta',
+     wa:cop(foco.wa.venta), ec:cop(foco.ec.venta),
+     sep:cop(focoSepVenta), ago:cop(foco.ago.venta)},
+    {rot:'Venta vs 2025',
+     wa:pp(foco.wa.var25), ec:pp(foco.ec.var25),
+     sep:pp(foco.sep.var25), ago:pp(foco.ago.var25)},
+    {rot:'Cumplimiento de presupuesto',
+     wa:nf1.format(foco.wa.ppto)+'%', ec:nf1.format(foco.ec.ppto)+'%',
+     sep:nf1.format(foco.sep.ppto)+'%',
+     ago:nf1.format(foco.ago.ppto)+'%<span class="marca-amarilla">Presupuesto placeholder</span>'},
+    {rot:'Tickets',
+     wa:u(foco.wa.tickets), ec:u(foco.ec.tickets),
+     sep:u(focoSepTickets), ago:u(foco.ago.tickets)},
+    {rot:'Ticket promedio',
+     wa:cop(Math.round(foco.wa.venta / foco.wa.tickets)),
+     ec:cop(Math.round(foco.ec.venta / foco.ec.tickets)),
+     sep:null,
+     ago:'<span class="val">WhatsApp ' + cop(foco.ago.ticketWa) +
+         ' · E-commerce ' + cop(foco.ago.ticketEc) + '</span>'},
+    {rot:'Unidades por ticket (UPT)',
+     wa:nf2.format(foco.wa.upt), ec:nf2.format(foco.ec.upt), sep:null, ago:null},
+    {rot:'Descuento sobre lista (ERP)',
+     wa:nf1.format(foco.wa.desc)+'%', ec:nf1.format(foco.ec.desc)+'%', sep:null, ago:null},
+    {rot:'Margen estimado tras descuento<span class="val">supone 60% de margen sobre lista</span>',
+     wa:'~'+nf1.format(margenTrasDesc(foco.wa.desc))+'%',
+     ec:'~'+nf1.format(margenTrasDesc(foco.ec.desc))+'%', sep:null, ago:null},
+    {rot:'Sesiones por ticket (E-commerce)',
+     wa:null, ec:u(264) + '<span class="val">agosto: 154</span>', sep:null, ago:null}
+  ];
+
+  document.getElementById('t-foco').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Métrica</th>' +
+        '<th class="gv" colspan="2">Septiembre</th>' +
+        '<th class="g26" colspan="2">Foco (WhatsApp + E-commerce)</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>WhatsApp</th><th>E-commerce</th><th>Septiembre</th><th>Agosto</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    filasFoco.map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f.rot + '</td>' +
+        (f.wa  === null ? raya : '<td class="num">' + f.wa  + '</td>') +
+        (f.ec  === null ? raya : '<td class="num">' + f.ec  + '</td>') +
+        (f.sep === null ? raya : '<td class="num">' + f.sep + '</td>') +
+        (f.ago === null ? raya : '<td class="num">' + f.ago + '</td>') +
+      '</tr>';
+    }).join('') + '</tbody>';
 
   /* ---------------- Tendencia por categoría ---------------- */
   var ordenCat = ['Fajas','Cinturilla','Short','Brasier'];
@@ -2987,9 +3135,6 @@
     '</tr></tbody>';
 
   /* ---------------- Bloque 4 ---------------- */
-  var nf2 = new Intl.NumberFormat('es-CO', {minimumFractionDigits:2, maximumFractionDigits:2});
-  var cop2 = function(n){ return '$' + nf2.format(n); };
-
   var totalLeads = 5582;
   var entradas = [
     ['ad (pauta)',     3251, true ],
@@ -3069,7 +3214,9 @@
   var botonSepChats = 1148;
   var invPautaSep   = 3142272;
   var ventasPautaSep = 9;
-  var ticketWaSep   = 185165;
+  var ticketWaSep   = 185165;   /* ERP */
+  var ticketWaSepOp = 227423;   /* dashboard operativo */
+  var cop1M = function(n){ return '$' + nf2.format(n / 1000000) + 'M'; };
 
   var entradasSep = [
     ['Pauta (Meta)',                     pautaSepConv,  true ],
@@ -3094,9 +3241,10 @@
     '<div class="fila fuerte"><dt>Costo por venta</dt><dd>' +
       cop(Math.round(invPautaSep / ventasPautaSep)) + '</dd></div>' +
     '<div class="fila"><dt>Valor de esas 9 ventas' +
-      '<span class="det">estimado: ' + u(ventasPautaSep) + ' × ticket promedio de WhatsApp de septiembre (' +
-      cop(ticketWaSep) + ')</span>' +
-    '</dt><dd>≈ ' + cop(ventasPautaSep * ticketWaSep) + '</dd></div>';
+      '<span class="det">según el ticket que se use: ERP ' + cop(ticketWaSep) +
+      ' o dashboard operativo ' + cop(ticketWaSepOp) + '</span>' +
+    '</dt><dd class="pendiente">≈ ' + cop1M(ventasPautaSep * ticketWaSep) + ' – ' +
+      cop1M(ventasPautaSep * ticketWaSepOp) + '</dd></div>';
 
   /* Ventas cerradas de septiembre por canal de origen */
   var canalesSep = [
@@ -3109,10 +3257,14 @@
   ];
   var canalesSepTot = canalesSep.reduce(function(a,c){ return a + c[1]; }, 0);
   var ventasAgoTot  = ventasTot[0];
+  var facturasWaSep = 408;
+  var sinOrigenSep  = facturasWaSep - canalesSepTot;
 
   document.getElementById('t-canales-sep').innerHTML =
     '<thead><tr class="campos">' +
-      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th><th>% de ventas</th>' +
+      '<th class="lft">Canal de origen</th><th>Ventas cerradas</th>' +
+      '<th class="wrap">% de las etiquetadas</th>' +
+      '<th class="wrap">% de las ' + u(facturasWaSep) + ' facturas</th>' +
     '</tr></thead><tbody>' +
     canalesSep.map(function(c){
       return '<tr' + (c[2] ? ' class="enlazada"' : '') + '>' +
@@ -3120,13 +3272,27 @@
           (c[2] ? '<span class="marca-morada">= rama de pauta</span>' : '') + '</td>' +
         '<td class="num">' + u(c[1]) + '</td>' +
         '<td class="num">' + nf1.format(c[1] / canalesSepTot * 100) + '%</td>' +
+        '<td class="num">' + nf1.format(c[1] / facturasWaSep * 100) + '%</td>' +
       '</tr>';
     }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total septiembre</td>' +
-      '<td class="num">' + u(canalesSepTot) +
+    '<tr class="sub-total">' +
+      '<td class="lft">Ventas con origen etiquetado' +
         '<span class="val">' + varTxt(ventasAgoTot, canalesSepTot).s + ' vs agosto (' +
         u(ventasAgoTot) + ')</span></td>' +
+      '<td class="num">' + u(canalesSepTot) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num">' + nf1.format(canalesSepTot / facturasWaSep * 100) + '%</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td class="lft">Sin origen etiquetado<span class="marca-amarilla">Sin atribuir</span></td>' +
+      '<td class="num pendiente">' + u(sinOrigenSep) + '</td>' +
+      '<td class="num pendiente">—</td>' +
+      '<td class="num pendiente">' + nf1.format(sinOrigenSep / facturasWaSep * 100) + '%</td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Facturas de WhatsApp · septiembre</td>' +
+      '<td class="num">' + u(facturasWaSep) + '</td>' +
+      '<td class="num">—</td>' +
       '<td class="num">100%</td>' +
     '</tr></tbody>';
 
@@ -3332,6 +3498,32 @@
       '<td class="num">' + nf2.format(ticketSepTot[0] / ticketSepTot[1]) + '</td>' +
       '<td class="num">' + cop(ticketSepTot[2]) + '</td>' +
     '</tr></tbody>';
+
+  /* El «ver más» del bloque de foco de la pestaña Ventas se dibuja aquí,
+     que es donde viven los únicos datos que hay de esos tres subcanales. */
+  var otrosSub = [
+    ['Dark Store', 'Darkstore'],
+    ['Merkaplace', 'Marketplace'],
+    ['Redes',      'Redes']
+  ];
+
+  document.getElementById('t-otros-sub').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Subcanal</th><th>Neto (ERP)</th><th>Descuento</th>' +
+      '<th>Unidades</th><th>Transacciones</th><th>Ticket promedio</th>' +
+    '</tr></thead><tbody>' +
+    otrosSub.map(function(o){
+      var d = descSep.filter(function(x){ return x[0] === o[0]; })[0];
+      var t = ticketSep.filter(function(x){ return x[0] === o[0]; })[0];
+      return '<tr>' +
+        '<td class="lft">' + o[1] + '<span class="val">en el ERP: ' + o[0] + '</span></td>' +
+        '<td class="num">' + cop(d[2]) + '</td>' +
+        '<td class="num pct">' + nf1.format(d[1] / d[2] * 100) + '%</td>' +
+        '<td class="num">' + u(t[1]) + '</td>' +
+        '<td class="num">' + u(t[2]) + '</td>' +
+        '<td class="num">' + cop(t[3]) + '</td>' +
+      '</tr>';
+    }).join('') + '</tbody>';
 
   var descMes = [
     ['Enero',   3.5,  6.9,  0.1, 4.1],
@@ -3847,6 +4039,35 @@
       '<td class="num">' + u(fuenteSepTot[1]) + '</td>' +
     '</tr></tbody>';
 
+  /* Conversión de WhatsApp con una sola definición: facturas / chats totales.
+     [mes, facturas, chats] */
+  var convWa = [
+    ['Agosto',     331, 5602],
+    ['Septiembre', 408, 4821]
+  ];
+
+  document.getElementById('t-conv-wa').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Mes</th><th>Facturas de WhatsApp</th>' +
+      '<th class="wrap">Chats totales (B2Chat)</th><th>Conversión</th>' +
+    '</tr></thead><tbody>' +
+    convWa.map(function(c){
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + u(c[2]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / c[2] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Variación</td>' +
+      '<td class="num">' + u(convWa[1][1] - convWa[0][1]) + '</td>' +
+      '<td class="num">' + u(convWa[1][2] - convWa[0][2]) + '</td>' +
+      '<td class="num pct">' +
+        pp(convWa[1][1]/convWa[1][2]*100 - convWa[0][1]/convWa[0][2]*100).replace('%', ' pp') +
+      '</td>' +
+    '</tr></tbody>';
+
   /* ---------------- Atribución mensual de pauta · WhatsApp ---------------- */
   /* [mes, total leads, leads pauta, contactos venta, valor aprox, aviso]
      aviso: 'roto'    = el total de B2Chat no es creíble ese mes
@@ -3925,6 +4146,54 @@
   tablaAtribWA('t-atrib-wa-25', atribWA25, 'Total Ene–Dic');
   tablaAtribWA('t-atrib-wa-26', atribWA26, 'Total Ene–Sep');
 
+  /* Lo que reclaman las plataformas contra la venta real de septiembre.
+     Todo lo derivado se calcula; solo entran los valores de origen. */
+  var recMeta   = 98578380;
+  var recGoogle = googleSepTot[1];          /* valor de conversión de Google */
+  var invMeta   = invSepMes;                /* inversión de Meta en septiembre */
+  var invGoogle = googleSepTot[0];
+  var ventaFoco = focoSepVenta;             /* WhatsApp + E-commerce */
+  var ventaShop = catSepTot[1];             /* neto de Shopify */
+  var reclamado = recMeta + recGoogle;
+  var invTotal  = invMeta + invGoogle;
+
+  document.getElementById('t-reclamado').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Concepto</th><th>Valor</th><th class="lft">De dónde sale</th>' +
+    '</tr></thead><tbody>' +
+    [
+      ['Meta · valor de conversión de compras', cop(recMeta),   'reportado por Meta'],
+      ['Google · valor de conversión',          cop(recGoogle), 'suma de las seis campañas'],
+      ['Venta WhatsApp + E-commerce',           cop(ventaFoco), 'dashboard operativo'],
+      ['Venta neta de Shopify',                 cop(ventaShop), 'Shopify, septiembre'],
+      ['Inversión Meta + Google',               cop(invTotal),  'suma de las dos plataformas']
+    ].map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + f[1] + '</td>' +
+        '<td class="lft canal">' + f[2] + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="sub-total">' +
+      '<td class="lft">Total reclamado por las plataformas</td>' +
+      '<td class="num">' + cop(reclamado) + '</td>' +
+      '<td class="lft canal">Meta + Google</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td class="lft">Reclamado ÷ venta<span class="val">por encima de 100% es imposible de sostener</span></td>' +
+      '<td class="num pct">' + nf0.format(Math.round(reclamado / ventaFoco * 100)) + '%' +
+        '<span class="val">contra Shopify: ' +
+        nf0.format(Math.round(reclamado / ventaShop * 100)) + '%</span></td>' +
+      '<td class="lft canal">dashboard operativo / Shopify</td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Retorno sobre la venta real</td>' +
+      '<td class="num pct">' + nf1.format(ventaFoco / invTotal) + 'x' +
+        '<span class="val">reportado: Meta ' + nf1.format(recMeta / invMeta) +
+        'x · Google ' + nf1.format(recGoogle / invGoogle) + 'x</span></td>' +
+      '<td class="lft canal">venta del foco ÷ inversión total</td>' +
+    '</tr></tbody>';
+
   /* ---------------- Resumen ejecutivo ---------------- */
   var hallazgos = [
     ['Las unidades caen, el valor sube',
@@ -3951,8 +4220,8 @@
     ['La pauta es el canal con peor tasa de cierre',
      'Pauta cierra 0,22% de sus leads, contra 6,7% de los canales propios y 58,3% de Walink. Tiene el mayor volumen y el peor rendimiento.',
      'whatsapp', 'WhatsApp'],
-    ['El sitio web y WhatsApp son dos motores separados',
-     'El 52,8% de los pedidos de Shopify ($110M) no tiene ninguna sesión web asociada: se cierran fuera del checkout online. No son un solo embudo y no se pueden medir como tal.',
+    ['Shopify recoge WhatsApp y E-commerce juntos',
+     'Los 695 pedidos de agosto y los 789 de septiembre cuadran con la suma de los dos canales del dashboard operativo (697 y 800). El 52,8% de los pedidos de agosto no tiene sesión web asociada, pero falta confirmar a qué canal corresponde cada grupo.',
      'sitio-web', 'Sitio web'],
     ['La atribución de ventas de Shopify no sirve para decidir',
      'El 74,3% de las ventas no tiene fuente asignada, y cuatro canales aparecen en $0 sin que eso signifique que no vendieron. Hace falta GA4 conectado.',
