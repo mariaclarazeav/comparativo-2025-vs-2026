@@ -5,22 +5,15 @@ fuentes de Google. Se abre directamente en el navegador.
 
 Cinco bloques, con los datos entregados tal cual:
 
-1. **Ventas generales por mes** — 4 categorías, ambos canales, enero–agosto,
-   más septiembre de 2026, que sale de otra fuente (categoria_tipo_producto de
-   Shopify) y por eso queda fuera del total comparable y sin dato en 2025.
-   Arriba, dos gráficos mensuales (unidades y valor) con eje ajustado al rango
-   de los datos; debajo, la tabla.
-2. **Categoría × canal comercial** — unidades y valor, con subtotales por categoría.
-   Debajo, «Venta online por subcanal» con los cinco subcanales del dashboard
-   online (FAJITEX_Dashboard_Online_Diario.xlsx, la fuente definitiva de la venta
-   online) y WhatsApp y E-commerce marcados como foco, la matriz de unidades por
-   mes y categoría,
-   una sección plegable con el detalle mes a mes de cada categoría por canal,
-   y la tabla de septiembre 2026 por categoría de Shopify, con las etiquetas sin agrupar.
-   Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto), cada uno
-   con el gráfico arriba y sus totales abajo, y eje vertical compartido desde cero: 2025 en nude oscuro `#9C7A56`, 2026 en morado `#4C1D6B`.
-   Al pasar el mouse por un mes, un tooltip muestra las unidades de cada año y
-   la diferencia 2026 − 2025 en unidades y en porcentaje.
+1. **Ventas por categoría** — Fajas, Short, Cinturilla y Brasier, Equipo de
+   WhatsApp y Sitio Web, enero–septiembre de los dos años. Sale de las 72 filas
+   del Excel dinámico (canal × categoría × mes) embebidas en el archivo: las
+   tarjetas, los gráficos y las cuatro tablas se calculan de ahí, y los filtros
+   de canal y categoría las recalculan todas. No incluye Accesorios, Vestido de
+   baño ni Sin categoría.
+2. **Septiembre 2026 por categoría — Shopify (e-commerce)**, **Venta online por
+   subcanal** (FAJITEX_Dashboard_Online_Diario.xlsx, fuente definitiva de la
+   venta online, con WhatsApp como un solo canal y el foco marcado).
 3. **Pauta Meta** — gráfico de inversión mensual 2025 vs 2026 (ambos años cortados
    al 13 de septiembre), tabla mensual completa (inversión, compras, ROAS y CPA),
    detalle por categoría (inversión, compras en número y valor estimado, ROAS, CPA
