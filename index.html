@@ -378,6 +378,84 @@
   .dot.verde{ background:var(--verde); }
   .dot.amarillo{ background:#E0A800; }
   .dot.rojo{ background:#D0342B; }
+  .dot.neutro{ background:var(--paper); border:1px solid var(--neutro-ln); }
+  .simb{
+    font-family:var(--cifra);
+    font-size:10px;
+    color:var(--tinta-3);
+    margin-right:4px;
+  }
+
+  /* ---------- Leyenda del semáforo ---------- */
+  .franja-sem{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px 20px;
+    margin:0 0 22px;
+    padding:9px 14px;
+    border:1px solid var(--linea);
+    background:var(--paper);
+    font-size:12.5px;
+    color:var(--tinta-2);
+  }
+  .franja-sem .item{ display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+  .ayuda-sem{ margin-left:auto; position:relative; }
+  .ayuda-sem > summary{
+    list-style:none;
+    cursor:pointer;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:1px solid var(--linea);
+    display:grid;
+    place-items:center;
+    font-family:var(--display);
+    font-weight:600;
+    font-size:12px;
+    color:var(--morado);
+  }
+  .ayuda-sem > summary::-webkit-details-marker{ display:none; }
+  .ayuda-sem > summary:focus-visible{ outline:2px solid var(--morado); outline-offset:2px; }
+  .ayuda-sem[open] > summary{ background:var(--morado); color:#FFFFFF; border-color:var(--morado); }
+  .ayuda-cuerpo{
+    position:absolute;
+    right:0;
+    top:30px;
+    z-index:6;
+    width:min(440px, calc(100vw - 52px));
+    background:var(--paper);
+    border:1px solid var(--linea);
+    border-top:3px solid var(--morado);
+    box-shadow:0 12px 34px rgba(26,26,26,.12);
+    padding:16px 18px 18px;
+    font-size:13px;
+    line-height:1.5;
+    color:var(--tinta-2);
+    text-align:left;
+    white-space:normal;
+  }
+  .ayuda-cuerpo h4{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--negro);
+    margin:0 0 10px;
+  }
+  .ayuda-cuerpo ol{ margin:0; padding-left:18px; display:grid; gap:9px; }
+  .ayuda-cuerpo li::marker{ font-family:var(--cifra); font-size:11px; color:var(--morado); }
+  .ayuda-cuerpo b{ color:var(--negro); font-weight:600; }
+  .ayuda-cuerpo .umbrales{ display:grid; gap:3px; margin-top:5px; }
+  .ayuda-cuerpo .umbrales span{ display:inline-flex; align-items:center; gap:6px; }
+
+  @media (max-width:720px){
+    .ayuda-sem{ margin-left:0; }
+    .ayuda-cuerpo{ right:auto; left:0; }
+  }
+  @media print{
+    .ayuda-cuerpo{ position:static; width:auto; box-shadow:none; margin-top:10px; }
+    .ayuda-sem > summary{ display:none; }
+  }
   td.estimado{ background:var(--amarillo-bg); color:var(--amarillo); }
   td.pendiente{
     background:var(--amarillo-bg);
@@ -1341,6 +1419,8 @@
       <span class="marca-morada">Equipo de WhatsApp + Sitio Web · Ene–Sep</span>
     </div>
     <p class="sub">Fajas, Short, Cinturilla y Brasier, mes a mes y por canal. Todo lo de abajo se calcula sobre las mismas 72 filas de origen: al mover un filtro se recalculan las tarjetas, los gráficos y las tablas.</p>
+
+    <div class="franja-sem" id="franja-sem"></div>
 
     <div class="filtros">
       <label for="f-canal">Canal
@@ -2348,15 +2428,85 @@
     }, [0,0,0,0]);
   }
 
-  /* Semáforo de la variación: verde si no cae, amarillo hasta -10%, rojo abajo */
-  function colorVar(v){ return v >= 0 ? 'verde' : (v >= -10 ? 'amarillo' : 'rojo'); }
+  /* ---- Umbrales del semáforo, en un solo sitio ----
+     Todo lo que pinta color —tablas, matriz, tarjetas, paneles y la propia
+     leyenda— lee de aquí, así que cambiar un número los mueve a todos. */
+  var SEM = {
+    VERDE:         0,    /* variación vs 2025: verde desde 0% */
+    AMARILLO:    -10,    /* amarillo hasta -10%; por debajo, rojo */
+    PPTO_VERDE:   95,    /* cumplimiento de presupuesto: verde desde 95% */
+    PPTO_AMARILLO:85     /* amarillo desde 85%; por debajo, rojo */
+  };
+  /* Además del color, un símbolo: se entiende impreso en blanco y negro */
+  var SIMBOLO = {verde:'▲', amarillo:'▬', rojo:'▼', neutro:'○'};
+  function marca(color){
+    return '<span class="dot ' + color + '"></span><span class="simb">' +
+           SIMBOLO[color] + '</span>';
+  }
+
+  function colorVar(v){
+    return v >= SEM.VERDE ? 'verde' : (v >= SEM.AMARILLO ? 'amarillo' : 'rojo');
+  }
+  function colorPpto(p){
+    return p >= SEM.PPTO_VERDE ? 'verde' : (p >= SEM.PPTO_AMARILLO ? 'amarillo' : 'rojo');
+  }
   function varSem(a, b){
     if (!a) { return '<td class="num var no-aplica">—</td>'; }
     var r = varTxt(a, b);
-    var f = r.v < 0 ? '▼' : (r.v > 0 ? '▲' : '—');
-    return '<td class="num var"><span class="dot ' + colorVar(r.v) + '"></span>' +
-           '<span class="flecha">' + f + '</span>' + r.s + '</td>';
+    return '<td class="num var">' + marca(colorVar(r.v)) + r.s + '</td>';
   }
+
+  /* Leyenda del semáforo, escrita con los mismos umbrales */
+  (function(){
+    var pct = function(v){ return nf0.format(Math.abs(v)) + '%'; };
+    document.getElementById('franja-sem').innerHTML =
+      '<span class="item">' + marca('verde') + 'Igual o mayor que 2025</span>' +
+      '<span class="item">' + marca('amarillo') + 'Cae hasta ' + pct(SEM.AMARILLO) + '</span>' +
+      '<span class="item">' + marca('rojo') + 'Cae más de ' + pct(SEM.AMARILLO) + '</span>' +
+      '<span class="item">' + marca('neutro') + 'Mes en curso (sin color)</span>' +
+      '<details class="ayuda-sem" id="ayuda-sem">' +
+        '<summary aria-label="¿Cómo leer el semáforo?" title="¿Cómo leer el semáforo?">?</summary>' +
+        '<div class="ayuda-cuerpo">' +
+          '<h4>¿Cómo leer el semáforo?</h4>' +
+          '<ol>' +
+            '<li><b>Variación vs 2025:</b> compara el mes de 2026 con el mismo mes de 2025, ' +
+              'en unidades y en ventas.' +
+              '<span class="umbrales">' +
+                '<span>' + marca('verde') + 'Verde: ' + pct(SEM.VERDE) + ' o más</span>' +
+                '<span>' + marca('amarillo') + 'Amarillo: entre −' + pct(SEM.AMARILLO) +
+                  ' y ' + pct(SEM.VERDE) + '</span>' +
+                '<span>' + marca('rojo') + 'Rojo: menor a −' + pct(SEM.AMARILLO) + '</span>' +
+              '</span>' +
+            '</li>' +
+            '<li><b>Cumplimiento de presupuesto</b> (solo en canales con presupuesto, ' +
+              'como WhatsApp y E-commerce).' +
+              '<span class="umbrales">' +
+                '<span>' + marca('verde') + 'Verde: ' + pct(SEM.PPTO_VERDE) + ' o más</span>' +
+                '<span>' + marca('amarillo') + 'Amarillo: de ' + pct(SEM.PPTO_AMARILLO) +
+                  ' a ' + pct(SEM.PPTO_VERDE) + '</span>' +
+                '<span>' + marca('rojo') + 'Rojo: menos de ' + pct(SEM.PPTO_AMARILLO) + '</span>' +
+              '</span>' +
+            '</li>' +
+            '<li><b>Mes en curso</b> (octubre): se muestra parcial, sin color y sin comparar ' +
+              'contra el mes completo de 2025.</li>' +
+            '<li>El semáforo mide <b>volumen de venta, no rentabilidad</b>. La eficiencia de ' +
+              'la inversión está en el módulo de Pauta paga.</li>' +
+            '<li><b>Fuentes:</b> ventas por categoría = pivote de Excel (4 categorías ' +
+              'principales); totales por canal = Dashboard Online diario.</li>' +
+          '</ol>' +
+        '</div>' +
+      '</details>';
+
+    /* En escritorio se abre al pasar el mouse; en móvil, al tocar */
+    var det = document.getElementById('ayuda-sem');
+    if (window.matchMedia && window.matchMedia('(hover: hover)').matches){
+      det.addEventListener('mouseenter', function(){ det.open = true; });
+      det.addEventListener('mouseleave', function(){ det.open = false; });
+    }
+    document.addEventListener('click', function(e){
+      if (det.open && !det.contains(e.target)) { det.open = false; }
+    });
+  })();
 
   /* Estado de los filtros */
   var filtroCanal = '', filtroCat = '';
@@ -2376,8 +2526,8 @@
       '<div class="par"><span class="a">' + u(t[0]) + '</span>' +
         '<span class="flecha">→</span><span class="b">' + u(t[2]) + ' u</span></div>' +
       '<div class="pie">' +
-        '<span class="dot ' + colorVar(vU.v) + '"></span>' + vU.s + ' en unidades · ' +
-        cop(t[3]) + ' <span class="dot ' + colorVar(vV.v) + '"></span>' + vV.s + ' en ventas' +
+        marca(colorVar(vU.v)) + vU.s + ' en unidades · ' +
+        cop(t[3]) + ' ' + marca(colorVar(vV.v)) + vV.s + ' en ventas' +
       '</div>' +
     '</div>';
   }
@@ -2599,7 +2749,6 @@
     document.getElementById('paneles').innerHTML = cats.map(function(cat){
       var t = sumaVentas(function(r){ return pasa(r) && r[1] === cat; });
       var v = varTxt(t[0], t[2]);
-      var f = v.v < 0 ? '▼' : (v.v > 0 ? '▲' : '—');
       return '<div class="panel" data-cat="' + cat + '">' +
         '<h3>' + cat + '</h3>' +
         bloqueGrafico('cat-' + cat, {
@@ -2614,7 +2763,7 @@
           '<span class="a">' + u(t[0]) + '</span>' +
           '<span class="flecha">→</span>' +
           '<span class="b">' + u(t[2]) + '</span>' +
-          '<span class="var"><span class="dot ' + colorVar(v.v) + '"></span>' + f + ' ' + v.s + '</span>' +
+          '<span class="var">' + marca(colorVar(v.v)) + v.s + '</span>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -2695,6 +2844,8 @@
      online. [subcanal, venta, unidades, tickets, presupuesto, venta 2025, foco]
      null = no hay dato todavía; 'na' = no aplica (subcanal sin base en 2025). */
   var FALTA = '[completar con dato real]';
+  var txtPpto   = function(p){ return marca(colorPpto(p)) + nf1.format(p) + '%'; };
+  var celdaPpto = function(p){ return '<td class="num pct">' + txtPpto(p) + '</td>'; };
   var pendTd = function(txt){ return '<td class="num pendiente">' + (txt || FALTA) + '</td>'; };
 
   var subcanales = [
@@ -2737,8 +2888,7 @@
         (naBase ? '<td class="num no-aplica">—</td>'
                 : c[5] === null ? pendTd('—') : varTd(c[5], c[1])) +
         (c[4] === null ? pendTd() : '<td class="num">' + cop(c[4]) + '</td>') +
-        (c[4] === null ? pendTd('—')
-                       : '<td class="num pct">' + nf1.format(c[1] / c[4] * 100) + '%</td>') +
+        (c[4] === null ? pendTd('—') : celdaPpto(c[1] / c[4] * 100)) +
         (c[3] === null ? pendTd('—')
                        : '<td class="num">' + cop(Math.round(c[1] / c[3])) + '</td>') +
       '</tr>';
@@ -2751,7 +2901,7 @@
       '<td class="num">' + cop(sumaFoco[4]) + '</td>' +
       varTd(sumaFoco[4], sumaFoco[0]) +
       '<td class="num">' + cop(sumaFoco[3]) + '</td>' +
-      '<td class="num pct">' + nf1.format(sumaFoco[0] / sumaFoco[3] * 100) + '%</td>' +
+      celdaPpto(sumaFoco[0] / sumaFoco[3] * 100) +
       '<td class="num">' + cop(Math.round(sumaFoco[0] / sumaFoco[2])) + '</td>' +
     '</tr>' +
     '<tr class="total">' +
@@ -2789,9 +2939,9 @@
      wa:varTxt(foco.wa.v25, foco.wa.venta).s, ec:varTxt(foco.ec.v25, foco.ec.venta).s,
      sep:varTxt(foco.wa.v25 + foco.ec.v25, focoSepVenta).s, ago:pp(foco.ago.var25)},
     {rot:'Cumplimiento de presupuesto',
-     wa:nf1.format(foco.wa.venta / foco.wa.ppto * 100)+'%',
-     ec:nf1.format(foco.ec.venta / foco.ec.ppto * 100)+'%',
-     sep:nf1.format(focoSepVenta / (foco.wa.ppto + foco.ec.ppto) * 100)+'%',
+     wa:txtPpto(foco.wa.venta / foco.wa.ppto * 100),
+     ec:txtPpto(foco.ec.venta / foco.ec.ppto * 100),
+     sep:txtPpto(focoSepVenta / (foco.wa.ppto + foco.ec.ppto) * 100),
      ago:nf1.format(foco.ago.ppto)+'%<span class="marca-amarilla">Presupuesto placeholder</span>'},
     {rot:'Unidades',
      wa:u(foco.wa.unidades), ec:u(foco.ec.unidades),
