@@ -1296,7 +1296,7 @@
       <span class="num-bloque">Bloque 01</span>
       <h2>Ventas generales por mes</h2>
     </div>
-    <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año, más septiembre de 2026, que viene de otra fuente. Pase el mouse sobre cualquier mes del gráfico para ver el detalle.</p>
+    <p class="sub">4 categorías, ambos canales. Enero – agosto de cada año, más septiembre de 2026, que es la vista de Shopify (e-commerce). Pase el mouse sobre cualquier mes del gráfico para ver el detalle.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -1304,8 +1304,8 @@
     <div class="graficos-b1" id="graficos-b1"></div>
     <div class="scroll"><table id="t-mes"></table></div>
     <div class="nota">
-      <span class="etq">Otra fuente</span>
-      <span>Septiembre sale de <b>categoria_tipo_producto de Shopify</b>, no del pivote de canal comercial que alimenta los demás meses. No tiene equivalente en 2025 y no entra en el total Ene–Ago: es un dato nuevo puesto al lado, no una continuación de la misma serie.</span>
+      <span class="etq">Shopify (e-commerce)</span>
+      <span>Septiembre es la vista de Shopify, que cubre el e-commerce; los demás meses salen del pivote de canal comercial. No tiene equivalente en 2025, no entra en el total Ene–Ago y no es el total de venta online del mes: ese está en «Venta online por subcanal» y vale $195.904.828.</span>
     </div>
   </section>
 
@@ -1323,16 +1323,12 @@
       <div id="detalle-mes"></div>
     </details>
 
-    <h3 class="sub-cab">Septiembre 2026 — por categoría</h3>
-    <p class="sub">Las categorías vienen como las nombra Shopify, sin agrupar. No hay corte por canal en esta fuente, así que no se puede comparar columna a columna con la tabla de arriba.</p>
+    <h3 class="sub-cab">Septiembre 2026 por categoría — Shopify (e-commerce)</h3>
+    <p class="sub">Vista aparte: el desglose por categoría que da Shopify, que cubre el e-commerce. Su total ($166.988.522) no es el total de venta online del mes y no se suma ni se compara peso a peso con el del dashboard ($195.904.828).</p>
     <div class="scroll"><table id="t-cat-sep"></table></div>
-    <div class="nota">
-      <span class="etq">Etiquetas</span>
-      <span>«Faja» y «Fajas» aparecen como categorías separadas en Shopify — probablemente el mismo producto mal etiquetado. Pendiente unificar con el equipo de catálogo.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Fuente</span>
-      <span>Septiembre viene de <b>categoria_tipo_producto de Shopify</b>, no del pivote de canal comercial de los meses anteriores. No mezclar estas filas con las columnas de WhatsApp y Sitio Web de arriba sin aclarar de dónde sale cada una.</span>
+    <div class="nota info">
+      <span class="etq">Unificado</span>
+      <span>«Faja» y «Fajas» venían separadas en Shopify y son la misma categoría: quedan sumadas en <b>Fajas</b> (327 unidades, $71.871.050).</span>
     </div>
   </section>
 
@@ -1341,9 +1337,16 @@
     <div class="cab">
       <span class="num-bloque">Venta online</span>
       <h2>Venta online por subcanal</h2>
-      <span class="marca-morada">Dashboard operativo</span>
+      <span class="marca-morada">FAJITEX_Dashboard_Online_Diario.xlsx</span>
     </div>
-    <p class="sub">En modo foco: WhatsApp (todos sus orígenes juntos, como un solo canal) y E-commerce, que son los dos que mueven el negocio online. Los otros tres subcanales quedan en «ver más».</p>
+    <p class="sub">Fuente definitiva de la venta online. WhatsApp va como un solo canal, con todos sus orígenes juntos; junto con E-commerce forman el foco. Septiembre de 2026.</p>
+    <div class="scroll"><table id="t-foco-canales"></table></div>
+    <div class="nota">
+      <span class="etq">Por completar</span>
+      <span>Del dashboard llegan la venta y las unidades de los cinco subcanales, pero los tickets y el presupuesto solo de los dos del foco; Darkstore no trae base de 2025 y Marketplace no tiene base porque es nuevo. El +17,6% del total es el que reporta el dashboard: no se puede recomponer sumando la columna de 2025 mientras falten esas bases.</span>
+    </div>
+
+    <h3 class="sub-cab">Foco — WhatsApp y E-commerce en detalle</h3>
     <div class="scroll"><table id="t-foco"></table></div>
     <div class="nota">
       <span class="etq">Placeholder</span>
@@ -1353,23 +1356,10 @@
       <span class="etq">Lectura</span>
       <span>La recuperación de septiembre viene de WhatsApp (de -22,9% a +16,6%); E-commerce crece menos que en agosto (+4,8% contra +7,0%). Redes y Marketplace explican la diferencia entre el +17,6% del total online y el +11,4% del foco.</span>
     </div>
-    <div class="nota fuerte">
-      <span class="etq">Dos fuentes</span>
-      <span>
-        <b>Estas cifras son del dashboard operativo y no coinciden con las del ERP que están en la pestaña Descuentos</b>, para el mismo septiembre: WhatsApp aparece aquí con $92.788.381 y 408 tickets, y allá con $101.288.452 netos y 493 transacciones; el ticket promedio pasa de $227.423 aquí a $185.165 allá. El descuento sobre lista sí es el mismo dato del ERP. Falta decidir cuál de las dos fuentes manda antes de usar estas cifras para medir cumplimiento.
-      </span>
+    <div class="nota info">
+      <span class="etq">Descuento y margen</span>
+      <span>El descuento sobre lista y el margen estimado salen del ERP, que es el sistema donde se factura; la venta, las unidades y los tickets salen del dashboard online.</span>
     </div>
-
-    <details class="plegable">
-      <summary>Ver más — Darkstore, Marketplace y Redes</summary>
-      <div class="cuerpo">
-        <div class="scroll"><table id="t-otros-sub"></table></div>
-        <div class="nota">
-          <span class="etq">Alcance</span>
-          <span>De estos tres subcanales solo está cargado lo que vino del ERP en septiembre (neto, descuento, unidades y ticket). No hay venta vs 2025, ni cumplimiento de presupuesto, ni dato de agosto.</span>
-        </div>
-      </div>
-    </details>
   </section>
 
   <!-- TENDENCIA -->
@@ -1385,7 +1375,14 @@
     </div>
     <div class="paneles" id="paneles"></div>
     <div id="nota-tendencia"></div>
-    <div class="scroll" style="margin-top:28px"><table id="t-cat-mes"></table></div>
+
+    <h3 class="sub-cab">Unidades — mes × categoría</h3>
+    <p class="sub">Cada mes con sus dos años uno debajo del otro y la variación. Las celdas sin dato dicen qué falta, no cero.</p>
+    <div class="scroll"><table id="t-cat-mes"></table></div>
+    <div class="nota">
+      <span class="etq">Por completar</span>
+      <span>Accesorios, Vestido de baño y Sin categoría solo existen en la vista de Shopify de septiembre de 2026; de enero a agosto no hay desglose de esas categorías y Brasier no aparece en el corte de septiembre. Septiembre de 2025 no tiene dato por categoría.</span>
+    </div>
   </section>
   </div>
 
@@ -1420,21 +1417,18 @@
       <span>El 7% del presupuesto que va a B2B genera el costo por resultado más barato de toda la cuenta (~$5.163 por lead, frente a $27.000-$37.700 de CPA en las categorías B2C) — pero esos 175 leads siguen 100% sin avanzar de «CREATED» en el CRM (ver hallazgo del archivo de leads B2B).</span>
     </div>
     <h4 class="tabla-anio">Detalle del gasto B2C</h4>
-    <div class="scroll"><table id="t-b2c-det"></table></div>
+    <p class="sub">Está en <a href="#meta-sep-categoria">Septiembre 2026 por categoría</a>, más abajo en este bloque, con el CPA y el semáforo de cada una.</p>
     <div class="nota info">
       <span class="etq">Hallazgo</span>
       <span>B2C concentra el 93% del presupuesto de Meta en septiembre, con un CPA que pesa entre 12% y 30% del ticket en las tres categorías medibles, cuando el umbral de rentabilidad es 8% — entre 1,5 y 3,8 veces por encima. Contrasta con el 7% que va a B2B, que corre muy por debajo de su propio umbral de costo.</span>
     </div>
     <div class="nota">
       <span class="etq">Periodo</span>
-      <span>Este corte se declara de septiembre, pero B2C y B2B suman $16.845.861: $456.697 más que la inversión de Meta de septiembre en la tabla mensual ($16.389.164). Dentro del propio corte, el detalle B2C suma $15.363.729 y deja $295.896 sin asignar frente a la fila de B2C. Falta cuadrar las dos fuentes antes de cruzar estas cifras con las demás tablas.</span>
+      <span>B2C y B2B suman $16.845.861, que son $456.697 más que la inversión de Meta de septiembre en la tabla mensual ($16.389.164). Falta cuadrar los dos cortes antes de cruzar estas cifras con las demás tablas.</span>
     </div>
-    <div class="nota fuerte">
-      <span class="etq">Contradicción</span>
-      <span>
-        <b>Esta tabla y la de <a href="#meta-sep-categoria">Septiembre 2026 — por categoría</a> dicen cosas opuestas sobre el mismo mes.</b>
-        Allá, Fajas y Cinturilla aparecen sin inversión rastreable y el 78,1% del gasto queda sin clasificar; aquí, Fajas tiene $5.273.012, Cinturilla $283.087 y solo $1.479.301 (9%) queda sin producto. Short también cambia: $3.588.454 y 119 compras allá, $8.328.329 y 221 compras aquí. Una de las dos lecturas está mal, y el hallazgo confirmado de ese bloque depende de cuál sea: hay que resolverlo antes de usar cualquiera de las dos para decidir presupuesto.
-      </span>
+    <div class="nota info">
+      <span class="etq">Mismo dato</span>
+      <span>El detalle por categoría del lado B2C es el de <a href="#meta-sep-categoria">Septiembre 2026 por categoría</a>, más abajo en este mismo bloque: está una sola vez, no repetido.</span>
     </div>
 
     <h3 class="sub-cab">Pauta por categoría</h3>
@@ -1463,13 +1457,15 @@
       <span>45% del gasto en 2025 y 32% en 2026 no se pudo categorizar por producto (campañas Advantage+/Catálogo) — este bloque es parcial.</span>
     </div>
 
-    <h3 class="sub-cab" id="meta-sep-categoria">Septiembre 2026 — por categoría</h3>
-    <p class="sub">Solo lo que se puede atribuir a una categoría. Las filas sin inversión rastreable se dejan marcadas, no en cero.</p>
+    <h3 class="sub-cab" id="meta-sep-categoria">Septiembre 2026 por categoría</h3>
+    <p class="sub">Según el conjunto de anuncios. Solo 1,8% del gasto queda sin clasificar por categoría, muy lejos del 32-45% de los meses anteriores.</p>
     <div class="scroll"><table id="t-pauta-sep"></table></div>
-
-    <div class="conclusion">
-      <span class="rot">Hallazgo confirmado</span>
-      En septiembre, 78,1% de la inversión de Meta no se puede atribuir a categoría — el peor mes registrado (antes 32-45%). Ninguna campaña con gasto relevante nombra «Faja» en septiembre; Fajas es la categoría que más factura en Shopify este mes ($70,2 M) pero no tiene inversión de Meta rastreable.
+    <div class="nota fuerte">
+      <span class="etq">No cuadra</span>
+      <span>
+        <b>Las categorías no suman el total del mes.</b>
+        Short, Fajas, Cinturilla y «Sin clasificar» dan $14.180.324; sumando la línea de WhatsApp/Mensajes llegan a $15.659.625, que es el total B2C. Contra los $16.389.164 del mes faltan $729.539 sin explicar, y el gasto B2B ($1.186.236) tampoco cabe dentro de esa diferencia. Hace falta la apertura completa del mes por conjunto de anuncios para cerrarlo.
+      </span>
     </div>
 
     <div class="acciones">
@@ -1936,7 +1932,7 @@
     <div class="cab">
       <span class="num-bloque">Bloque 06</span>
       <h2>Descuentos por canal (ERP, B2C)</h2>
-      <span class="marca-morada">Otra fuente</span>
+      <span class="marca-morada">ERP de facturación</span>
     </div>
     <p class="sub">Sale del ERP de facturación, que es un sistema distinto a Shopify, y por ahora solo cubre B2C. No mezclar estas cifras con las de los Bloques 1 y 2, que vienen de Shopify.</p>
     <div class="scroll"><table id="t-desc"></table></div>
@@ -1956,8 +1952,8 @@
     <h3 class="sub-cab">Ticket promedio por canal, septiembre</h3>
     <div class="scroll"><table id="t-ticket-sep"></table></div>
     <div class="nota">
-      <span class="etq">Otra fuente</span>
-      <span>Sale del ERP/B2Chat y suma $192,6 M, distinto de los $167,0 M que reporta Shopify para el mismo septiembre. No sumar ni comparar peso a peso con las tablas de Shopify.</span>
+      <span class="etq">Alcance</span>
+      <span>Esta es la vista del ERP de facturación, que es donde se mide el descuento. Para la venta, las unidades y el ticket de la venta online manda el dashboard online: ahí WhatsApp de septiembre son 703 unidades en 408 tickets con ticket promedio de $227.423, no las 600 en 493 de esta tabla.</span>
     </div>
 
     <h3 class="sub-cab">Tendencia mensual del % de descuento sobre venta neta</h3>
@@ -2214,7 +2210,7 @@
     ['Agosto',    906, 148782562, 831, 134938835]
   ];
 
-  /* Septiembre 2026 sale de otra fuente (categoria_tipo_producto de Shopify),
+  /* Septiembre 2026 es la vista de Shopify (e-commerce) por categoría,
      así que va aparte: no entra en el total comparable Ene–Ago y no tiene
      equivalente en 2025. */
   var mesSep = ['Septiembre', null, null, 1145, 166988522];
@@ -2245,7 +2241,7 @@
     var falta25 = m[1] === null;
     return '<tr>' +
       '<td class="lft">' + m[0] +
-        (falta25 ? '<span class="marca-amarilla">Otra fuente</span>' : '') + '</td>' +
+        (falta25 ? '<span class="marca-morada">Shopify (e-commerce)</span>' : '') + '</td>' +
       (falta25
         ? '<td class="num pendiente">___</td><td class="num pendiente">___</td>'
         : '<td class="num">' + u(m[1]) + '</td><td class="num">' + cop(m[2]) + '</td>') +
@@ -2262,7 +2258,7 @@
 
   var pie =
     '<tr class="total">' +
-      '<td class="lft">Total Ene–Ago<span class="val">sin septiembre, que viene de otra fuente</span></td>' +
+      '<td class="lft">Total Ene–Ago<span class="val">sin septiembre, que es la vista de Shopify</span></td>' +
       '<td class="num">' + u(TOTAL.u25) + '</td>' +
       '<td class="num">' + cop(TOTAL.v25) + '</td>' +
       '<td class="num">' + u(TOTAL.u26) + '</td>' +
@@ -2272,7 +2268,7 @@
 
   document.getElementById('graficos-b1').innerHTML =
     '<div class="grafico-b1">' +
-      '<div class="rot">Unidades por mes <span class="eje">eje desde 700 · septiembre solo 2026, de otra fuente</span></div>' +
+      '<div class="rot">Unidades por mes <span class="eje">eje desde 700 · septiembre solo 2026, vista de Shopify</span></div>' +
       bloqueGrafico('b1-und', {
         a: mesesG.map(function(m){ return m[1]; }),
         b: mesesG.map(function(m){ return m[3]; }),
@@ -2283,7 +2279,7 @@
       }) +
     '</div>' +
     '<div class="grafico-b1">' +
-      '<div class="rot">Valor por mes <span class="eje">eje desde $100 M · septiembre solo 2026, de otra fuente</span></div>' +
+      '<div class="rot">Valor por mes <span class="eje">eje desde $100 M · septiembre solo 2026, vista de Shopify</span></div>' +
       bloqueGrafico('b1-val', {
         a: mesesG.map(function(m){ return m[2]; }),
         b: mesesG.map(function(m){ return m[4]; }),
@@ -2388,11 +2384,10 @@
   /* Septiembre 2026 por categoría, tal como las nombra Shopify.
      [categoría, unidades, valor, marca] */
   var catSep = [
-    ['Faja',            317, 70166836, 'duplicado'],
+    ['Fajas',           327, 71871050, null],
     ['Short',           455, 56833820, null],
     ['Accesorios',       95,  6201098, null],
     ['Cinturilla',       39,  5811887, null],
-    ['Fajas',            10,  1704214, 'duplicado'],
     ['Vestido de baño',   1,    82319, null],
     ['Sin categoría',   228, 26188348, 'null']
   ];
@@ -2407,7 +2402,6 @@
       var flojo = c[3] !== null;
       return '<tr>' +
         '<td class="lft">' + c[0] +
-          (c[3] === 'duplicado' ? '<span class="marca-amarilla">Posible duplicado</span>' : '') +
           (c[3] === 'null' ? '<span class="marca-amarilla">Sin etiqueta</span>' : '') + '</td>' +
         '<td class="num' + (flojo ? ' pendiente' : '') + '">' + u(c[1]) + '</td>' +
         '<td class="num' + (flojo ? ' pendiente' : '') + '">' + cop(c[2]) + '</td>' +
@@ -2508,15 +2502,89 @@
       }).join('') + '</div>';
   })();
 
-  /* ---------------- Venta online por subcanal (dashboard operativo) ----------------
-     El foco son WhatsApp y E-commerce; los demás subcanales van en «ver más»
-     con lo único que hay de ellos, que es el corte de septiembre del ERP. */
+  /* ---------------- Venta online por subcanal ----------------
+     FAJITEX_Dashboard_Online_Diario.xlsx es la fuente definitiva de la venta
+     online. [subcanal, venta, unidades, tickets, presupuesto, venta 2025, foco]
+     null = no hay dato todavía; 'na' = no aplica (subcanal sin base en 2025). */
+  var FALTA = '[completar con dato real]';
+  var pendTd = function(txt){ return '<td class="num pendiente">' + (txt || FALTA) + '</td>'; };
+
+  var subcanales = [
+    ['WhatsApp',    92788381, 703,  408, 100000000, 79556154, true ],
+    ['E-commerce',  66204275, 574,  392,  70000000, 63191730, true ],
+    ['Darkstore',    7481882,  51, null,      null,     null, false],
+    ['Marketplace', 12380187,  81, null,      null,      'na', false],
+    ['Redes',       17050103,  93, null,      null, 10484264, false]
+  ];
+  var TOTAL_ONLINE = {venta:195904828, unidades:1502, tickets:995, var25:17.6};
+
+  var sumaFoco = subcanales.filter(function(c){ return c[6]; })
+    .reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2], a[2]+c[3], a[3]+c[4], a[4]+c[5]]; },
+            [0,0,0,0,0]);
+
+  document.getElementById('t-foco-canales').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Subcanal</th>' +
+        '<th class="g26" colspan="3">Septiembre 2026</th>' +
+        '<th class="g25" colspan="2">Contra 2025</th>' +
+        '<th class="gv" colspan="3">Presupuesto y ticket</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Venta</th><th>Unidades</th><th>Tickets</th>' +
+        '<th>Venta 2025</th><th>Var.</th>' +
+        '<th>Presupuesto</th><th>Cumplimiento</th><th>Ticket promedio</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    subcanales.map(function(c){
+      var naBase = c[5] === 'na';
+      return '<tr' + (c[6] ? ' class="enlazada"' : '') + '>' +
+        '<td class="lft">' + c[0] +
+          (c[6] ? '<span class="marca-morada">Foco</span>' : '') + '</td>' +
+        '<td class="num">' + cop(c[1]) + '</td>' +
+        '<td class="num">' + u(c[2]) + '</td>' +
+        (c[3] === null ? pendTd() : '<td class="num">' + u(c[3]) + '</td>') +
+        (naBase ? '<td class="num no-aplica">—</td>'
+                : c[5] === null ? pendTd() : '<td class="num">' + cop(c[5]) + '</td>') +
+        (naBase ? '<td class="num no-aplica">—</td>'
+                : c[5] === null ? pendTd('—') : varTd(c[5], c[1])) +
+        (c[4] === null ? pendTd() : '<td class="num">' + cop(c[4]) + '</td>') +
+        (c[4] === null ? pendTd('—')
+                       : '<td class="num pct">' + nf1.format(c[1] / c[4] * 100) + '%</td>') +
+        (c[3] === null ? pendTd('—')
+                       : '<td class="num">' + cop(Math.round(c[1] / c[3])) + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="sub-total">' +
+      '<td class="lft">Foco · WhatsApp + E-commerce</td>' +
+      '<td class="num">' + cop(sumaFoco[0]) + '</td>' +
+      '<td class="num">' + u(sumaFoco[1]) + '</td>' +
+      '<td class="num">' + u(sumaFoco[2]) + '</td>' +
+      '<td class="num">' + cop(sumaFoco[4]) + '</td>' +
+      varTd(sumaFoco[4], sumaFoco[0]) +
+      '<td class="num">' + cop(sumaFoco[3]) + '</td>' +
+      '<td class="num pct">' + nf1.format(sumaFoco[0] / sumaFoco[3] * 100) + '%</td>' +
+      '<td class="num">' + cop(Math.round(sumaFoco[0] / sumaFoco[2])) + '</td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Total venta online</td>' +
+      '<td class="num">' + cop(TOTAL_ONLINE.venta) + '</td>' +
+      '<td class="num">' + u(TOTAL_ONLINE.unidades) + '</td>' +
+      '<td class="num">' + u(TOTAL_ONLINE.tickets) + '</td>' +
+      pendTd() +
+      '<td class="num var"><span class="flecha">▲</span>+' +
+        nf1.format(TOTAL_ONLINE.var25) + '%</td>' +
+      pendTd() + pendTd('—') +
+      '<td class="num">' + cop(Math.round(TOTAL_ONLINE.venta / TOTAL_ONLINE.tickets)) + '</td>' +
+    '</tr></tbody>';
+
+  /* Detalle de los dos canales del foco. La venta, las unidades y los tickets
+     salen del dashboard online; el descuento, del ERP. */
   var foco = {
-    wa:  {venta:92788381, var25:16.6, ppto:92.8, tickets:408, upt:1.72, desc:13.2},
-    ec:  {venta:66204275, var25: 4.8, ppto:94.6, tickets:392, upt:1.46, desc: 7.6},
-    sep: {var25:11.4, ppto:93.5},
-    ago: {venta:135269304, var25:-12.5, ppto:77.6, tickets:697,
-          ticketWa:235315, ticketEc:156776}
+    wa: {venta:92788381, unidades:703, tickets:408, ppto:100000000, v25:79556154, desc:13.2},
+    ec: {venta:66204275, unidades:574, tickets:392, ppto: 70000000, v25:63191730, desc: 7.6},
+    ago:{venta:135269304, var25:-12.5, ppto:77.6, tickets:697,
+         ticketWa:235315, ticketEc:156776}
   };
   var focoSepVenta   = foco.wa.venta + foco.ec.venta;
   var focoSepTickets = foco.wa.tickets + foco.ec.tickets;
@@ -2530,23 +2598,29 @@
      wa:cop(foco.wa.venta), ec:cop(foco.ec.venta),
      sep:cop(focoSepVenta), ago:cop(foco.ago.venta)},
     {rot:'Venta vs 2025',
-     wa:pp(foco.wa.var25), ec:pp(foco.ec.var25),
-     sep:pp(foco.sep.var25), ago:pp(foco.ago.var25)},
+     wa:varTxt(foco.wa.v25, foco.wa.venta).s, ec:varTxt(foco.ec.v25, foco.ec.venta).s,
+     sep:varTxt(foco.wa.v25 + foco.ec.v25, focoSepVenta).s, ago:pp(foco.ago.var25)},
     {rot:'Cumplimiento de presupuesto',
-     wa:nf1.format(foco.wa.ppto)+'%', ec:nf1.format(foco.ec.ppto)+'%',
-     sep:nf1.format(foco.sep.ppto)+'%',
+     wa:nf1.format(foco.wa.venta / foco.wa.ppto * 100)+'%',
+     ec:nf1.format(foco.ec.venta / foco.ec.ppto * 100)+'%',
+     sep:nf1.format(focoSepVenta / (foco.wa.ppto + foco.ec.ppto) * 100)+'%',
      ago:nf1.format(foco.ago.ppto)+'%<span class="marca-amarilla">Presupuesto placeholder</span>'},
+    {rot:'Unidades',
+     wa:u(foco.wa.unidades), ec:u(foco.ec.unidades),
+     sep:u(foco.wa.unidades + foco.ec.unidades), ago:null},
     {rot:'Tickets',
      wa:u(foco.wa.tickets), ec:u(foco.ec.tickets),
      sep:u(focoSepTickets), ago:u(foco.ago.tickets)},
     {rot:'Ticket promedio',
      wa:cop(Math.round(foco.wa.venta / foco.wa.tickets)),
      ec:cop(Math.round(foco.ec.venta / foco.ec.tickets)),
-     sep:null,
+     sep:cop(Math.round(focoSepVenta / focoSepTickets)),
      ago:'<span class="val">WhatsApp ' + cop(foco.ago.ticketWa) +
          ' · E-commerce ' + cop(foco.ago.ticketEc) + '</span>'},
     {rot:'Unidades por ticket (UPT)',
-     wa:nf2.format(foco.wa.upt), ec:nf2.format(foco.ec.upt), sep:null, ago:null},
+     wa:nf2.format(foco.wa.unidades / foco.wa.tickets),
+     ec:nf2.format(foco.ec.unidades / foco.ec.tickets),
+     sep:nf2.format((foco.wa.unidades + foco.ec.unidades) / focoSepTickets), ago:null},
     {rot:'Descuento sobre lista (ERP)',
      wa:nf1.format(foco.wa.desc)+'%', ec:nf1.format(foco.ec.desc)+'%', sep:null, ago:null},
     {rot:'Margen estimado tras descuento<span class="val">supone 60% de margen sobre lista</span>',
@@ -2649,8 +2723,8 @@
     {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  valor:3452190,   roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
   ];
 
-  /* Meta mes a mes. 2026 llega al mes completo de septiembre; 2025 se quedó
-     cortado al día 13, así que ese mes no es comparable entre columnas.
+  /* Meta mes a mes, los dos años con septiembre completo. El de 2025 está
+     derivado de exportaciones, no exportado directo.
      [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26, cpa26, aviso] */
   var metaMes = [
     ['Enero',      'Ene', 18546010, 398, '4,68x',  46598, 15984516, 469, '7,79x', 34082],
@@ -2661,7 +2735,7 @@
     ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321, '5,62x', 41256],
     ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379, '6,93x', 35707],
     ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372, '5,97x', 37129],
-    ['Septiembre', 'Sep',  5552622, 237, '9,28x',  23429, 16389164, 428, '6,01x', 38292, 'desigual']
+    ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16389164, 428, '6,01x', 38292, 'derivado']
   ];
   var metaTot = metaMes.reduce(function(a,m){
     return [a[0]+m[2], a[1]+m[3], a[2]+m[6], a[3]+m[7]];
@@ -2673,18 +2747,16 @@
     ['WhatsApp',         244, 219731,  241, 229432]
   ];
 
-  /* Ticket del año, ponderado por compras, con el que se calcula el
-     benchmark del 8%. No hay ticket mes a mes: se usa el del año. */
-  var ticketAnio = [
-    (ticketCanal[0][1]*ticketCanal[0][2] + ticketCanal[1][1]*ticketCanal[1][2]) / (ticketCanal[0][1] + ticketCanal[1][1]),
-    (ticketCanal[0][3]*ticketCanal[0][4] + ticketCanal[1][3]*ticketCanal[1][4]) / (ticketCanal[0][3] + ticketCanal[1][3])
-  ];
-  var benchAnio = [ticketAnio[0] * 0.08, ticketAnio[1] * 0.08];
+  /* El ticket de cada mes sale de sus propias cifras: (ROAS × inversión) / compras,
+     no de un ticket anual fijo. Semáforo del CPA como % del ticket: verde hasta
+     8%, amarillo entre 8 y 12, rojo por encima de 12. */
+  var numRoas    = function(r){ return parseFloat(String(r).replace(',', '.')); };
+  var ticketMes  = function(roas, inv, compras){ return numRoas(roas) * inv / compras; };
+  var valorMes   = function(roas, inv){ return numRoas(roas) * inv; };
 
-  /* Sobre el benchmark, rojo; en el objetivo o por debajo, verde. */
-  function celdaBench(cpa, idx){
-    var pct = cpa / ticketAnio[idx] * 100;
-    var color = pct <= 8 ? 'verde' : 'rojo';
+  function celdaCpaTicket(cpa, ticket){
+    var pct = cpa / ticket * 100;
+    var color = pct <= 8 ? 'verde' : (pct <= 12 ? 'amarillo' : 'rojo');
     return '<td class="num pct"><span class="dot ' + color + '"></span>' + nf1.format(pct) + '%</td>';
   }
 
@@ -2718,39 +2790,48 @@
     metaMes.map(function(m){
       return '<tr>' +
         '<td class="lft">' + m[0] +
-          (m[10] === 'desigual' ? '<span class="marca-amarilla">2025 solo 1–13</span>' : '') + '</td>' +
+          (m[10] === 'derivado' ? '<span class="marca-amarilla">2025 derivado</span>' : '') + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
         '<td class="num">' + u(m[3]) + '</td>' +
         '<td class="num">' + m[4] + '</td>' +
         '<td class="num">' + cop(m[5]) + '</td>' +
-        celdaBench(m[5], 0) +
+        celdaCpaTicket(m[5], ticketMes(m[4], m[2], m[3])) +
         '<td class="num">' + cop(m[6]) + '</td>' +
         '<td class="num">' + u(m[7]) + '</td>' +
         '<td class="num">' + m[8] + '</td>' +
         '<td class="num">' + cop(m[9]) + '</td>' +
-        celdaBench(m[9], 1) +
+        celdaCpaTicket(m[9], ticketMes(m[8], m[6], m[7])) +
       '</tr>';
     }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total Ene–Sep<span class="val">2025 llega al 13 de septiembre; 2026, al mes completo</span></td>' +
-      '<td class="num">' + cop(metaTot[0]) + '</td>' +
-      '<td class="num">' + u(metaTot[1]) + '</td>' +
-      '<td class="num">—</td>' +
-      '<td class="num">' + cop(Math.round(metaTot[0]/metaTot[1])) + '</td>' +
-      celdaBench(metaTot[0]/metaTot[1], 0) +
-      '<td class="num">' + cop(metaTot[2]) + '</td>' +
-      '<td class="num">' + u(metaTot[3]) + '</td>' +
-      '<td class="num">—</td>' +
-      '<td class="num">' + cop(Math.round(metaTot[2]/metaTot[3])) + '</td>' +
-      celdaBench(metaTot[2]/metaTot[3], 1) +
-    '</tr></tbody>';
+    (function(){
+      /* El ticket del periodo se pondera con el valor de cada mes */
+      var val = metaMes.reduce(function(a,m){
+        return [a[0] + valorMes(m[4], m[2]), a[1] + valorMes(m[8], m[6])];
+      }, [0,0]);
+      return '<tr class="total">' +
+        '<td class="lft">Total Ene–Sep</td>' +
+        '<td class="num">' + cop(metaTot[0]) + '</td>' +
+        '<td class="num">' + u(metaTot[1]) + '</td>' +
+        '<td class="num">' + nf2.format(val[0] / metaTot[0]) + 'x</td>' +
+        '<td class="num">' + cop(Math.round(metaTot[0]/metaTot[1])) + '</td>' +
+        celdaCpaTicket(metaTot[0]/metaTot[1], val[0] / metaTot[1]) +
+        '<td class="num">' + cop(metaTot[2]) + '</td>' +
+        '<td class="num">' + u(metaTot[3]) + '</td>' +
+        '<td class="num">' + nf2.format(val[1] / metaTot[2]) + 'x</td>' +
+        '<td class="num">' + cop(Math.round(metaTot[2]/metaTot[3])) + '</td>' +
+        celdaCpaTicket(metaTot[2]/metaTot[3], val[1] / metaTot[3]) +
+      '</tr></tbody>';
+    })();
 
   document.getElementById('nota-bench-mes').innerHTML =
-    '<div class="nota"><span class="etq">Supuesto</span><span>' +
-      'No hay ticket promedio mes a mes, así que el benchmark del 8% se calcula sobre el ticket del año ' +
-      'ponderado por compras según el píxel de Meta: ' + cop(Math.round(ticketAnio[0])) + ' en 2025 y ' +
-      cop(Math.round(ticketAnio[1])) + ' en 2026, es decir un CPA objetivo de ' + cop(Math.round(benchAnio[0])) +
-      ' y ' + cop(Math.round(benchAnio[1])) + '. Verde si el CPA queda en el objetivo o por debajo, rojo si lo supera.' +
+    '<div class="nota"><span class="etq">Septiembre 2025</span><span>' +
+      'Derivado de exportaciones (año completo − Ene-13sep − Oct-Dic + 1-13sep); ' +
+      'reemplazar con exportación directa cuando exista.' +
+    '</span></div>' +
+    '<div class="nota info"><span class="etq">Cómo se calcula</span><span>' +
+      'El ticket de cada mes sale de sus propias cifras, (ROAS × inversión) / compras, ' +
+      'no de un ticket anual fijo. El semáforo del CPA como % del ticket va verde hasta 8%, ' +
+      'amarillo entre 8% y 12%, y rojo por encima de 12%.' +
     '</span></div>';
 
   document.getElementById('t-ticket').innerHTML =
@@ -2843,51 +2924,6 @@
     na:       '<span class="sem na"><span class="punto"></span>No aplica</span>'
   };
 
-  /* Detalle del gasto B2C de ese mismo corte.
-     El CPA y el semáforo se calculan; el % del ticket y el benchmark vienen
-     dados. [categoría, inversión, compras, % del ticket, benchmark 8%] */
-  var detalleB2C = [
-    ['Fajas',                            5273012, 195, 12.3, 17578],
-    ['Short',                            8328329, 221, 30.2,  9993],
-    ['Cinturilla',                        283087,   8, 23.8, 11922],
-    ['WhatsApp/Mensajes (sin producto)', 1479301, null, null, null]
-  ];
-  var detB2CTot = detalleB2C.reduce(function(a,d){ return a + d[1]; }, 0);
-
-  document.getElementById('t-b2c-det').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Categoría</th><th>Inversión</th><th>% del B2C</th>' +
-      '<th>Compras</th><th>CPA real</th>' +
-      '<th class="wrap">CPA como % del ticket<span class="obj">objetivo 8%</span></th>' +
-      '<th>Benchmark 8%</th><th class="lft">Semáforo</th>' +
-    '</tr></thead><tbody>' +
-    detalleB2C.map(function(d){
-      var medible = d[2] !== null;
-      return '<tr>' +
-        '<td class="lft">' + d[0] +
-          (medible ? '' : '<span class="marca-amarilla">Sin producto asignado</span>') + '</td>' +
-        '<td class="num">' + cop(d[1]) + '</td>' +
-        '<td class="num pct">' + nf1.format(d[1] / detB2CTot * 100) + '%</td>' +
-        (medible
-          ? '<td class="num">' + u(d[2]) + '</td>' +
-            '<td class="num">' + cop(Math.round(d[1] / d[2])) + '</td>' +
-            '<td class="num pct"><span class="dot ' + (d[3] <= 8 ? 'verde' : 'rojo') + '"></span>' +
-              nf1.format(d[3]) + '%</td>' +
-            '<td class="num">' + cop(d[4]) + '</td>' +
-            '<td class="lft">' + (d[3] <= 8 ? chips.verde : chips.rojo) + '</td>'
-          : '<td class="num pendiente">—</td><td class="num pendiente">—</td>' +
-            '<td class="num pendiente">—</td><td class="num pendiente">—</td>' +
-            '<td class="lft">' + chips.na + '</td>') +
-      '</tr>';
-    }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total B2C detallado</td>' +
-      '<td class="num">' + cop(detB2CTot) + '</td>' +
-      '<td class="num">100%</td>' +
-      '<td class="num">' + u(detalleB2C.reduce(function(a,d){ return a + (d[2]||0); }, 0)) + '</td>' +
-      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
-    '</tr></tbody>';
-
   var encab3 =
     '<thead><tr class="campos">' +
       '<th class="lft">Categoría</th>' +
@@ -2944,44 +2980,71 @@
 
   document.getElementById('t-pauta').innerHTML = encab3 + '<tbody>' + html3 + '</tbody>';
 
-  /* Septiembre 2026 en Meta, por categoría. Solo Short y el bloque sin
-     clasificar tienen inversión rastreable; el resto se marca, no se pone en
-     cero. Las compras del gasto sin clasificar no se pueden repartir, así que
-     quedan pendientes. [categoría, inversión, compras, roas, cpa, estado] */
-  var pautaSep = [
-    ['Short',                  3588454,  119, '6,91x', 30155, null],
-    ['Fajas',                     null, null, null,     null, 'Sin inversión rastreable este mes'],
-    ['Cinturilla',                null, null, null,     null, 'Sin inversión rastreable este mes'],
-    ['Sin clasificar',        12800710, null, null,     null, 'Campañas que no nombran categoría']
-  ];
+
+  /* Septiembre 2026 en Meta por categoría, según el conjunto de anuncios.
+     El CPA y el semáforo se calculan; el % del ticket y el benchmark vienen
+     dados. [categoría, inversión, compras, % del ticket, benchmark 8%, marca] */
   var invSepMes = 16389164;
+  var pautaSep = [
+    ['Short',                            8328329,  221, 30.2,  9993, null],
+    ['Fajas',                            5273012,  195, 12.3, 17578, null],
+    ['Cinturilla',                        283087,    8, 23.8, 11922, null],
+    ['Sin clasificar',                    295896, null, null,  null, 'Campañas que no nombran categoría'],
+    ['WhatsApp/Mensajes (sin producto)', 1479301, null, null,  null, 'Sin producto asignado']
+  ];
+  var pautaSepSuma = pautaSep.reduce(function(a,p){ return [a[0]+p[1], a[1]+(p[2]||0)]; }, [0,0]);
+  var pautaSepHueco = invSepMes - pautaSepSuma[0];
 
   document.getElementById('t-pauta-sep').innerHTML =
     '<thead><tr class="campos">' +
       '<th class="lft">Categoría</th><th>Inversión</th><th>% del gasto del mes</th>' +
-      '<th>Compras (#)</th><th>ROAS</th><th>CPA real</th>' +
+      '<th>Compras (#)</th><th>CPA real</th>' +
+      '<th class="wrap">CPA como % del ticket<span class="obj">objetivo 8%</span></th>' +
+      '<th>Benchmark 8%</th><th class="lft">Semáforo</th>' +
     '</tr></thead><tbody>' +
     pautaSep.map(function(p){
-      var sinInv = p[1] === null;
+      var medible = p[2] !== null;
       return '<tr>' +
         '<td class="lft">' + p[0] +
           (p[5] ? '<span class="marca-amarilla">' + p[5] + '</span>' : '') + '</td>' +
-        (sinInv
-          ? '<td class="num pendiente">___</td><td class="num pendiente">—</td>'
-          : '<td class="num">' + cop(p[1]) + '</td>' +
-            '<td class="num pct">' + nf1.format(p[1] / invSepMes * 100) + '%</td>') +
-        (p[2] === null ? '<td class="num pendiente">___</td>' : '<td class="num">' + u(p[2]) + '</td>') +
-        (p[3] === null ? '<td class="num pendiente">—</td>' : '<td class="num">' + p[3] + '</td>') +
-        (p[4] === null ? '<td class="num pendiente">—</td>' : '<td class="num">' + cop(p[4]) + '</td>') +
+        '<td class="num">' + cop(p[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(p[1] / invSepMes * 100) + '%</td>' +
+        (medible
+          ? '<td class="num">' + u(p[2]) + '</td>' +
+            '<td class="num">' + cop(Math.round(p[1] / p[2])) + '</td>' +
+            '<td class="num pct"><span class="dot ' +
+              (p[3] <= 8 ? 'verde' : (p[3] <= 12 ? 'amarillo' : 'rojo')) + '"></span>' +
+              nf1.format(p[3]) + '%</td>' +
+            '<td class="num">' + cop(p[4]) + '</td>' +
+            '<td class="lft">' + (p[3] <= 8 ? chips.verde : (p[3] <= 12 ? chips.amarillo : chips.rojo)) + '</td>'
+          : '<td class="num pendiente">' + FALTA + '</td>' +
+            '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+            '<td class="num no-aplica">—</td><td class="lft">' + chips.na + '</td>') +
       '</tr>';
     }).join('') +
+    '<tr class="sub-total">' +
+      '<td class="lft">Suma de las filas de arriba</td>' +
+      '<td class="num">' + cop(pautaSepSuma[0]) + '</td>' +
+      '<td class="num">' + nf1.format(pautaSepSuma[0] / invSepMes * 100) + '%</td>' +
+      '<td class="num">' + u(pautaSepSuma[1]) + '</td>' +
+      '<td class="num">—</td><td class="num">—</td><td class="num">—</td><td></td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td class="lft">Sin explicar frente al total del mes' +
+        '<span class="marca-amarilla">No cuadra</span></td>' +
+      '<td class="num pendiente">' + cop(pautaSepHueco) + '</td>' +
+      '<td class="num pendiente">' + nf1.format(pautaSepHueco / invSepMes * 100) + '%</td>' +
+      '<td class="num pendiente">' + FALTA + '</td>' +
+      '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+      '<td class="num no-aplica">—</td><td></td>' +
+    '</tr>' +
     '<tr class="total">' +
       '<td class="lft">Total septiembre</td>' +
       '<td class="num">' + cop(invSepMes) + '</td>' +
       '<td class="num">100%</td>' +
       '<td class="num">' + u(428) + '</td>' +
-      '<td class="num">6,01x</td>' +
       '<td class="num">' + cop(Math.round(invSepMes / 428)) + '</td>' +
+      '<td class="num">—</td><td class="num">—</td><td></td>' +
     '</tr></tbody>';
 
   /* ---------------- Pauta Google Ads ---------------- */
@@ -3498,32 +3561,6 @@
       '<td class="num">' + nf2.format(ticketSepTot[0] / ticketSepTot[1]) + '</td>' +
       '<td class="num">' + cop(ticketSepTot[2]) + '</td>' +
     '</tr></tbody>';
-
-  /* El «ver más» del bloque de foco de la pestaña Ventas se dibuja aquí,
-     que es donde viven los únicos datos que hay de esos tres subcanales. */
-  var otrosSub = [
-    ['Dark Store', 'Darkstore'],
-    ['Merkaplace', 'Marketplace'],
-    ['Redes',      'Redes']
-  ];
-
-  document.getElementById('t-otros-sub').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Subcanal</th><th>Neto (ERP)</th><th>Descuento</th>' +
-      '<th>Unidades</th><th>Transacciones</th><th>Ticket promedio</th>' +
-    '</tr></thead><tbody>' +
-    otrosSub.map(function(o){
-      var d = descSep.filter(function(x){ return x[0] === o[0]; })[0];
-      var t = ticketSep.filter(function(x){ return x[0] === o[0]; })[0];
-      return '<tr>' +
-        '<td class="lft">' + o[1] + '<span class="val">en el ERP: ' + o[0] + '</span></td>' +
-        '<td class="num">' + cop(d[2]) + '</td>' +
-        '<td class="num pct">' + nf1.format(d[1] / d[2] * 100) + '%</td>' +
-        '<td class="num">' + u(t[1]) + '</td>' +
-        '<td class="num">' + u(t[2]) + '</td>' +
-        '<td class="num">' + cop(t[3]) + '</td>' +
-      '</tr>';
-    }).join('') + '</tbody>';
 
   var descMes = [
     ['Enero',   3.5,  6.9,  0.1, 4.1],
@@ -4412,33 +4449,103 @@
       }).join('') +
     '</div>';
 
-  /* Tabla mensual por categoría, la misma serie que dibujan los paneles */
+  /* Matriz de unidades: mes en las filas, categoría en las columnas, con los
+     dos años uno debajo del otro y su variación. Donde no hay dato se escribe
+     [completar con dato real], nunca un cero. */
+  var catsMatriz = ['Fajas','Short','Cinturilla','Accesorios','Vestido de baño','Sin categoría','Brasier'];
+  var mesesMatriz = nombresMes.concat(['Septiembre']);
+  /* Septiembre 2026 por categoría, de la vista de Shopify (e-commerce) */
+  var sepPorCat = {
+    'Fajas':327, 'Short':455, 'Cinturilla':39,
+    'Accesorios':95, 'Vestido de baño':1, 'Sin categoría':228
+  };
+
+  function unidadesDe(cat, anio, i){
+    if (i < 8){
+      var s = serieMes[cat];
+      return s ? s[anio === 2025 ? 'a2025' : 'a2026'][i] : null;
+    }
+    if (anio === 2026 && sepPorCat[cat] !== undefined) { return sepPorCat[cat]; }
+    return null;
+  }
+  function sumaFila(anio, i){
+    return catsMatriz.reduce(function(a,c){
+      var v = unidadesDe(c, anio, i);
+      return v === null ? a : a + v;
+    }, 0);
+  }
+  var celdaU = function(v){
+    return v === null ? '<td class="num pendiente">' + FALTA + '</td>'
+                      : '<td class="num">' + u(v) + '</td>';
+  };
+
   document.getElementById('t-cat-mes').innerHTML =
-    '<thead>' +
-      '<tr class="grupos">' +
-        '<th class="lft" rowspan="2">Mes</th>' +
-        ordenCat.map(function(c){ return '<th class="gv" colspan="2">' + c + '</th>'; }).join('') +
-      '</tr>' +
-      '<tr class="campos">' +
-        ordenCat.map(function(){ return '<th>2025</th><th>2026</th>'; }).join('') +
-      '</tr>' +
-    '</thead><tbody>' +
-    etiquetasMes.map(function(m, i){
+    '<thead><tr class="campos">' +
+      '<th class="lft">Mes</th><th class="lft">Año</th>' +
+      catsMatriz.map(function(c){ return '<th>' + c + '</th>'; }).join('') +
+      '<th>Total del mes</th>' +
+    '</tr></thead><tbody>' +
+    mesesMatriz.map(function(m, i){
+      var sinSep25 = i === 8;
       return '<tr>' +
-        '<td class="lft">' + nombresMes[i] + '</td>' +
-        ordenCat.map(function(c){
-          return '<td class="num">' + u(serieMes[c].a2025[i]) + '</td>' +
-                 '<td class="num">' + u(serieMes[c].a2026[i]) + '</td>';
-        }).join('') +
-      '</tr>';
+          '<td class="lft" rowspan="3">' + m +
+            (sinSep25 ? '<span class="marca-morada">Shopify (e-commerce)</span>' : '') + '</td>' +
+          '<td class="lft canal">2025</td>' +
+          catsMatriz.map(function(c){ return celdaU(unidadesDe(c, 2025, i)); }).join('') +
+          (sinSep25 ? '<td class="num pendiente">' + FALTA + '</td>'
+                    : '<td class="num">' + u(sumaFila(2025, i)) + '</td>') +
+        '</tr>' +
+        '<tr>' +
+          '<td class="lft canal">2026</td>' +
+          catsMatriz.map(function(c){ return celdaU(unidadesDe(c, 2026, i)); }).join('') +
+          '<td class="num">' + u(sumaFila(2026, i)) + '</td>' +
+        '</tr>' +
+        '<tr class="hija">' +
+          '<td class="lft canal">Var.</td>' +
+          catsMatriz.map(function(c){
+            var a = unidadesDe(c, 2025, i), b = unidadesDe(c, 2026, i);
+            return (a === null || b === null || a === 0)
+              ? '<td class="num no-aplica">—</td>' : varTd(a, b);
+          }).join('') +
+          (sinSep25 ? '<td class="num no-aplica">—</td>' : varTd(sumaFila(2025, i), sumaFila(2026, i))) +
+        '</tr>';
     }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total Ene–Ago</td>' +
-      ordenCat.map(function(c){
-        var t = totalCategoria(c);
-        return '<td class="num">' + u(t[0]) + '</td><td class="num">' + u(t[1]) + '</td>';
-      }).join('') +
-    '</tr></tbody>';
+    (function(){
+      /* Totales por columna: solo enero–agosto, que es el tramo con los dos años */
+      function totalCol(cat, anio){
+        var t = 0, hay = false;
+        for (var i = 0; i < 8; i++){
+          var v = unidadesDe(cat, anio, i);
+          if (v !== null) { t += v; hay = true; }
+        }
+        return hay ? t : null;
+      }
+      var tot25 = catsMatriz.map(function(c){ return totalCol(c, 2025); });
+      var tot26 = catsMatriz.map(function(c){ return totalCol(c, 2026); });
+      var gran25 = tot25.reduce(function(a,v){ return v === null ? a : a + v; }, 0);
+      var gran26 = tot26.reduce(function(a,v){ return v === null ? a : a + v; }, 0);
+
+      return '<tr class="total">' +
+          '<td class="lft" rowspan="3">Total Ene–Ago<span class="val">septiembre queda fuera: 2025 no tiene dato</span></td>' +
+          '<td class="lft canal">2025</td>' +
+          tot25.map(celdaU).join('') +
+          '<td class="num">' + u(gran25) + '</td>' +
+        '</tr>' +
+        '<tr class="total">' +
+          '<td class="lft canal">2026</td>' +
+          tot26.map(celdaU).join('') +
+          '<td class="num">' + u(gran26) + '</td>' +
+        '</tr>' +
+        '<tr class="total">' +
+          '<td class="lft canal">Var.</td>' +
+          catsMatriz.map(function(c, k){
+            return (tot25[k] === null || tot26[k] === null)
+              ? '<td class="num no-aplica">—</td>' : varTd(tot25[k], tot26[k]);
+          }).join('') +
+          varTd(gran25, gran26) +
+        '</tr>';
+    })() +
+    '</tbody>';
 
   /* ---------- Auditoría de walinks ---------- */
   var MANO  = '👋';        /* 👋 */
@@ -4645,6 +4752,7 @@
         '<p class="msg nuevo">' + a.txt + '</p>' +
       '</article>';
     }).join('');
+
 
   ligarGraficos();
 })();

@@ -11,8 +11,10 @@ Cinco bloques, con los datos entregados tal cual:
    Arriba, dos gráficos mensuales (unidades y valor) con eje ajustado al rango
    de los datos; debajo, la tabla.
 2. **Categoría × canal comercial** — unidades y valor, con subtotales por categoría.
-   Debajo, el bloque de foco «Venta online por subcanal» (WhatsApp y E-commerce
-   arriba, los otros tres subcanales en «ver más»),
+   Debajo, «Venta online por subcanal» con los cinco subcanales del dashboard
+   online (FAJITEX_Dashboard_Online_Diario.xlsx, la fuente definitiva de la venta
+   online) y WhatsApp y E-commerce marcados como foco, la matriz de unidades por
+   mes y categoría,
    una sección plegable con el detalle mes a mes de cada categoría por canal,
    y la tabla de septiembre 2026 por categoría de Shopify, con las etiquetas sin agrupar.
    Debajo, cuatro paneles de tendencia (unidades por mes, enero–agosto), cada uno
