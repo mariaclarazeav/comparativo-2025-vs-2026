@@ -1525,7 +1525,10 @@
       <span class="num-bloque">Bloque 03</span>
       <h2>Pauta Meta</h2>
     </div>
-    <p class="sub">Inversión mensual y detalle por categoría. De enero a agosto la comparación es pareja; en septiembre, 2026 ya tiene el mes completo y 2025 sigue cortado al día 13, así que esa fila no se compara entre columnas.</p>
+    <p class="sub">Inversión mensual y detalle por objetivo, categoría y conjunto de anuncios. Enero a octubre de los dos años, con septiembre y octubre ya completos.</p>
+
+    <div class="franja-sem" id="franja-sem-pauta"></div>
+
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -1536,6 +1539,65 @@
     <div class="nota info">
       <span class="etq">Lectura</span>
       <span>2025 tuvo mejor ROAS y CPA que 2026 en jul-ago-sep (9-11x vs 6-7x) — 2026 no es una mejora frente a 2025 en esos meses, solo frente al baseline de mayo-junio de la propia agencia.</span>
+    </div>
+
+    <h3 class="sub-cab">Inversión por objetivo — septiembre y octubre</h3>
+    <p class="sub">Cómo se repartió la inversión entre los objetivos de campaña en los dos meses, en los dos años.</p>
+    <div class="scroll"><table id="t-objetivo"></table></div>
+    <div id="grafico-mezcla"></div>
+    <div class="nota">
+      <span class="etq">Etiquetas</span>
+      <span>En 2025 el indicador de los leads B2B era «leadgen.other». Septiembre de 2026 incluye además 36.281 de leadgen.other y 30.333 de clics, ya sumados donde corresponde.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">No cuadra</span>
+      <span>Los cuatro objetivos de septiembre de 2025 suman <b>$13.068.046</b>, $1.000 más que los $13.067.046 de la tabla mensual. Diferencia pequeña pero sin explicar: por confirmar cuál de los dos cortes manda.</span>
+    </div>
+
+    <h3 class="sub-cab">Resultados por objetivo</h3>
+    <p class="sub">Solo los conjuntos optimizados a cada objetivo, con su propio costo por resultado.</p>
+    <div class="scroll"><table id="t-resultados-obj"></table></div>
+    <div class="nota">
+      <span class="etq">Alcance</span>
+      <span>Compras = resultados de conjuntos optimizados a compra; no incluye compras atribuidas a otros objetivos.</span>
+    </div>
+
+    <h3 class="sub-cab">ROAS y valor de conversión — octubre 2026</h3>
+    <div class="scroll"><table id="t-roas-oct"></table></div>
+    <div class="nota">
+      <span class="etq">Pendiente</span>
+      <span>Estos cinco campos se llenan cuando llegue el export a nivel campaña de octubre. Hasta entonces no hay ROAS del mes.</span>
+    </div>
+
+    <h3 class="sub-cab">Octubre 2026 por categoría</h3>
+    <p class="sub">Clasificada por el nombre del conjunto de anuncios. B2B y B2C van separados y etiquetados en cada fila.</p>
+    <div class="scroll"><table id="t-cat-oct"></table></div>
+    <div class="nota">
+      <span class="etq">Estimado</span>
+      <span>El CPA como % del ticket usa el ticket de septiembre de Shopify (Short ≈ $125.000, Fajas ≈ $220.000); actualizar con el de octubre. El CPA de cada categoría se calcula solo sobre el gasto de sus conjuntos de compra (Short $6.772.019, Fajas $5.618.600, Cinturilla $331.123), no sobre su inversión total.</span>
+    </div>
+
+    <details class="plegable">
+      <summary>Ver más — conjuntos de anuncios de octubre</summary>
+      <div class="cuerpo">
+        <div class="scroll"><table id="t-conjuntos"></table></div>
+        <div class="nota fuerte">
+          <span class="etq">Falta el archivo</span>
+          <span>
+            <b>El CSV de conjuntos de octubre no llegó con el mensaje</b>, así que la tabla no tiene las 31 filas: solo están los diez conjuntos que venían escritos, que suman $12.613.047 de los $15.970.230 del mes (79,0%). Los 21 restantes, $3.357.183, quedan en una sola línea pendiente. Con el CSV se generan las 31 filas completas.
+          </span>
+        </div>
+      </div>
+    </details>
+
+    <div class="acciones">
+      <h4>Hallazgos de octubre</h4>
+      <ol>
+        <li>La mezcla de inversión se movió de mensajes (37% → 10%) a compras (51% → 80%) frente a octubre de 2025.</li>
+        <li>Con 33% más de inversión en compras salen 18% menos compras (CPA +62%).</li>
+        <li>Short concentra 53% del gasto de compras con un CPA 61% mayor que el de Fajas.</li>
+        <li>La retargeting 19/03_RET_Shorts usa 20% del gasto del mes con una ventana de atribución más amplia que el resto.</li>
+      </ol>
     </div>
 
     <h3 class="sub-cab">Inversión por canal: B2B vs. B2C</h3>
@@ -2435,7 +2497,9 @@
     VERDE:         0,    /* variación vs 2025: verde desde 0% */
     AMARILLO:    -10,    /* amarillo hasta -10%; por debajo, rojo */
     PPTO_VERDE:   95,    /* cumplimiento de presupuesto: verde desde 95% */
-    PPTO_AMARILLO:85     /* amarillo desde 85%; por debajo, rojo */
+    PPTO_AMARILLO:85,    /* amarillo desde 85%; por debajo, rojo */
+    CPA_VERDE:     8,    /* CPA como % del ticket: verde hasta 8% */
+    CPA_AMARILLO: 12     /* amarillo hasta 12%; por encima, rojo */
   };
   /* Además del color, un símbolo: se entiende impreso en blanco y negro */
   var SIMBOLO = {verde:'▲', amarillo:'▬', rojo:'▼', neutro:'○'};
@@ -2456,15 +2520,22 @@
     return '<td class="num var">' + marca(colorVar(r.v)) + r.s + '</td>';
   }
 
-  /* Leyenda del semáforo, escrita con los mismos umbrales */
-  (function(){
+  function colorCpa(p){
+    return p <= SEM.CPA_VERDE ? 'verde' : (p <= SEM.CPA_AMARILLO ? 'amarillo' : 'rojo');
+  }
+
+  /* Leyenda del semáforo, escrita con los mismos umbrales. La pintan los
+     módulos que la necesiten, siempre desde esta misma función. */
+  function pintarFranjaSem(id){
+    var caja = document.getElementById(id);
+    if (!caja) { return; }
     var pct = function(v){ return nf0.format(Math.abs(v)) + '%'; };
-    document.getElementById('franja-sem').innerHTML =
+    caja.innerHTML =
       '<span class="item">' + marca('verde') + 'Igual o mayor que 2025</span>' +
       '<span class="item">' + marca('amarillo') + 'Cae hasta ' + pct(SEM.AMARILLO) + '</span>' +
       '<span class="item">' + marca('rojo') + 'Cae más de ' + pct(SEM.AMARILLO) + '</span>' +
       '<span class="item">' + marca('neutro') + 'Mes en curso (sin color)</span>' +
-      '<details class="ayuda-sem" id="ayuda-sem">' +
+      '<details class="ayuda-sem">' +
         '<summary aria-label="¿Cómo leer el semáforo?" title="¿Cómo leer el semáforo?">?</summary>' +
         '<div class="ayuda-cuerpo">' +
           '<h4>¿Cómo leer el semáforo?</h4>' +
@@ -2487,18 +2558,26 @@
                 '<span>' + marca('rojo') + 'Rojo: menos de ' + pct(SEM.PPTO_AMARILLO) + '</span>' +
               '</span>' +
             '</li>' +
+            '<li><b>CPA como % del ticket</b> (módulo de Pauta paga).' +
+              '<span class="umbrales">' +
+                '<span>' + marca('verde') + 'Verde: hasta ' + pct(SEM.CPA_VERDE) + '</span>' +
+                '<span>' + marca('amarillo') + 'Amarillo: de ' + pct(SEM.CPA_VERDE) +
+                  ' a ' + pct(SEM.CPA_AMARILLO) + '</span>' +
+                '<span>' + marca('rojo') + 'Rojo: más de ' + pct(SEM.CPA_AMARILLO) + '</span>' +
+              '</span>' +
+            '</li>' +
             '<li><b>Mes en curso</b> (octubre): se muestra parcial, sin color y sin comparar ' +
               'contra el mes completo de 2025.</li>' +
-            '<li>El semáforo mide <b>volumen de venta, no rentabilidad</b>. La eficiencia de ' +
-              'la inversión está en el módulo de Pauta paga.</li>' +
+            '<li>En Ventas el semáforo mide <b>volumen de venta, no rentabilidad</b>. La ' +
+              'eficiencia de la inversión está en el módulo de Pauta paga.</li>' +
             '<li><b>Fuentes:</b> ventas por categoría = pivote de Excel (4 categorías ' +
-              'principales); totales por canal = Dashboard Online diario.</li>' +
+              'principales); totales por canal = Dashboard Online diario; pauta = exports de Meta.</li>' +
           '</ol>' +
         '</div>' +
       '</details>';
 
     /* En escritorio se abre al pasar el mouse; en móvil, al tocar */
-    var det = document.getElementById('ayuda-sem');
+    var det = caja.querySelector('.ayuda-sem');
     if (window.matchMedia && window.matchMedia('(hover: hover)').matches){
       det.addEventListener('mouseenter', function(){ det.open = true; });
       det.addEventListener('mouseleave', function(){ det.open = false; });
@@ -2506,7 +2585,9 @@
     document.addEventListener('click', function(e){
       if (det.open && !det.contains(e.target)) { det.open = false; }
     });
-  })();
+  }
+  pintarFranjaSem('franja-sem');
+  pintarFranjaSem('franja-sem-pauta');
 
   /* Estado de los filtros */
   var filtroCanal = '', filtroCat = '';
@@ -2999,22 +3080,28 @@
     {cat:'Cinturilla', anio:2026, inv:561848,   compras:17,  valor:3452190,   roas:'6,1x',  cpa:33050, pct:20.5, bench:12871, sem:'rojo'},
   ];
 
-  /* Meta mes a mes, los dos años con septiembre completo. El de 2025 está
-     derivado de exportaciones, no exportado directo.
-     [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26, cpa26, aviso] */
+  /* Meta mes a mes, los dos años completos hasta octubre.
+     La inversión de 2026 sale del export de conjuntos de anuncios; ROAS, compras
+     y CPA salen del export a nivel campaña. En septiembre los dos exports no
+     coinciden, así que el ticket de ese mes se calcula sobre la inversión de
+     campaña (índice 11), no sobre la de conjuntos.
+     [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26,
+      cpa26, aviso, base de ROAS/CPA 2026] */
   var metaMes = [
-    ['Enero',      'Ene', 18546010, 398, '4,68x',  46598, 15984516, 469, '7,79x', 34082],
-    ['Febrero',    'Feb', 16728334, 341, '4,45x',  49057, 11835958, 312, '6,86x', 37936],
-    ['Marzo',      'Mar', 19547309, 377, '4,71x',  51850, 10328995, 277, '7,42x', 37289],
-    ['Abril',      'Abr', 10818104, 279, '5,90x',  38775,  8010146, 227, '6,86x', 35287],
-    ['Mayo',       'May', 15876197, 489, '6,76x',  32467, 10206426, 293, '7,83x', 34834],
-    ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321, '5,62x', 41256],
-    ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379, '6,93x', 35707],
-    ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372, '5,97x', 37129],
-    ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16389164, 428, '6,01x', 38292, 'derivado']
+    ['Enero',      'Ene', 18546010, 398, '4,68x',  46598, 15984516, 469,  '7,79x', 34082],
+    ['Febrero',    'Feb', 16728334, 341, '4,45x',  49057, 11835958, 312,  '6,86x', 37936],
+    ['Marzo',      'Mar', 19547309, 377, '4,71x',  51850, 10328995, 277,  '7,42x', 37289],
+    ['Abril',      'Abr', 10818104, 279, '5,90x',  38775,  8010146, 227,  '6,86x', 35287],
+    ['Mayo',       'May', 15876197, 489, '6,76x',  32467, 10206426, 293,  '7,83x', 34834],
+    ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321,  '5,62x', 41256],
+    ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379,  '6,93x', 35707],
+    ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372,  '5,97x', 37129],
+    ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16847214, 428,  '6,01x', 38292, 'desfase', 16389164],
+    ['Octubre',    'Oct', 18727794, null, null,     null, 15970230, null,  null,    null]
   ];
+  /* Inversión: los diez meses. Compras: solo los meses que ya la tienen. */
   var metaTot = metaMes.reduce(function(a,m){
-    return [a[0]+m[2], a[1]+m[3], a[2]+m[6], a[3]+m[7]];
+    return [a[0]+m[2], a[1]+(m[3]||0), a[2]+m[6], a[3]+(m[7]||0)];
   }, [0,0,0,0]);
 
   /* Ticket promedio por canal, según el píxel de Meta */
@@ -3032,8 +3119,7 @@
 
   function celdaCpaTicket(cpa, ticket){
     var pct = cpa / ticket * 100;
-    var color = pct <= 8 ? 'verde' : (pct <= 12 ? 'amarillo' : 'rojo');
-    return '<td class="num pct"><span class="dot ' + color + '"></span>' + nf1.format(pct) + '%</td>';
+    return '<td class="num pct">' + marca(colorCpa(pct)) + nf1.format(pct) + '%</td>';
   }
 
   document.getElementById('grafico-meta').innerHTML =
@@ -3051,6 +3137,23 @@
       }) +
     '</div>';
 
+  /* Una celda por métrica: si el mes todavía no tiene el dato, va el texto de
+     pendiente en vez de un cero. */
+  function metaCeldas(inv, compras, roas, cpa, base){
+    if (compras === null || roas === null){
+      return '<td class="num">' + cop(inv) + '</td>' +
+             '<td class="num pendiente">' + FALTA + '</td>' +
+             '<td class="num pendiente">' + FALTA + '</td>' +
+             '<td class="num pendiente">' + FALTA + '</td>' +
+             '<td class="num pendiente">' + FALTA + '</td>';
+    }
+    return '<td class="num">' + cop(inv) + '</td>' +
+           '<td class="num">' + u(compras) + '</td>' +
+           '<td class="num">' + roas + '</td>' +
+           '<td class="num">' + cop(cpa) + '</td>' +
+           celdaCpaTicket(cpa, ticketMes(roas, base || inv, compras));
+  }
+
   document.getElementById('t-meta-mes').innerHTML =
     '<thead>' +
       '<tr class="grupos">' +
@@ -3066,48 +3169,61 @@
     metaMes.map(function(m){
       return '<tr>' +
         '<td class="lft">' + m[0] +
-          (m[10] === 'derivado' ? '<span class="marca-amarilla">2025 derivado</span>' : '') + '</td>' +
-        '<td class="num">' + cop(m[2]) + '</td>' +
-        '<td class="num">' + u(m[3]) + '</td>' +
-        '<td class="num">' + m[4] + '</td>' +
-        '<td class="num">' + cop(m[5]) + '</td>' +
-        celdaCpaTicket(m[5], ticketMes(m[4], m[2], m[3])) +
-        '<td class="num">' + cop(m[6]) + '</td>' +
-        '<td class="num">' + u(m[7]) + '</td>' +
-        '<td class="num">' + m[8] + '</td>' +
-        '<td class="num">' + cop(m[9]) + '</td>' +
-        celdaCpaTicket(m[9], ticketMes(m[8], m[6], m[7])) +
+          (m[10] === 'desfase' ? '<span class="marca-amarilla">Dos exports</span>' : '') +
+          (m[3] === null ? '<span class="val">inversión ' + varTxt(m[2], m[6]).s + ' vs 2025</span>' : '') + '</td>' +
+        metaCeldas(m[2], m[3], m[4], m[5]) +
+        metaCeldas(m[6], m[7], m[8], m[9], m[11]) +
       '</tr>';
     }).join('') +
     (function(){
-      /* El ticket del periodo se pondera con el valor de cada mes */
+      /* El ticket del periodo se pondera con el valor de los meses que lo tienen */
       var val = metaMes.reduce(function(a,m){
-        return [a[0] + valorMes(m[4], m[2]), a[1] + valorMes(m[8], m[6])];
+        return [a[0] + (m[4] ? valorMes(m[4], m[2]) : 0),
+                a[1] + (m[8] ? valorMes(m[8], m[11] || m[6]) : 0)];
+      }, [0,0]);
+      var invCon = metaMes.reduce(function(a,m){
+        return [a[0] + (m[4] ? m[2] : 0), a[1] + (m[8] ? (m[11] || m[6]) : 0)];
       }, [0,0]);
       return '<tr class="total">' +
-        '<td class="lft">Total Ene–Sep</td>' +
+        '<td class="lft">Total Ene–Oct' +
+          '<span class="val">compras, ROAS y CPA solo de ene–sep: octubre aún no los tiene</span></td>' +
         '<td class="num">' + cop(metaTot[0]) + '</td>' +
         '<td class="num">' + u(metaTot[1]) + '</td>' +
-        '<td class="num">' + nf2.format(val[0] / metaTot[0]) + 'x</td>' +
-        '<td class="num">' + cop(Math.round(metaTot[0]/metaTot[1])) + '</td>' +
-        celdaCpaTicket(metaTot[0]/metaTot[1], val[0] / metaTot[1]) +
+        '<td class="num">' + nf2.format(val[0] / invCon[0]) + 'x</td>' +
+        '<td class="num">' + cop(Math.round(invCon[0]/metaTot[1])) + '</td>' +
+        celdaCpaTicket(invCon[0]/metaTot[1], val[0] / metaTot[1]) +
         '<td class="num">' + cop(metaTot[2]) + '</td>' +
         '<td class="num">' + u(metaTot[3]) + '</td>' +
-        '<td class="num">' + nf2.format(val[1] / metaTot[2]) + 'x</td>' +
-        '<td class="num">' + cop(Math.round(metaTot[2]/metaTot[3])) + '</td>' +
-        celdaCpaTicket(metaTot[2]/metaTot[3], val[1] / metaTot[3]) +
+        '<td class="num">' + nf2.format(val[1] / invCon[1]) + 'x</td>' +
+        '<td class="num">' + cop(Math.round(invCon[1]/metaTot[3])) + '</td>' +
+        celdaCpaTicket(invCon[1]/metaTot[3], val[1] / metaTot[3]) +
+      '</tr>' +
+      '<tr class="sub-total">' +
+        '<td class="lft">Variación Ene–Oct</td>' +
+        varSem(metaMes.reduce(function(a,m){ return a+m[2]; },0),
+               metaMes.reduce(function(a,m){ return a+m[6]; },0)) +
+        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+        '<td class="num no-aplica">—</td>' +
       '</tr></tbody>';
     })();
 
   document.getElementById('nota-bench-mes').innerHTML =
-    '<div class="nota"><span class="etq">Septiembre 2025</span><span>' +
-      'Derivado de exportaciones (año completo − Ene-13sep − Oct-Dic + 1-13sep); ' +
-      'reemplazar con exportación directa cuando exista.' +
+    '<div class="nota"><span class="etq">Septiembre</span><span>' +
+      'Diferencia de ' + cop(16847214 - 16389164) + ' entre el export de campaña y el de ' +
+      'conjuntos, por confirmar. La inversión del mes usa el de conjuntos (' + cop(16847214) +
+      '); el ROAS y el CPA, el de campaña (' + cop(16389164) + '), que es la base sobre la ' +
+      'que se calcularon.' +
+    '</span></div>' +
+    '<div class="nota"><span class="etq">Octubre</span><span>' +
+      'De octubre solo llegó la inversión, del export de conjuntos. Compras, ROAS, CPA y ' +
+      'valor de conversión se llenan cuando llegue el export a nivel campaña.' +
     '</span></div>' +
     '<div class="nota info"><span class="etq">Cómo se calcula</span><span>' +
       'El ticket de cada mes sale de sus propias cifras, (ROAS × inversión) / compras, ' +
-      'no de un ticket anual fijo. El semáforo del CPA como % del ticket va verde hasta 8%, ' +
-      'amarillo entre 8% y 12%, y rojo por encima de 12%.' +
+      'no de un ticket anual fijo. Los umbrales del semáforo están en la franja de arriba.' +
     '</span></div>';
 
   document.getElementById('t-ticket').innerHTML =
@@ -3137,6 +3253,248 @@
       '<td class="num">—</td>' +
       '<td class="num">' + u(ticketCanal[0][3] + ticketCanal[1][3]) + '</td>' +
       '<td class="num">—</td>' +
+    '</tr></tbody>';
+
+
+  /* ---------------- Octubre 2026 · Meta ---------------- */
+  var COLS_OBJ = ['Sep 2025', 'Oct 2025', 'Sep 2026', 'Oct 2026'];
+
+  /* Inversión por objetivo. [objetivo, Sep25, Oct25, Sep26, Oct26, color] */
+  var objetivos = [
+    ['Compras',              7524305, 9591376, 12405467, 12721742, '#4C1D6B'],
+    ['Mensajes WhatsApp',    4834804, 6924129,  3459047,  1634973, '#9C7A56'],
+    ['Leads B2B',                  0, 1432970,   867613,  1440704, '#C19A73'],
+    ['Alcance, video y otros', 708937,  779319,   115087,   172811, '#B3AABF']
+  ];
+  var objTot = [1,2,3,4].map(function(k){
+    return objetivos.reduce(function(a,o){ return a + o[k]; }, 0);
+  });
+
+  document.getElementById('t-objetivo').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Objetivo</th>' +
+        '<th class="g25" colspan="2">2025</th>' +
+        '<th class="g26" colspan="2">2026</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Septiembre</th><th>Octubre</th><th>Septiembre</th><th>Octubre</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    objetivos.map(function(o){
+      return '<tr>' +
+        '<td class="lft"><span class="sw" style="background:' + o[5] + '"></span>' + o[0] + '</td>' +
+        [1,2,3,4].map(function(k){
+          return '<td class="num">' + cop(o[k]) +
+                 '<span class="val">' + nf1.format(o[k] / objTot[k-1] * 100) + '% del mes</span></td>';
+        }).join('') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total del mes</td>' +
+      objTot.map(function(t){ return '<td class="num">' + cop(t) + '</td>'; }).join('') +
+    '</tr></tbody>';
+
+  /* Barras apiladas al 100%: el cambio de mezcla mes a mes */
+  function svgMezcla(){
+    var W = 760, H = 300, PL = 10, PT = 26, PB = 34, ancho = 78, hueco = 62;
+    var alto = H - PT - PB;
+    var svg = '';
+    COLS_OBJ.forEach(function(nom, c){
+      var x = PL + c * (ancho + hueco) + 40;
+      var y = PT;
+      var total = objTot[c];
+      svg += '<text x="' + (x + ancho/2) + '" y="' + (PT - 10) + '" text-anchor="middle" ' +
+             'font-family="IBM Plex Mono, monospace" font-size="11" fill="#514B57">' + nom + '</text>';
+      objetivos.forEach(function(o){
+        var parte = o[c+1] / total;
+        var h = parte * alto;
+        if (h <= 0) { return; }
+        svg += '<rect x="' + x + '" y="' + y.toFixed(1) + '" width="' + ancho +
+               '" height="' + h.toFixed(1) + '" fill="' + o[5] + '"></rect>';
+        if (parte >= 0.08){
+          svg += '<text x="' + (x + ancho/2) + '" y="' + (y + h/2 + 4).toFixed(1) + '" ' +
+                 'text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" ' +
+                 'fill="#FFFFFF">' + nf0.format(Math.round(parte * 100)) + '%</text>';
+        }
+        y += h;
+      });
+      svg += '<text x="' + (x + ancho/2) + '" y="' + (H - 12) + '" text-anchor="middle" ' +
+             'font-family="IBM Plex Mono, monospace" font-size="11" fill="#77707E">' +
+             '$' + nf0.format(Math.round(total/1000000)) + ' M</text>';
+    });
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+           'aria-label="Reparto de la inversión de Meta por objetivo en septiembre y octubre de 2025 y 2026">' +
+           svg + '</svg>';
+  }
+
+  document.getElementById('grafico-mezcla').innerHTML =
+    '<div class="grafico-b1">' +
+      '<div class="rot">Mezcla de inversión por objetivo <span class="eje">cada barra es el 100% del mes</span></div>' +
+      '<div class="grafico">' + svgMezcla() + '</div>' +
+      '<div class="leyenda-lineas">' +
+        objetivos.map(function(o){
+          return '<span><span class="sw" style="background:' + o[5] + '"></span>' + o[0] + '</span>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+
+  /* Resultados por objetivo. [fila, Sep25, Oct25, Sep26, Oct26, formato] */
+  var resObj = [
+    ['Compras',                     492,   541,   434,   442, u],
+    ['CPA de compras',            15293, 17729, 28584, 28782, cop],
+    ['Conversaciones de WhatsApp', 1832,  1993,  3320,  2031, u],
+    ['Costo por conversación',     2639,  3474,  1042,   805, cop],
+    ['Leads B2B',                  null,    65,   174,   298, u],
+    ['Costo por lead B2B',         null, 22046,  4986,  4835, cop]
+  ];
+
+  document.getElementById('t-resultados-obj').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Indicador</th>' +
+        '<th class="g25" colspan="2">2025</th>' +
+        '<th class="g26" colspan="2">2026</th>' +
+        '<th class="gv" rowspan="2">Oct 26 vs Oct 25</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Septiembre</th><th>Octubre</th><th>Septiembre</th><th>Octubre</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    resObj.map(function(f){
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        [1,2,3,4].map(function(k){
+          return f[k] === null ? '<td class="num no-aplica">—</td>'
+                               : '<td class="num">' + f[5](f[k]) + '</td>';
+        }).join('') +
+        varSem(f[2], f[4]) +
+      '</tr>';
+    }).join('') +
+    '<tr class="sub-total">' +
+      '<td class="lft">Inversión en compras</td>' +
+      [1,2,3,4].map(function(k){
+        return '<td class="num">' + cop(objetivos[0][k]) + '</td>';
+      }).join('') +
+      varSem(objetivos[0][2], objetivos[0][4]) +
+    '</tr></tbody>';
+
+  /* ROAS y valor de conversión de octubre: todo pendiente del export de campaña */
+  document.getElementById('t-roas-oct').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Indicador</th><th>Octubre 2026</th>' +
+    '</tr></thead><tbody>' +
+    ['ROAS', 'Valor de conversión', 'Compras totales de Meta',
+     'Ticket (valor ÷ compras)', 'CPA como % del ticket'].map(function(n){
+      return '<tr><td class="lft">' + n + '</td>' +
+             '<td class="num pendiente">' + FALTA + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  /* Octubre por categoría. [categoría, inversión, compras, gasto de compra,
+     ticket estimado, tipo, nota] */
+  var catOct = [
+    ['Short',         7463602,  182, 6772019, 125000, 'B2C'],
+    ['Fajas',         5662296,  243, 5618600, 220000, 'B2C'],
+    ['Cinturilla',     357760,   17,  331123,   null, 'B2C'],
+    ['Luxury (fajas)',  103866, null,    null,   null, 'B2C'],
+    ['B2B leads (Marca Blanca + Distribuidores)', 1440704, 298, 1440704, null, 'B2B', 'leads'],
+    ['WhatsApp genérico y otros', 942002, null, null, null, 'B2C']
+  ];
+  var catOctTot = catOct.reduce(function(a,c){ return a + c[1]; }, 0);
+
+  document.getElementById('t-cat-oct').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Categoría</th><th class="lft">Tipo</th>' +
+      '<th>Inversión</th><th>% del total</th><th>Resultados</th>' +
+      '<th>Costo por resultado</th>' +
+      '<th class="wrap">CPA como % del ticket<span class="obj">estimado con el ticket de septiembre</span></th>' +
+    '</tr></thead><tbody>' +
+    catOct.map(function(c){
+      var esLead = c[5] === 'leads' || c[6] === 'leads';
+      var costo = c[2] ? Math.round(c[3] / c[2]) : null;
+      var pctTicket = (c[4] && costo) ? costo / c[4] * 100 : null;
+      return '<tr>' +
+        '<td class="lft">' + c[0] + '</td>' +
+        '<td class="lft canal"><span class="marca-morada">' + c[5] + '</span></td>' +
+        '<td class="num">' + cop(c[1]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[1] / catOctTot * 100) + '%</td>' +
+        (c[2] === null ? '<td class="num pendiente">' + FALTA + '</td>'
+                       : '<td class="num">' + u(c[2]) + (esLead ? ' leads' : ' compras') + '</td>') +
+        (costo === null ? '<td class="num pendiente">' + FALTA + '</td>'
+                        : '<td class="num">' + cop(costo) + (esLead ? ' / lead' : '') + '</td>') +
+        (esLead ? '<td class="num no-aplica">no aplica</td>'
+                : pctTicket === null
+                  ? '<td class="num pendiente">' + FALTA + '</td>'
+                  : '<td class="num pct">' + marca(colorCpa(pctTicket)) + '≈' +
+                    nf1.format(pctTicket) + '%' +
+                    '<span class="val">ticket ≈ ' + cop(c[4]) + '</span></td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total octubre</td><td></td>' +
+      '<td class="num">' + cop(catOctTot) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+      '<td class="num no-aplica">—</td>' +
+    '</tr></tbody>';
+
+  /* Conjuntos de anuncios de octubre. Solo los que venían escritos: el CSV
+     completo no llegó. [nombre, estado, categoría, objetivo, resultados,
+     unidad, inversión] */
+  var conjuntos = [
+    ['19/03_RET_Shorts',                          null,             'Short',  'Compras',  87,   'compras', 3133816],
+    ['19/03_RET_Fajas_A+',                        'not_delivering', 'Fajas',  'Compras',  64,   'compras', 1842979],
+    ['29/07_SHORTS_ANGULO_TRANSFORMACION-2 NC',   null,             'Short',  'Compras',  33,   'compras', 1509913],
+    ['22/09_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS-2 NC', null,           'Fajas',  'Compras',  39,   'compras', 1480500],
+    ['21/08_FAJAS_ANGULO_TRANSFORMACION',         null,             'Fajas',  'Compras',  25,   'compras', 1255056],
+    ['Marca Blanca CP Sep 2026',                  null,             'B2B',    'Leads',    241,  'leads',   1106117],
+    ['26/12_RMK_Shorts_A+',                       null,             'Short',  'Compras',  19,   'compras',  840983],
+    ['Shorts (mensajes)',                         null,             'Short',  'Mensajes', 554,  'conv.',    619693],
+    ['28/07_Broad_WA_Statics_01',                 null,             'WhatsApp', 'Mensajes', 1032, 'conv.',  480529],
+    ['21/08_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS',    null,             'Fajas',  'Compras',  90,   'compras',  343461]
+  ];
+  var INV_OCT = 15970230;
+  var conjSuma = conjuntos.reduce(function(a,c){ return a + c[6]; }, 0);
+
+  document.getElementById('t-conjuntos').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Conjunto</th><th class="lft">Estado</th><th class="lft">Categoría</th>' +
+      '<th class="lft">Objetivo</th><th>Resultados</th><th>Inversión</th>' +
+      '<th>% del mes</th><th>Costo por resultado</th>' +
+    '</tr></thead><tbody>' +
+    conjuntos.slice().sort(function(a,b){ return b[6] - a[6]; }).map(function(c){
+      var ret = c[0].indexOf('RET') >= 0;
+      var nuevo = c[0].indexOf('26/10') >= 0;
+      return '<tr>' +
+        '<td class="lft">' + (ret ? '🚩 ' : '') + c[0] +
+          (ret ? '<span class="marca-amarilla">Atribución más amplia</span>' : '') +
+          (nuevo ? '<span class="marca-amarilla">Nuevo, sin datos suficientes</span>' : '') + '</td>' +
+        (c[1] === null ? '<td class="lft pendiente">' + FALTA + '</td>'
+                       : '<td class="lft canal">' + c[1] + '</td>') +
+        '<td class="lft canal">' + c[2] + '</td>' +
+        '<td class="lft canal">' + c[3] + '</td>' +
+        '<td class="num">' + u(c[4]) + ' ' + c[5] + '</td>' +
+        '<td class="num">' + cop(c[6]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[6] / INV_OCT * 100) + '%</td>' +
+        '<td class="num">' + cop(Math.round(c[6] / c[4])) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="hija">' +
+      '<td class="lft">Los 21 conjuntos restantes<span class="marca-amarilla">Falta el CSV</span></td>' +
+      '<td class="lft pendiente">' + FALTA + '</td>' +
+      '<td class="lft pendiente">' + FALTA + '</td>' +
+      '<td class="lft pendiente">' + FALTA + '</td>' +
+      '<td class="num pendiente">' + FALTA + '</td>' +
+      '<td class="num">' + cop(INV_OCT - conjSuma) + '</td>' +
+      '<td class="num pct">' + nf1.format((INV_OCT - conjSuma) / INV_OCT * 100) + '%</td>' +
+      '<td class="num pendiente">' + FALTA + '</td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Total octubre</td><td></td><td></td><td></td>' +
+      '<td class="num no-aplica">—</td>' +
+      '<td class="num">' + cop(INV_OCT) + '</td>' +
+      '<td class="num">100%</td>' +
+      '<td class="num no-aplica">—</td>' +
     '</tr></tbody>';
 
   /* Inversión por canal de negocio. [canal, inversión] */
