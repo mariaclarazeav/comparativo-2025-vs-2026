@@ -377,6 +377,18 @@
   }
   .tabla-sticky td, .tabla-sticky th{ padding-inline:9px; }
   .tabla-sticky .val{ white-space:nowrap; }
+  .val .prov{
+    font-family:var(--cifra);
+    font-size:9.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--amarillo);
+    background:var(--amarillo-bg);
+    border:1px solid var(--amarillo-ln);
+    padding:0 4px;
+    margin-left:5px;
+  }
+  .val.solo-prov{ margin-top:3px; }
   .tabla-sticky td.pendiente{ white-space:normal; max-width:92px; font-size:11px; line-height:1.3; }
   thead th .obj{
     display:block;
@@ -3097,10 +3109,10 @@
   ];
 
   /* Meta mes a mes, los dos años completos hasta octubre.
-     La inversión de 2026 sale del export de conjuntos de anuncios; ROAS, compras
-     y CPA salen del export a nivel campaña. En septiembre los dos exports no
-     coinciden, así que el ticket de ese mes se calcula sobre la inversión de
-     campaña (índice 11), no sobre la de conjuntos.
+     La inversión sale del export más reciente de Meta. Las compras, el ROAS y el
+     CPA de septiembre de 2026 son provisionales: vienen de un export anterior,
+     descargado antes de que el mes cerrara, así que el ticket de ese mes se
+     calcula sobre esa misma base (índice 11), que es la que les corresponde.
      [mes, etiqueta, inv25, compras25, roas25, cpa25, inv26, compras26, roas26,
       cpa26, aviso, base de ROAS/CPA 2026] */
   var metaMes = [
@@ -3112,7 +3124,7 @@
     ['Junio',      'Jun', 13790261, 399, '7,55x',  34562, 13243075, 321,  '5,62x', 41256],
     ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379,  '6,93x', 35707],
     ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372,  '5,97x', 37129],
-    ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16847214, 428,  '6,01x', 38292, 'desfase', 16389164],
+    ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16847214, 428,  '6,01x', 38292, 'prov', 16389164],
     ['Octubre',    'Oct', 18727794, 575, '7,01x', 32570, 15970230, null,  null,    null]
   ];
   /* Inversión: los diez meses. Compras: solo los meses que ya la tienen. */
@@ -3156,14 +3168,19 @@
   /* La tabla se agrupa por métrica: 2025, 2026 y su variación quedan juntos,
      así cabe sin scroll horizontal. El CPA lleva debajo su % del ticket con el
      semáforo, para no gastar dos columnas más. */
-  function celdaCpa(cpa, roas, inv, compras){
+  function celdaCpa(cpa, roas, inv, compras, prov){
     if (cpa === null) { return '<td class="num pendiente">' + FALTA + '</td>'; }
     var pct = cpa / ticketMes(roas, inv, compras) * 100;
     return '<td class="num">' + cop(cpa) +
-           '<span class="val">' + marca(colorCpa(pct)) + nf1.format(pct) + '%</span></td>';
+           '<span class="val">' + marca(colorCpa(pct)) + nf1.format(pct) + '%' +
+           (prov ? PROV : '') + '</span></td>';
   }
-  var cel  = function(v, f){ return v === null ? '<td class="num pendiente">' + FALTA + '</td>'
-                                               : '<td class="num">' + f(v) + '</td>'; };
+  var PROV = '<span class="prov">prov.</span>';
+  var cel  = function(v, f, prov){
+    if (v === null) { return '<td class="num pendiente">' + FALTA + '</td>'; }
+    return '<td class="num">' + f(v) +
+           (prov ? '<span class="val solo-prov">' + PROV + '</span>' : '') + '</td>';
+  };
   var vacio = '<td class="num no-aplica">—</td>';
 
   document.getElementById('t-meta-mes').innerHTML =
@@ -3184,16 +3201,16 @@
     '</thead><tbody>' +
     metaMes.map(function(m){
       return '<tr>' +
-        '<td class="lft">' + m[0] +
-          (m[10] === 'desfase' ? '<span class="marca-amarilla">Dos exports</span>' : '') + '</td>' +
+        '<td class="lft">' + m[0] + '</td>' +
         '<td class="num">' + cop(m[2]) + '</td>' +
         '<td class="num">' + cop(m[6]) + '</td>' +
         varSem(m[2], m[6]) +
-        cel(m[3], u) + cel(m[7], u) +
+        cel(m[3], u) + cel(m[7], u, m[10] === 'prov') +
         (m[3] === null || m[7] === null ? vacio : varSem(m[3], m[7])) +
-        cel(m[4], function(x){ return x; }) + cel(m[8], function(x){ return x; }) +
+        cel(m[4], function(x){ return x; }) +
+        cel(m[8], function(x){ return x; }, m[10] === 'prov') +
         celdaCpa(m[5], m[4], m[2], m[3]) +
-        celdaCpa(m[9], m[8], m[11] || m[6], m[7]) +
+        celdaCpa(m[9], m[8], m[11] || m[6], m[7], m[10] === 'prov') +
       '</tr>';
     }).join('') +
     (function(){
@@ -3202,11 +3219,14 @@
          la base sobre la que se calcularon compras, ROAS y CPA. */
       var comp = metaMes.filter(function(m){ return m[3] !== null && m[7] !== null; });
       var inv25 = comp.reduce(function(a,m){ return a + m[2]; }, 0);
-      var inv26 = comp.reduce(function(a,m){ return a + (m[11] || m[6]); }, 0);
+      var inv26 = comp.reduce(function(a,m){ return a + m[6]; }, 0);
+      /* el CPA de 2026 sigue saliendo de la base de campaña, que es sobre la
+         que Meta calculó las compras de septiembre; por eso va marcado prov. */
+      var inv26cpa = comp.reduce(function(a,m){ return a + (m[11] || m[6]); }, 0);
       var c25   = comp.reduce(function(a,m){ return a + m[3]; }, 0);
       var c26   = comp.reduce(function(a,m){ return a + m[7]; }, 0);
       var val25 = comp.reduce(function(a,m){ return a + valorMes(m[4], m[2]); }, 0);
-      var cpa25 = Math.round(inv25 / c25), cpa26 = Math.round(inv26 / c26);
+      var cpa25 = Math.round(inv25 / c25), cpa26 = Math.round(inv26cpa / c26);
       var pct25 = cpa25 / (val25 / c25) * 100;
       var inv25Oct = metaMes.reduce(function(a,m){ return a + m[2]; }, 0);
       var inv26Oct = metaMes.reduce(function(a,m){ return a + m[6]; }, 0);
@@ -3223,10 +3243,10 @@
         '<td class="num pendiente">' + FALTA + '</td>' +
         '<td class="num">' + cop(cpa25) +
           '<span class="val">' + marca(colorCpa(pct25)) + nf1.format(pct25) + '%</span></td>' +
-        '<td class="num">' + cop(cpa26) + '</td>' +
+        '<td class="num">' + cop(cpa26) + '<span class="val solo-prov">' + PROV + '</span></td>' +
       '</tr>' +
       '<tr class="total">' +
-        '<td class="lft">Total Ene–Oct<span class="val">solo inversión: octubre de 2026 aún no tiene compras</span></td>' +
+        '<td class="lft">Total Ene–Oct<span class="val">inversión; compras pendientes de octubre 2026</span></td>' +
         '<td class="num">' + cop(inv25Oct) + '</td>' +
         '<td class="num">' + cop(inv26Oct) + '</td>' +
         varSem(inv25Oct, inv26Oct) +
@@ -3235,17 +3255,11 @@
     })();
 
   document.getElementById('nota-bench-mes').innerHTML =
-    '<div class="nota info"><span class="etq">Los dos totales</span><span>' +
-      'Son periodos distintos a propósito. <b>Ene–Sep</b> es el tramo comparable: es ' +
-      'hasta donde los dos años tienen compras, ROAS y CPA, y en 2026 usa la inversión del ' +
-      'export de campaña (' + cop(16389164) + ' en septiembre), que es la base sobre la que se ' +
-      'calcularon esas métricas. <b>Ene–Oct</b> solo compara inversión, porque octubre de 2026 ' +
-      'todavía no tiene compras, y en septiembre usa el export de conjuntos (' + cop(16847214) +
-      '): de ahí que su total de 2026 sea ' + cop(458050) + ' mayor que el del tramo comparable.' +
-    '</span></div>' +
-    '<div class="nota"><span class="etq">Septiembre</span><span>' +
-      'Diferencia de ' + cop(16847214 - 16389164) + ' entre el export de campaña y el de ' +
-      'conjuntos, por confirmar.' +
+    '<div class="nota"><span class="etq">Septiembre 2026</span><span>' +
+      'Inversión: export más reciente de Meta (septiembre: ' + cop(16847214) + '). Compras, ROAS y ' +
+      'CPA de septiembre 2026 son provisionales: vienen de un export descargado cerca del 30-sep, ' +
+      'cuando el gasto y la atribución de 7 días aún no estaban consolidados (gasto final ≈ 2,8% ' +
+      'mayor). Se actualizan al descargar de nuevo el export de campañas.' +
     '</span></div>' +
     '<div class="nota"><span class="etq">Octubre 2026</span><span>' +
       'De octubre de 2026 solo llegó la inversión, del export de conjuntos. Compras, ROAS, CPA y ' +
