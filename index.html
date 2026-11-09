@@ -1549,10 +1549,6 @@
       <span class="etq">Etiquetas</span>
       <span>En 2025 el indicador de los leads B2B era «leadgen.other». Septiembre de 2026 incluye además 36.281 de leadgen.other y 30.333 de clics, ya sumados donde corresponde.</span>
     </div>
-    <div class="nota">
-      <span class="etq">No cuadra</span>
-      <span>Los cuatro objetivos de septiembre de 2025 suman <b>$13.068.046</b>, $1.000 más que los $13.067.046 de la tabla mensual. Diferencia pequeña pero sin explicar: por confirmar cuál de los dos cortes manda.</span>
-    </div>
 
     <h3 class="sub-cab">Resultados por objetivo</h3>
     <p class="sub">Solo los conjuntos optimizados a cada objetivo, con su propio costo por resultado.</p>
@@ -1581,11 +1577,9 @@
       <summary>Ver más — conjuntos de anuncios de octubre</summary>
       <div class="cuerpo">
         <div class="scroll"><table id="t-conjuntos"></table></div>
-        <div class="nota fuerte">
-          <span class="etq">Falta el archivo</span>
-          <span>
-            <b>El CSV de conjuntos de octubre no llegó con el mensaje</b>, así que la tabla no tiene las 31 filas: solo están los diez conjuntos que venían escritos, que suman $12.613.047 de los $15.970.230 del mes (79,0%). Los 21 restantes, $3.357.183, quedan en una sola línea pendiente. Con el CSV se generan las 31 filas completas.
-          </span>
+        <div class="nota">
+          <span class="etq">Cómo leer</span>
+          <span>Las 31 filas salen del export de conjuntos de octubre y suman exacto los $15.970.230 del mes. La bandera 🚩 marca los conjuntos cuya configuración de atribución incluye «1 día tras visualización activa», más amplia que la del resto: son siete y se llevan el 37,2% del gasto. Las filas grises son los cuatro conjuntos creados el 26/10, con pocos días de datos.</span>
         </div>
       </div>
     </details>
@@ -3264,7 +3258,7 @@
     ['Compras',              7524305, 9591376, 12405467, 12721742, '#4C1D6B'],
     ['Mensajes WhatsApp',    4834804, 6924129,  3459047,  1634973, '#9C7A56'],
     ['Leads B2B',                  0, 1432970,   867613,  1440704, '#C19A73'],
-    ['Alcance, video y otros', 708937,  779319,   115087,   172811, '#B3AABF']
+    ['Alcance, video y otros', 707937,  779319,   115087,   172811, '#B3AABF']
   ];
   var objTot = [1,2,3,4].map(function(k){
     return objetivos.reduce(function(a,o){ return a + o[k]; }, 0);
@@ -3438,61 +3432,75 @@
       '<td class="num no-aplica">—</td>' +
     '</tr></tbody>';
 
-  /* Conjuntos de anuncios de octubre. Solo los que venían escritos: el CSV
-     completo no llegó. [nombre, estado, categoría, objetivo, resultados,
-     unidad, inversión] */
+  /* Conjuntos de anuncios de octubre de 2026, las 31 filas del export de Meta.
+     [nombre, entrega, categoría, objetivo, resultados, inversión, creado el 26/10,
+      atribución más amplia (incluye 1 día tras visualización activa)] */
   var conjuntos = [
-    ['19/03_RET_Shorts',                          null,             'Short',  'Compras',  87,   'compras', 3133816],
-    ['19/03_RET_Fajas_A+',                        'not_delivering', 'Fajas',  'Compras',  64,   'compras', 1842979],
-    ['29/07_SHORTS_ANGULO_TRANSFORMACION-2 NC',   null,             'Short',  'Compras',  33,   'compras', 1509913],
-    ['22/09_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS-2 NC', null,           'Fajas',  'Compras',  39,   'compras', 1480500],
-    ['21/08_FAJAS_ANGULO_TRANSFORMACION',         null,             'Fajas',  'Compras',  25,   'compras', 1255056],
-    ['Marca Blanca CP Sep 2026',                  null,             'B2B',    'Leads',    241,  'leads',   1106117],
-    ['26/12_RMK_Shorts_A+',                       null,             'Short',  'Compras',  19,   'compras',  840983],
-    ['Shorts (mensajes)',                         null,             'Short',  'Mensajes', 554,  'conv.',    619693],
-    ['28/07_Broad_WA_Statics_01',                 null,             'WhatsApp', 'Mensajes', 1032, 'conv.',  480529],
-    ['21/08_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS',    null,             'Fajas',  'Compras',  90,   'compras',  343461]
+    ['19/03_RET_Shorts', 'active', 'Short', 'Compras', 87, 3133816, false, true],
+    ['19/03_RET_Fajas_A+', 'not_delivering', 'Fajas', 'Compras', 64, 1842979, false, true],
+    ['29/07_SHORTS_ANGULO_TRANSFORMACION - 2 NC', 'active', 'Short', 'Compras', 33, 1509913, false, false],
+    ['22/09_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS - 2 NC', 'active', 'Fajas', 'Compras', 39, 1480500, false, false],
+    ['21/08_FAJAS_ANGULO_TRANSFORMACION', 'active', 'Fajas', 'Compras', 25, 1255056, false, false],
+    ['Marca Blanca | CP |  Sep 2026', 'active', 'B2B leads', 'Leads', 241, 1106117, false, false],
+    ['26/12_RMK_Shorts_A+', 'active', 'Short', 'Compras', 19, 840983, false, true],
+    ['Shorts', 'not_delivering', 'Short', 'Mensajes', 554, 619693, false, false],
+    ['28/07_Broad_WA_Statics_01', 'active', 'WhatsApp genérico y otros', 'Mensajes', 1032, 480529, false, false],
+    ['22/09_SHORTS_ANGULO_USO DIARIO - NC', 'active', 'Short', 'Compras', 18, 405274, false, false],
+    ['29/07_SHORTS_ANGULO_TRANSFORMACION', 'inactive', 'Short', 'Compras', 11, 350332, false, false],
+    ['21/08_FAJAS_ANGULO_VILLANO_OTRAS_FAJAS', 'active', 'Fajas', 'Compras', 90, 343461, false, false],
+    ['Distribuidores | CP |  Sep 2026', 'active', 'B2B leads', 'Leads', 57, 334587, false, false],
+    ['17/09_FAJAS_ANGULO_INSEGURIDAD_NC', 'active', 'Fajas', 'Compras', 9, 317214, false, false],
+    ['05/06_Broad_WA_Video_01', 'active', 'WhatsApp genérico y otros', 'Mensajes', 200, 215751, false, false],
+    ['03/09_FAJAS_ANGULO_TRANSFORMACION - 2 NC', 'active', 'Fajas', 'Compras', 5, 198769, false, false],
+    ['05/06_Broad_WA_Video_02', 'active', 'WhatsApp genérico y otros', 'Mensajes', 191, 194925, false, false],
+    ['21/08_FAJAS_ANGULO_MECANISMO_USP', 'active', 'Fajas', 'Compras', 11, 180621, false, false],
+    ['21/08_SHORTS_ANGULO_MECANISMO_USP', 'inactive', 'Short', 'Compras', 4, 172348, false, false],
+    ['21/08_CINTURILLA_ANGULO_TRANSFORMACION_MOFU_BOFU', 'active', 'Cinturilla', 'Compras', 8, 168801, false, false],
+    ['21/08_CINTURILLA_ANGULO_TRANSFORMACION_TOFU', 'active', 'Cinturilla', 'Compras', 9, 162322, false, false],
+    ['21/08_SHORTS_ANGULO_VILLANO_OTROS_SHORTS', 'active', 'Short', 'Compras', 4, 139382, false, false],
+    ['02/09_SHORTS_ANGULO_MECANISMO_USP - 2 NC', 'active', 'Short', 'Compras', 5, 139053, false, false],
+    ['Luxury', 'not_delivering', 'Luxury (fajas)', 'Mensajes', 51, 103866, false, false],
+    ['26/10_RET_SHORTS_A+_NC', 'active', 'Short', 'Compras', 1, 80918, true, true],
+    ['21/08_SHORTS_ANGULO_VILLANO_OTROS_SHORTS - 2 NC', 'active', 'Short', 'Sin resultados', null, 71890, false, false],
+    ['05/06_Broad_Statics_01', 'active', 'WhatsApp genérico y otros', 'Sin resultados', null, 50797, false, false],
+    ['26/10_RET_Fajas_A+_NC', 'active', 'Fajas', 'Sin resultados', null, 40290, true, true],
+    ['Cinturillas', 'not_delivering', 'Cinturilla', 'Mensajes', 3, 20209, false, false],
+    ['26/10_WINNERS_CINTURILLAS_A+', 'active', 'Cinturilla', 'Sin resultados', null, 6428, true, true],
+    ['26/10_WINNERS_FAJAS_A+', 'active', 'Fajas', 'Sin resultados', null, 3406, true, true]
   ];
+  var UNIDAD = {Compras:'compras', Mensajes:'conv.', Leads:'leads'};
   var INV_OCT = 15970230;
-  var conjSuma = conjuntos.reduce(function(a,c){ return a + c[6]; }, 0);
+  var conjSuma = conjuntos.reduce(function(a,c){ return a + c[5]; }, 0);
 
   document.getElementById('t-conjuntos').innerHTML =
     '<thead><tr class="campos">' +
-      '<th class="lft">Conjunto</th><th class="lft">Estado</th><th class="lft">Categoría</th>' +
+      '<th class="lft">Conjunto</th><th class="lft">Entrega</th><th class="lft">Categoría</th>' +
       '<th class="lft">Objetivo</th><th>Resultados</th><th>Inversión</th>' +
       '<th>% del mes</th><th>Costo por resultado</th>' +
     '</tr></thead><tbody>' +
-    conjuntos.slice().sort(function(a,b){ return b[6] - a[6]; }).map(function(c){
-      var ret = c[0].indexOf('RET') >= 0;
-      var nuevo = c[0].indexOf('26/10') >= 0;
-      return '<tr>' +
-        '<td class="lft">' + (ret ? '🚩 ' : '') + c[0] +
-          (ret ? '<span class="marca-amarilla">Atribución más amplia</span>' : '') +
-          (nuevo ? '<span class="marca-amarilla">Nuevo, sin datos suficientes</span>' : '') + '</td>' +
-        (c[1] === null ? '<td class="lft pendiente">' + FALTA + '</td>'
-                       : '<td class="lft canal">' + c[1] + '</td>') +
+    conjuntos.map(function(c){
+      return '<tr' + (c[6] ? ' class="hija"' : '') + '>' +
+        '<td class="lft">' + (c[7] ? '🚩 ' : '') + c[0] +
+          (c[7] ? '<span class="marca-amarilla">Atribución más amplia</span>' : '') +
+          (c[6] ? '<span class="marca-amarilla">Nuevo (26/10), sin datos suficientes</span>' : '') +
+        '</td>' +
+        '<td class="lft canal">' + c[1] + '</td>' +
         '<td class="lft canal">' + c[2] + '</td>' +
-        '<td class="lft canal">' + c[3] + '</td>' +
-        '<td class="num">' + u(c[4]) + ' ' + c[5] + '</td>' +
-        '<td class="num">' + cop(c[6]) + '</td>' +
-        '<td class="num pct">' + nf1.format(c[6] / INV_OCT * 100) + '%</td>' +
-        '<td class="num">' + cop(Math.round(c[6] / c[4])) + '</td>' +
+        '<td class="lft canal">' + (c[3] === 'Sin resultados' ? '—' : c[3]) + '</td>' +
+        (c[4] === null
+          ? '<td class="num no-aplica">sin resultados</td>'
+          : '<td class="num">' + u(c[4]) + ' ' + UNIDAD[c[3]] + '</td>') +
+        '<td class="num">' + cop(c[5]) + '</td>' +
+        '<td class="num pct">' + nf1.format(c[5] / INV_OCT * 100) + '%</td>' +
+        (c[4] ? '<td class="num">' + cop(Math.round(c[5] / c[4])) + '</td>'
+              : '<td class="num no-aplica">—</td>') +
       '</tr>';
     }).join('') +
-    '<tr class="hija">' +
-      '<td class="lft">Los 21 conjuntos restantes<span class="marca-amarilla">Falta el CSV</span></td>' +
-      '<td class="lft pendiente">' + FALTA + '</td>' +
-      '<td class="lft pendiente">' + FALTA + '</td>' +
-      '<td class="lft pendiente">' + FALTA + '</td>' +
-      '<td class="num pendiente">' + FALTA + '</td>' +
-      '<td class="num">' + cop(INV_OCT - conjSuma) + '</td>' +
-      '<td class="num pct">' + nf1.format((INV_OCT - conjSuma) / INV_OCT * 100) + '%</td>' +
-      '<td class="num pendiente">' + FALTA + '</td>' +
-    '</tr>' +
     '<tr class="total">' +
-      '<td class="lft">Total octubre</td><td></td><td></td><td></td>' +
+      '<td class="lft">Total octubre<span class="val">' + u(conjuntos.length) + ' conjuntos</span></td>' +
+      '<td></td><td></td><td></td>' +
       '<td class="num no-aplica">—</td>' +
-      '<td class="num">' + cop(INV_OCT) + '</td>' +
+      '<td class="num">' + cop(conjSuma) + '</td>' +
       '<td class="num">100%</td>' +
       '<td class="num no-aplica">—</td>' +
     '</tr></tbody>';
