@@ -356,6 +356,28 @@
   tr.suma-pend td{ border-bottom:1px solid var(--linea); font-weight:600; }
 
   thead th.wrap{ white-space:normal; max-width:120px; line-height:1.3; }
+
+  /* Tabla con la columna de mes fija cuando hay scroll lateral */
+  .tabla-sticky{ min-width:0; }
+  .tabla-sticky th.lft, .tabla-sticky td.lft{
+    position:sticky;
+    left:0;
+    z-index:2;
+    background:var(--paper);
+  }
+  .tabla-sticky tr.total td.lft{ background:var(--paper); }
+  .tabla-sticky tr.sub-total td.lft{ background:var(--lavado); }
+  .tabla-sticky tbody tr:hover td.lft{ background:var(--lavado); }
+  .tabla-sticky td.lft::after{
+    content:"";
+    position:absolute;
+    top:0; right:0; bottom:0;
+    width:1px;
+    background:var(--linea-suave);
+  }
+  .tabla-sticky td, .tabla-sticky th{ padding-inline:9px; }
+  .tabla-sticky .val{ white-space:nowrap; }
+  .tabla-sticky td.pendiente{ white-space:normal; max-width:92px; font-size:11px; line-height:1.3; }
   thead th .obj{
     display:block;
     font-family:var(--texto);
@@ -1534,7 +1556,7 @@
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
     </div>
     <div id="grafico-meta"></div>
-    <div class="scroll"><table id="t-meta-mes"></table></div>
+    <div class="scroll"><table id="t-meta-mes" class="tabla-sticky"></table></div>
     <div id="nota-bench-mes"></div>
     <div class="nota info">
       <span class="etq">Lectura</span>
@@ -3091,7 +3113,7 @@
     ['Julio',      'Jul', 11076617, 496, '11,22x', 22332, 13533089, 379,  '6,93x', 35707],
     ['Agosto',     'Ago', 13536905, 573, '9,52x',  23625, 13812049, 372,  '5,97x', 37129],
     ['Septiembre', 'Sep', 13067046, 526, '9,30x',  24842, 16847214, 428,  '6,01x', 38292, 'desfase', 16389164],
-    ['Octubre',    'Oct', 18727794, null, null,     null, 15970230, null,  null,    null]
+    ['Octubre',    'Oct', 18727794, 575, '7,01x', 32570, 15970230, null,  null,    null]
   ];
   /* Inversión: los diez meses. Compras: solo los meses que ya la tienen. */
   var metaTot = metaMes.reduce(function(a,m){
@@ -3131,89 +3153,104 @@
       }) +
     '</div>';
 
-  /* Una celda por métrica: si el mes todavía no tiene el dato, va el texto de
-     pendiente en vez de un cero. */
-  function metaCeldas(inv, compras, roas, cpa, base){
-    if (compras === null || roas === null){
-      return '<td class="num">' + cop(inv) + '</td>' +
-             '<td class="num pendiente">' + FALTA + '</td>' +
-             '<td class="num pendiente">' + FALTA + '</td>' +
-             '<td class="num pendiente">' + FALTA + '</td>' +
-             '<td class="num pendiente">' + FALTA + '</td>';
-    }
-    return '<td class="num">' + cop(inv) + '</td>' +
-           '<td class="num">' + u(compras) + '</td>' +
-           '<td class="num">' + roas + '</td>' +
-           '<td class="num">' + cop(cpa) + '</td>' +
-           celdaCpaTicket(cpa, ticketMes(roas, base || inv, compras));
+  /* La tabla se agrupa por métrica: 2025, 2026 y su variación quedan juntos,
+     así cabe sin scroll horizontal. El CPA lleva debajo su % del ticket con el
+     semáforo, para no gastar dos columnas más. */
+  function celdaCpa(cpa, roas, inv, compras){
+    if (cpa === null) { return '<td class="num pendiente">' + FALTA + '</td>'; }
+    var pct = cpa / ticketMes(roas, inv, compras) * 100;
+    return '<td class="num">' + cop(cpa) +
+           '<span class="val">' + marca(colorCpa(pct)) + nf1.format(pct) + '%</span></td>';
   }
+  var cel  = function(v, f){ return v === null ? '<td class="num pendiente">' + FALTA + '</td>'
+                                               : '<td class="num">' + f(v) + '</td>'; };
+  var vacio = '<td class="num no-aplica">—</td>';
 
   document.getElementById('t-meta-mes').innerHTML =
     '<thead>' +
       '<tr class="grupos">' +
         '<th class="lft" rowspan="2">Mes</th>' +
-        '<th class="g25" colspan="5">2025</th>' +
-        '<th class="g26" colspan="5">2026</th>' +
+        '<th class="gv" colspan="3">Inversión</th>' +
+        '<th class="gv" colspan="3">Compras</th>' +
+        '<th class="gv" colspan="2">ROAS</th>' +
+        '<th class="gv" colspan="2">CPA · % del ticket<span class="obj">objetivo 8%</span></th>' +
       '</tr>' +
       '<tr class="campos">' +
-        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th><th class="wrap">CPA % del ticket<span class="obj">objetivo 8%</span></th>' +
-        '<th>Inversión</th><th>Compras</th><th>ROAS</th><th>CPA</th><th class="wrap">CPA % del ticket<span class="obj">objetivo 8%</span></th>' +
+        '<th class="g25">2025</th><th class="g26">2026</th><th>Var.</th>' +
+        '<th class="g25">2025</th><th class="g26">2026</th><th>Var.</th>' +
+        '<th class="g25">2025</th><th class="g26">2026</th>' +
+        '<th class="g25">2025</th><th class="g26">2026</th>' +
       '</tr>' +
     '</thead><tbody>' +
     metaMes.map(function(m){
       return '<tr>' +
         '<td class="lft">' + m[0] +
-          (m[10] === 'desfase' ? '<span class="marca-amarilla">Dos exports</span>' : '') +
-          (m[3] === null ? '<span class="val">inversión ' + varTxt(m[2], m[6]).s + ' vs 2025</span>' : '') + '</td>' +
-        metaCeldas(m[2], m[3], m[4], m[5]) +
-        metaCeldas(m[6], m[7], m[8], m[9], m[11]) +
+          (m[10] === 'desfase' ? '<span class="marca-amarilla">Dos exports</span>' : '') + '</td>' +
+        '<td class="num">' + cop(m[2]) + '</td>' +
+        '<td class="num">' + cop(m[6]) + '</td>' +
+        varSem(m[2], m[6]) +
+        cel(m[3], u) + cel(m[7], u) +
+        (m[3] === null || m[7] === null ? vacio : varSem(m[3], m[7])) +
+        cel(m[4], function(x){ return x; }) + cel(m[8], function(x){ return x; }) +
+        celdaCpa(m[5], m[4], m[2], m[3]) +
+        celdaCpa(m[9], m[8], m[11] || m[6], m[7]) +
       '</tr>';
     }).join('') +
     (function(){
-      /* El ticket del periodo se pondera con el valor de los meses que lo tienen */
-      var val = metaMes.reduce(function(a,m){
-        return [a[0] + (m[4] ? valorMes(m[4], m[2]) : 0),
-                a[1] + (m[8] ? valorMes(m[8], m[11] || m[6]) : 0)];
-      }, [0,0]);
-      var invCon = metaMes.reduce(function(a,m){
-        return [a[0] + (m[4] ? m[2] : 0), a[1] + (m[8] ? (m[11] || m[6]) : 0)];
-      }, [0,0]);
+      /* Comparable: enero–septiembre, el tramo con compras en los dos años.
+         En 2026 la inversión de septiembre es la del export de campaña, que es
+         la base sobre la que se calcularon compras, ROAS y CPA. */
+      var comp = metaMes.filter(function(m){ return m[3] !== null && m[7] !== null; });
+      var inv25 = comp.reduce(function(a,m){ return a + m[2]; }, 0);
+      var inv26 = comp.reduce(function(a,m){ return a + (m[11] || m[6]); }, 0);
+      var c25   = comp.reduce(function(a,m){ return a + m[3]; }, 0);
+      var c26   = comp.reduce(function(a,m){ return a + m[7]; }, 0);
+      var val25 = comp.reduce(function(a,m){ return a + valorMes(m[4], m[2]); }, 0);
+      var cpa25 = Math.round(inv25 / c25), cpa26 = Math.round(inv26 / c26);
+      var pct25 = cpa25 / (val25 / c25) * 100;
+      var inv25Oct = metaMes.reduce(function(a,m){ return a + m[2]; }, 0);
+      var inv26Oct = metaMes.reduce(function(a,m){ return a + m[6]; }, 0);
+
       return '<tr class="total">' +
-        '<td class="lft">Total Ene–Oct' +
-          '<span class="val">compras, ROAS y CPA solo de ene–sep: octubre aún no los tiene</span></td>' +
-        '<td class="num">' + cop(metaTot[0]) + '</td>' +
-        '<td class="num">' + u(metaTot[1]) + '</td>' +
-        '<td class="num">' + nf2.format(val[0] / invCon[0]) + 'x</td>' +
-        '<td class="num">' + cop(Math.round(invCon[0]/metaTot[1])) + '</td>' +
-        celdaCpaTicket(invCon[0]/metaTot[1], val[0] / metaTot[1]) +
-        '<td class="num">' + cop(metaTot[2]) + '</td>' +
-        '<td class="num">' + u(metaTot[3]) + '</td>' +
-        '<td class="num">' + nf2.format(val[1] / invCon[1]) + 'x</td>' +
-        '<td class="num">' + cop(Math.round(invCon[1]/metaTot[3])) + '</td>' +
-        celdaCpaTicket(invCon[1]/metaTot[3], val[1] / metaTot[3]) +
+        '<td class="lft">Total Ene–Sep<span class="val">comparable: los dos años con compras</span></td>' +
+        '<td class="num">' + cop(inv25) + '</td>' +
+        '<td class="num">' + cop(inv26) + '</td>' +
+        varSem(inv25, inv26) +
+        '<td class="num">' + u(c25) + '</td>' +
+        '<td class="num">' + u(c26) + '</td>' +
+        varSem(c25, c26) +
+        '<td class="num">' + nf2.format(val25 / inv25) + 'x</td>' +
+        '<td class="num pendiente">' + FALTA + '</td>' +
+        '<td class="num">' + cop(cpa25) +
+          '<span class="val">' + marca(colorCpa(pct25)) + nf1.format(pct25) + '%</span></td>' +
+        '<td class="num">' + cop(cpa26) + '</td>' +
       '</tr>' +
-      '<tr class="sub-total">' +
-        '<td class="lft">Variación Ene–Oct</td>' +
-        varSem(metaMes.reduce(function(a,m){ return a+m[2]; },0),
-               metaMes.reduce(function(a,m){ return a+m[6]; },0)) +
-        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
-        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
-        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
-        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
-        '<td class="num no-aplica">—</td>' +
+      '<tr class="total">' +
+        '<td class="lft">Total Ene–Oct<span class="val">solo inversión: octubre de 2026 aún no tiene compras</span></td>' +
+        '<td class="num">' + cop(inv25Oct) + '</td>' +
+        '<td class="num">' + cop(inv26Oct) + '</td>' +
+        varSem(inv25Oct, inv26Oct) +
+        vacio + vacio + vacio + vacio + vacio + vacio + vacio +
       '</tr></tbody>';
     })();
 
   document.getElementById('nota-bench-mes').innerHTML =
+    '<div class="nota info"><span class="etq">Los dos totales</span><span>' +
+      'Son periodos distintos a propósito. <b>Ene–Sep</b> es el tramo comparable: es ' +
+      'hasta donde los dos años tienen compras, ROAS y CPA, y en 2026 usa la inversión del ' +
+      'export de campaña (' + cop(16389164) + ' en septiembre), que es la base sobre la que se ' +
+      'calcularon esas métricas. <b>Ene–Oct</b> solo compara inversión, porque octubre de 2026 ' +
+      'todavía no tiene compras, y en septiembre usa el export de conjuntos (' + cop(16847214) +
+      '): de ahí que su total de 2026 sea ' + cop(458050) + ' mayor que el del tramo comparable.' +
+    '</span></div>' +
     '<div class="nota"><span class="etq">Septiembre</span><span>' +
       'Diferencia de ' + cop(16847214 - 16389164) + ' entre el export de campaña y el de ' +
-      'conjuntos, por confirmar. La inversión del mes usa el de conjuntos (' + cop(16847214) +
-      '); el ROAS y el CPA, el de campaña (' + cop(16389164) + '), que es la base sobre la ' +
-      'que se calcularon.' +
+      'conjuntos, por confirmar.' +
     '</span></div>' +
-    '<div class="nota"><span class="etq">Octubre</span><span>' +
-      'De octubre solo llegó la inversión, del export de conjuntos. Compras, ROAS, CPA y ' +
-      'valor de conversión se llenan cuando llegue el export a nivel campaña.' +
+    '<div class="nota"><span class="etq">Octubre 2026</span><span>' +
+      'De octubre de 2026 solo llegó la inversión, del export de conjuntos. Compras, ROAS, CPA y ' +
+      'valor de conversión se llenan cuando llegue el export a nivel campaña; el ROAS del ' +
+      'acumulado 2026 espera ese mismo dato.' +
     '</span></div>' +
     '<div class="nota info"><span class="etq">Cómo se calcula</span><span>' +
       'El ticket de cada mes sale de sus propias cifras, (ROAS × inversión) / compras, ' +
