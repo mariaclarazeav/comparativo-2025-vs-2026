@@ -11,7 +11,9 @@ Cinco bloques, con los datos entregados tal cual:
    tarjetas, los gráficos y las cuatro tablas se calculan de ahí, y los filtros
    de canal y categoría las recalculan todas. No incluye Accesorios, Vestido de
    baño ni Sin categoría.
-2. **Septiembre 2026 por categoría — Shopify (e-commerce)**, **Venta online por
+2. **Venta bruta, descuentos y venta neta** (Shopify, todos los estados,
+   enero–octubre), **venta neta por categoría**, **tienda online y pedidos sin
+   pagar**, **Septiembre 2026 por categoría — Shopify (e-commerce)**, **Venta online por
    subcanal** (FAJITEX_Dashboard_Online_Diario.xlsx, fuente definitiva de la
    venta online, con WhatsApp como un solo canal y el foco marcado).
 3. **Pauta Meta** — gráfico de inversión mensual 2025 vs 2026 (ambos años cortados
