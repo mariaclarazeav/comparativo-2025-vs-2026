@@ -762,6 +762,7 @@
     margin-top:16px;
   }
   .nota + .nota{ margin-top:8px; }
+  .nota code{ font-family:var(--cifra); font-size:12px; overflow-wrap:anywhere; }
   .nota.fuerte{
     border-width:2px;
     border-color:#D9A800;
@@ -1442,6 +1443,14 @@
     </div>
     <p class="sub">Fajas, Short, Cinturilla y Brasier, mes a mes y por canal. Todo lo de abajo se calcula sobre las mismas 72 filas de origen: al mover un filtro se recalculan las tarjetas, los gráficos y las tablas.</p>
 
+    <div class="nota fuerte">
+      <span class="etq">Por reemplazar</span>
+      <span>
+        <b>Esta matriz sale de un pivote anterior y la coordinación la dio por no válida.</b>
+        Se reemplaza por la del ERP (Power BI «Comparativo Online 2025 2026») en cuanto llegue el archivo <code>ventas_mes_categoria_canal_2025_2026_ERP.csv</code>, que no venía adjunto. Mientras tanto queda a la vista para no perder la referencia, pero no debe usarse para decidir: cubre enero–septiembre, solo WhatsApp y Sitio Web, y no descuenta notas crédito.
+      </span>
+    </div>
+
     <div class="franja-sem" id="franja-sem"></div>
 
     <div class="filtros">
@@ -1505,6 +1514,28 @@
     <div class="nota info">
       <span class="etq">Unificado</span>
       <span>«Faja» y «Fajas» venían separadas en Shopify y son la misma categoría: quedan sumadas en <b>Fajas</b> (327 unidades, $71.871.050).</span>
+    </div>
+  </section>
+
+  <!-- OCTUBRE POR TIPO DE CANAL (ERP) -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">ERP</span>
+      <h2>Octubre por tipo de canal</h2>
+      <span class="marca-morada">ERP · Power BI</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span><b>Fuente: ERP (Power BI).</b> Canal Comercial = Sitio Web / Equipo de WhatsApp, todos los tipos de canal (incluye Marketplace, Redes y Dark Store), con notas crédito restadas. No es comparable peso a peso con Shopify (pedidos de todos los estados, sin devoluciones).</span>
+    </div>
+    <div class="scroll"><table id="t-tipo-canal"></table></div>
+    <div class="nota">
+      <span class="etq">Por confirmar</span>
+      <span>Marketplace y Redes casi no existían en 2025 y hoy suman $34,1M en octubre; confirmar si el Dashboard Online los incluye.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Redondeo</span>
+      <span>Estas cifras llegaron en millones con un decimal, así que la suma de las filas da $174,2M y $176,1M, una décima por debajo y por encima del total del mes del ERP ($174,3M → $176,0M).</span>
     </div>
   </section>
 
@@ -3064,6 +3095,52 @@
       '<td class="num">100%</td><td class="num">100%</td>' +
     '</tr></tbody>';
 
+
+
+  /* ---------------- Octubre por tipo de canal (ERP) ----------------
+     Llegó en millones con un decimal, así que se guarda así y se formatea
+     como millones: redondearlo a pesos daría una precisión que no tiene.
+     [tipo, octubre 2025 en $M, octubre 2026 en $M] */
+  var tipoCanal = [
+    ['Ecommerce',    56.8, 63.7],
+    ['WhatsApp',    101.4, 71.7],
+    ['Marketplace',   7.5, 14.9],
+    ['Redes',         4.7, 19.2],
+    ['Dark Store',    3.7,  5.8],
+    ['No aplica',     0.1,  0.8]
+  ];
+  var tipoTot = tipoCanal.reduce(function(a,t){ return [a[0]+t[1], a[1]+t[2]]; }, [0,0]);
+  var millones = function(v){ return '$' + nf1.format(v) + ' M'; };
+
+  document.getElementById('t-tipo-canal').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Tipo de canal</th><th>Octubre 2025</th><th>Octubre 2026</th>' +
+      '<th>Var.</th><th>% del mes 2026</th>' +
+    '</tr></thead><tbody>' +
+    tipoCanal.map(function(t){
+      return '<tr>' +
+        '<td class="lft">' + t[0] + '</td>' +
+        '<td class="num">' + millones(t[1]) + '</td>' +
+        '<td class="num">' + millones(t[2]) + '</td>' +
+        varSem(t[1], t[2]) +
+        '<td class="num pct">' + nf1.format(t[2] / tipoTot[1] * 100) + '%</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="sub-total">' +
+      '<td class="lft">Marketplace + Redes<span class="val">casi no existían en 2025</span></td>' +
+      '<td class="num">' + millones(tipoCanal[2][1] + tipoCanal[3][1]) + '</td>' +
+      '<td class="num">' + millones(tipoCanal[2][2] + tipoCanal[3][2]) + '</td>' +
+      varSem(tipoCanal[2][1] + tipoCanal[3][1], tipoCanal[2][2] + tipoCanal[3][2]) +
+      '<td class="num pct">' +
+        nf1.format((tipoCanal[2][2] + tipoCanal[3][2]) / tipoTot[1] * 100) + '%</td>' +
+    '</tr>' +
+    '<tr class="total">' +
+      '<td class="lft">Total de las filas</td>' +
+      '<td class="num">' + millones(tipoTot[0]) + '</td>' +
+      '<td class="num">' + millones(tipoTot[1]) + '</td>' +
+      varSem(tipoTot[0], tipoTot[1]) +
+      '<td class="num">100%</td>' +
+    '</tr></tbody>';
 
   /* ---------------- Venta bruta, descuentos y neta (Shopify) ----------------
      [mes, bruta 25, bruta 26, neta 25, neta 26, % desc 25, % desc 26] */
@@ -4768,9 +4845,12 @@
 
   /* Alertas de calidad de datos. [alerta, detalle, estado] */
   var calidad = [
-    ['Septiembre 2025: dos bases distintas',
-     'El dashboard parte de $142,7M y Shopify, con todos los estados, da $178,3M. No se cambia ninguna cifra hasta que la coordinadora confirme cuál es la base correcta.',
-     'Por validar'],
+    ['Septiembre 2025: $142,7M del dashboard contra $178,3M de Shopify',
+     'Resuelto: es diferencia de fuente, no un error. Los $142,7M del dashboard son la suma del ERP de Ecommerce + WhatsApp + Redes + No aplica ($142,76M); Shopify cuenta los pedidos de todos los estados y no descuenta devoluciones.',
+     'Resuelto'],
+    ['Septiembre 2026: la misma definición ya no replica',
+     'Con el criterio que cuadró en 2025, el dashboard da Ecommerce $66,2M y WhatsApp $92,8M, pero el ERP da $63,0M y $89,9M. La definición de canales no es la misma en los dos años.',
+     'Definición de canales por confirmar con quien arma el Dashboard Online'],
     ['Septiembre 2025, «Sin categoría»: 245.086 unidades',
      'Es un error de captura, no una venta.',
      'Error conocido'],
@@ -4790,7 +4870,8 @@
       return '<tr>' +
         '<td class="lft"><b>' + c[0] + '</b></td>' +
         '<td class="lft canal">' + c[1] + '</td>' +
-        '<td class="lft"><span class="marca-amarilla">' + c[2] + '</span></td>' +
+        '<td class="lft"><span class="' +
+          (c[2] === 'Resuelto' ? 'marca-morada' : 'marca-amarilla') + '">' + c[2] + '</span></td>' +
       '</tr>';
     }).join('') + '</tbody>';
 
