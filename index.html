@@ -763,6 +763,7 @@
   }
   .nota + .nota{ margin-top:8px; }
   .nota code{ font-family:var(--cifra); font-size:12px; overflow-wrap:anywhere; }
+  .aviso{ color:var(--nude-oscuro); font-weight:700; }
   .nota.fuerte{
     border-width:2px;
     border-color:#D9A800;
@@ -1740,6 +1741,38 @@
     </div>
   </section>
 
+
+  <!-- PEDIDOS POR CAMPAÑA, UTM DE SHOPIFY -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">UTM</span>
+      <h2>Pedidos por campaña, UTM de Shopify</h2>
+      <span class="marca-morada">Shopify · todos los estados</span>
+    </div>
+    <p class="sub">Pedidos que llegaron con la etiqueta UTM de cada campaña. No es lo que reporta la plataforma: son pedidos de Shopify.</p>
+
+    <h3 class="sub-cab">Meta</h3>
+    <div class="scroll"><table id="t-utm-meta"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Pedidos de Shopify con UTM de campaña de Meta, todos los estados. No se suman ni se comparan con las compras que reporta el píxel de Meta: son dos fuentes distintas. «ABO_COL_RET_(Compra)_26» suma las dos variantes del nombre.</span>
+    </div>
+
+    <h3 class="sub-cab">Google</h3>
+    <div class="scroll"><table id="t-utm-google"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Pedidos de Shopify con UTM de campaña de Google, todos los estados. «Ecore-Compra-RMK» va aparte porque la plataforma está por confirmar.</span>
+    </div>
+
+    <h3 class="sub-cab">Retorno marginal de Google — octubre</h3>
+    <div class="scroll"><table id="t-utm-marginal"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Pedidos con UTM de Google, todos los estados. Con pedidos pagados el incremento es +46 pedidos y +$10,9M. No incluye ventas por WhatsApp ni conversiones asistidas.</span>
+    </div>
+  </section>
+
   <!-- PAUTA GOOGLE ADS -->
   <section>
     <div class="cab">
@@ -2100,6 +2133,153 @@
   </div>
 
   <div class="panel-tab" id="sitio-web" role="tabpanel" aria-labelledby="tab-sitio-web">
+  <!-- SESIONES Y CONVERSIÓN -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">Tienda online</span>
+      <h2>Sesiones y conversión</h2>
+      <span class="marca-morada">Shopify · sesiones por dispositivo</span>
+    </div>
+    <p class="sub">Enero a octubre de los dos años. La conversión es pedidos ÷ sesiones.</p>
+    <div class="franja-sem" id="franja-sem-web"></div>
+    <div class="scroll"><table id="t-web-mes" class="tabla-sticky"></table></div>
+    <div class="nota">
+      <span class="etq">⚠ Tráfico atípico</span>
+      <span>Jun 2025 y sep 2026 tienen picos de sesiones de escritorio atípicos (sep 2026: 42.825 sesiones de escritorio, 29 pedidos); marcados con ⚠ y excluidos de comparaciones de conversión.</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Sesiones y pedidos de la tienda online según Shopify. La conversión de cada año se calcula en el sitio como pedidos ÷ sesiones del mismo mes.</span>
+    </div>
+  </section>
+
+  <!-- EMBUDO DE COMPRA -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Embudo</span>
+      <h2>Embudo de compra</h2>
+      <span class="marca-morada">Shopify</span>
+    </div>
+    <p class="sub">Octubre de 2025 y los tres últimos meses de 2026.</p>
+    <div class="scroll"><table id="t-web-embudo"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>La métrica «sesiones con vista de producto» no está disponible en el reporte. El semáforo de la columna de octubre de 2026 es la variación frente a octubre de 2025.</span>
+    </div>
+  </section>
+
+  <!-- PEDIDOS POR ESTADO -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Estado</span>
+      <h2>Pedidos de la tienda online por estado</h2>
+      <span class="marca-morada">Shopify</span>
+    </div>
+    <p class="sub">Octubre de los dos años.</p>
+    <div class="scroll"><table id="t-web-estado"></table></div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Pedidos creados en el canal tienda online. «Pagados» y «pendientes» son estados financieros de Shopify; la tasa de pago es pagados ÷ creados, calculada en el sitio. Las ventas netas son de todos los estados.</span>
+    </div>
+  </section>
+
+  <!-- PEDIDOS POR ORIGEN UTM -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">UTM</span>
+      <h2>Pedidos de la tienda online por origen</h2>
+      <span class="marca-morada">Shopify · todos los estados</span>
+    </div>
+    <p class="sub">Octubre de los dos años, 395 pedidos en 2025 y 343 en 2026.</p>
+    <div class="scroll"><table id="t-web-utm"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Origen tomado de la etiqueta UTM del pedido, todos los estados. Los pedidos sin etiqueta no se pueden asignar a un canal.</span>
+    </div>
+  </section>
+
+  <!-- PÁGINAS DE ENTRADA Y UTM -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">Entrada</span>
+      <h2>Páginas de entrada y UTM</h2>
+      <span class="marca-morada">Shopify · top 50 combinaciones</span>
+    </div>
+
+    <h3 class="sub-cab">Tráfico de PMax Shopping por página de entrada</h3>
+    <p class="sub">UTM «TL | Shopping | Performance Max», agosto a octubre de 2026.</p>
+    <div class="scroll"><table id="t-web-pmax"></table></div>
+    <h4 class="tabla-anio">Contexto · octubre 2025</h4>
+    <div class="scroll"><table id="t-web-pmax25"></table></div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Sesiones, pedidos y conversión de la combinación UTM × página de entrada, según el reporte top 50 de Shopify. La conversión se calcula en el sitio como pedidos ÷ sesiones. Las dos filas de octubre de 2025 están como contexto: en ese mes PMax entraba por otras páginas.</span>
+    </div>
+
+    <h3 class="sub-cab">Páginas de entrada, octubre 2025 → octubre 2026</h3>
+    <div class="scroll"><table id="t-web-paginas"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Sesiones y pedidos por página de entrada, todas las fuentes. «n.d.» = la página no aparece en el top 50 de octubre de 2025, no significa cero.</span>
+    </div>
+
+    <h3 class="sub-cab">Por tipo de página</h3>
+    <div class="scroll"><table id="t-web-tipos"></table></div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Agrupación de las páginas de entrada en colecciones, home y fichas de producto. Sesiones y conversión del reporte; la variación de conversión es relativa, no en puntos porcentuales.</span>
+    </div>
+  </section>
+
+  <!-- CLIENTES NUEVOS VS RECURRENTES -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">Clientes</span>
+      <h2>Clientes nuevos y recurrentes</h2>
+      <span class="marca-morada">Shopify · todos los canales, todos los estados</span>
+    </div>
+    <p class="sub">Acumulado enero–octubre y el mes de octubre.</p>
+    <div class="scroll"><table id="t-web-clientes" class="tabla-sticky"></table></div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Un cliente es nuevo en su primera compra y recurrente desde la segunda. Incluye todos los canales de venta, no solo la tienda online. El % de la venta neta de recurrentes y las variaciones se calculan en el sitio.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Indicador mezclado</span>
+      <span>La pauta por cliente nuevo mezcla fuentes: la pauta incluye retargeting y los clientes nuevos incluyen orgánicos.</span>
+    </div>
+  </section>
+
+  <!-- CARRITOS ABANDONADOS -->
+  <section>
+    <div class="cab">
+      <span class="num-bloque">Carritos</span>
+      <h2>Carritos abandonados</h2>
+      <span class="marca-morada">Shopify</span>
+    </div>
+    <p class="sub">El reporte solo existe desde septiembre de 2026.</p>
+    <div class="scroll"><table id="t-web-carritos"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Carritos iniciados que no terminaron en pedido, con su valor y los que se recuperaron después. Los meses anteriores a septiembre de 2026 no están en el reporte.</span>
+    </div>
+  </section>
+
+  <!-- PEDIDOS SIN PAGAR POR ESTADO Y CANAL -->
+  <section class="ancha">
+    <div class="cab">
+      <span class="num-bloque">Sin pagar</span>
+      <h2>Pedidos sin pagar por estado y canal</h2>
+      <span class="marca-morada">Shopify</span>
+    </div>
+    <p class="sub">Octubre de 2026, con el comparativo de octubre de 2025 donde existe.</p>
+    <div class="scroll"><table id="t-web-sinpagar"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Estado financiero del pedido en Shopify: pendiente, parcialmente pagado y pagado, abierto por canal de venta. De octubre de 2025 el reporte solo trae pendiente y pagado.</span>
+    </div>
+  </section>
+
   <!-- EMBUDO SHOPIFY -->
   <section>
     <div class="cab">
@@ -2243,6 +2423,22 @@
     <div class="nota">
       <span class="etq">Alcance</span>
       <span>Esta es la vista del ERP de facturación, que es donde se mide el descuento. Para la venta, las unidades y el ticket de la venta online manda el dashboard online: ahí WhatsApp de septiembre son 703 unidades en 408 tickets con ticket promedio de $227.423, no las 600 en 493 de esta tabla.</span>
+    </div>
+
+
+    <h3 class="sub-cab">Descuento total por tipo — octubre (Shopify)</h3>
+    <p class="sub">Octubre de los dos años. Fuente distinta a la tabla de arriba: esta sale de Shopify, no del ERP de facturación.</p>
+    <div class="scroll"><table id="t-desc-tipo"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Shopify, top 30 descuentos por mes, todos los estados. Automático = regla de la tienda; manual = descuento escrito por quien toma el pedido; código = cupón. El semáforo va al revés que en el resto del tablero: aquí subir es peor.</span>
+    </div>
+
+    <h3 class="sub-cab">Principales descuentos de octubre 2026</h3>
+    <div class="scroll"><table id="t-desc-top"></table></div>
+    <div class="nota">
+      <span class="etq">Definición</span>
+      <span>Shopify, top 30 descuentos del mes, todos los estados. El % sobre la venta bruta se calcula en el sitio. Los descuentos manuales se registran con texto libre; se agrupan solo cuando el nombre es idéntico.</span>
     </div>
 
     <h3 class="sub-cab">Tendencia mensual del % de descuento sobre venta neta</h3>
@@ -2975,7 +3171,7 @@
   var canalOct = [
     ['Tienda online · venta',        59750000,  68070000, cop],
     ['Tienda online · pedidos creados',   395,       343, u],
-    ['Tienda online · tasa de pago',       62,        86, function(v){ return nf0.format(v) + '%'; }, 'pp'],
+    ['Tienda online · tasa de pago',       62,        87, function(v){ return nf0.format(v) + '%'; }, 'pp'],
     ['Pedidos manuales / WhatsApp',  100200000, 91600000, cop],
     ['Pedidos sin pagar · valor neto', 53700000, 52300000, cop],
     ['Pedidos sin pagar · número',          323,      267, u]
@@ -4559,7 +4755,19 @@
      'Descartado'],
     ['Plataformas y Shopify son fuentes distintas',
      'No se suman ni se comparan peso a peso sin rotular de cuál viene cada cifra y qué cuenta como compra en cada una.',
-     'Regla permanente']
+     'Regla permanente'],
+    ['Sesiones de sep 2026 y jun 2025 con tráfico atípico',
+     'Picos de sesiones de escritorio que no traen pedidos: en sep 2026 son 42.825 sesiones de escritorio con 29 pedidos. Esos dos meses van marcados con ⚠ y quedan fuera de las comparaciones de conversión.',
+     'Marcado en el tablero'],
+    ['34% de los pedidos de oct 2026 no tiene etiqueta UTM',
+     '118 de los 343 pedidos de la tienda online entran sin UTM, así que no se pueden asignar a ningún canal. En oct 2025 eran 163 de 395 (41%).',
+     'Sin resolver'],
+    ['El reporte de páginas y UTM solo trae el top 30/50 por mes',
+     'Las páginas y los descuentos que no entran en ese corte aparecen como «n.d.», que no es cero. Por eso las tablas de páginas de entrada y de descuentos no suman el total del mes.',
+     'Límite del reporte'],
+    ['Carritos abandonados: solo desde sep 2026',
+     'El reporte de Shopify no cubre los meses anteriores, así que no hay con qué comparar 2025 ni el acumulado del año.',
+     'Límite del reporte']
   ];
 
   document.getElementById('t-calidad').innerHTML =
@@ -5616,6 +5824,588 @@
         '<p class="msg nuevo">' + a.txt + '</p>' +
       '</article>';
     }).join('');
+
+
+  /* ================= SITIO WEB · SHOPIFY, OCTUBRE 2026 =================
+     Todo lo de este bloque sale de los reportes de Shopify (Sidekick).
+     Las tasas y las variaciones se calculan aquí; del reporte solo entran
+     las cifras base. Ventas en millones de pesos con un decimal. */
+
+  var pc1 = function(v){ return nf1.format(v) + '%'; };
+  var mm2 = function(v){ return '$' + nf2.format(v) + ' M'; };
+  var pc2 = function(v){ return nf2.format(v) + '%'; };
+  var PEND = '<td class="num pendiente">[pendiente]</td>';
+  var NA   = '<td class="num no-aplica">—</td>';
+
+  /* Semáforo invertido: para lo que es mejor cuando baja (pedidos sin pagar,
+     carritos abandonados, costo por cliente nuevo). Mismos umbrales de SEM,
+     espejados. */
+  function colorVarInv(v){
+    return v <= -SEM.VERDE ? 'verde' : (v <= -SEM.AMARILLO ? 'amarillo' : 'rojo');
+  }
+  function marcaDir(color, v){
+    var simb = v > 0 ? SIMBOLO.verde : (v < 0 ? SIMBOLO.rojo : SIMBOLO.amarillo);
+    return '<span class="dot ' + color + '"></span><span class="simb">' + simb + '</span>';
+  }
+  function varSemInv(a, b){
+    if (!a) { return NA; }
+    var r = varTxt(a, b);
+    return '<td class="num var">' + marcaDir(colorVarInv(r.v), r.v) + r.s + '</td>';
+  }
+  /* Variación en puntos porcentuales, para tasas sobre la misma base */
+  function varPp(a, b){
+    var d = b - a;
+    return '<td class="num var">' + marca(colorVar(d)) +
+      (d > 0 ? '+' : '') + nf1.format(d) + ' pp</td>';
+  }
+  /* Marca de semáforo suelta, para meter dentro de una celda de 2026 */
+  function sem(a, b){
+    var r = varTxt(a, b);
+    return '<span class="val">' + marca(colorVar(r.v)) + r.s + '</span>';
+  }
+
+  /* ---- 1. Sesiones y conversión, mes a mes ----
+     [mes, sesiones 25, pedidos 25, sesiones 26, pedidos 26] */
+  var WEB_MES = [
+    ['Enero',      30211, 206, 47645, 321],
+    ['Febrero',    26063, 165, 38734, 204],
+    ['Marzo',      25571, 155, 45750, 250],
+    ['Abril',      22648, 139, 36289, 229],
+    ['Mayo',       41053, 257, 42325, 214],
+    ['Junio',      64874, 195, 39535, 260],
+    ['Julio',      53546, 286, 47336, 271],
+    ['Agosto',     51368, 367, 56081, 326],
+    ['Septiembre', 49180, 345, 101629, 338],
+    ['Octubre',    55015, 392, 74072, 356]
+  ];
+  /* Meses con tráfico atípico: [mes, año]. Se marcan con ⚠ y quedan fuera
+     de la comparación de conversión. */
+  var WEB_RARO = {'Junio': 2025, 'Septiembre': 2026};
+
+  document.getElementById('t-web-mes').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        '<th class="g25" colspan="3">2025</th>' +
+        '<th class="g26" colspan="3">2026</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Sesiones</th><th>Pedidos</th><th>Conv.</th>' +
+        '<th>Sesiones</th><th>Pedidos</th><th>Conv.</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    WEB_MES.map(function(m){
+      var c25 = m[2] / m[1] * 100, c26 = m[4] / m[3] * 100;
+      var raro = WEB_RARO[m[0]];
+      var avisa = function(anio){
+        return raro === anio ? ' <span class="aviso" title="Tráfico atípico">⚠</span>' : '';
+      };
+      return '<tr>' +
+        '<td class="lft">' + m[0] + '</td>' +
+        '<td class="num">' + u(m[1]) + avisa(2025) + '</td>' +
+        '<td class="num">' + u(m[2]) + '</td>' +
+        '<td class="num pct">' + pc2(c25) + '</td>' +
+        '<td class="num">' + u(m[3]) + avisa(2026) + '</td>' +
+        '<td class="num">' + u(m[4]) + '</td>' +
+        '<td class="num pct">' + pc2(c26) + (raro ? '' : sem(c25, c26)) + '</td>' +
+      '</tr>';
+    }).join('') +
+    (function(){
+      /* Acumulado enero–agosto: los dos meses con tráfico atípico quedan fuera */
+      var a = WEB_MES.slice(0, 8).reduce(function(t, m){
+        return [t[0]+m[1], t[1]+m[2], t[2]+m[3], t[3]+m[4]];
+      }, [0,0,0,0]);
+      var c25 = a[1] / a[0] * 100, c26 = a[3] / a[2] * 100;
+      return '<tr class="total">' +
+        '<td class="lft">Acumulado Ene–Ago<span class="val">enero a agosto de cada año</span></td>' +
+        '<td class="num">' + u(a[0]) + '</td>' +
+        '<td class="num">' + u(a[1]) + '</td>' +
+        '<td class="num pct">' + pc2(c25) + '</td>' +
+        '<td class="num">' + u(a[2]) + '</td>' +
+        '<td class="num">' + u(a[3]) + '</td>' +
+        '<td class="num pct">' + pc2(c26) + sem(c25, c26) + '</td>' +
+      '</tr></tbody>';
+    })();
+  pintarFranjaSem('franja-sem-web');
+
+  /* ---- 2. Embudo de compra ----
+     [etapa, oct 2025, ago 2026, sep 2026, oct 2026] en % */
+  var WEB_EMBUDO = [
+    ['Sesiones con carrito',   3.94,  3.13,  1.46,  2.44],
+    ['De carrito a checkout', 77.96, 70.19, 75.11, 59.16],
+    ['De checkout a compra',  22.53, 26.26, 29.04, 33.21]
+  ];
+  document.getElementById('t-web-embudo').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Etapa</th><th>Oct 2025</th><th>Ago 2026</th>' +
+      '<th>Sep 2026</th><th>Oct 2026</th>' +
+    '</tr></thead><tbody>' +
+    WEB_EMBUDO.map(function(e){
+      return '<tr>' +
+        '<td class="lft">' + e[0] + '</td>' +
+        '<td class="num pct">' + pc2(e[1]) + '</td>' +
+        '<td class="num pct">' + pc2(e[2]) + '</td>' +
+        '<td class="num pct">' + pc2(e[3]) + '</td>' +
+        '<td class="num pct">' + pc2(e[4]) + sem(e[1], e[4]) + '</td>' +
+      '</tr>';
+    }).join('') + '</tbody>';
+
+  /* ---- 3. Pedidos de la tienda online por estado ---- */
+  var WEB_EST = {cre:[395, 343], pag:[244, 297], pen:[112, 45], ven:[59.75, 68.07]};
+  document.getElementById('t-web-estado').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Concepto</th><th>Octubre 2025</th><th>Octubre 2026</th><th>Var.</th>' +
+    '</tr></thead><tbody>' +
+    '<tr><td class="lft">Pedidos creados</td>' +
+      '<td class="num">' + u(WEB_EST.cre[0]) + '</td>' +
+      '<td class="num">' + u(WEB_EST.cre[1]) + '</td>' + varSem(WEB_EST.cre[0], WEB_EST.cre[1]) + '</tr>' +
+    '<tr><td class="lft">Pagados</td>' +
+      '<td class="num">' + u(WEB_EST.pag[0]) + '</td>' +
+      '<td class="num">' + u(WEB_EST.pag[1]) + '</td>' + varSem(WEB_EST.pag[0], WEB_EST.pag[1]) + '</tr>' +
+    '<tr><td class="lft">Pendientes</td>' +
+      '<td class="num">' + u(WEB_EST.pen[0]) + '</td>' +
+      '<td class="num">' + u(WEB_EST.pen[1]) + '</td>' + varSemInv(WEB_EST.pen[0], WEB_EST.pen[1]) + '</tr>' +
+    '<tr class="hija"><td class="lft">Otros estados<span class="val">por diferencia</span></td>' +
+      '<td class="num">' + u(WEB_EST.cre[0] - WEB_EST.pag[0] - WEB_EST.pen[0]) + '</td>' +
+      '<td class="num">' + u(WEB_EST.cre[1] - WEB_EST.pag[1] - WEB_EST.pen[1]) + '</td>' + NA + '</tr>' +
+    (function(){
+      var t25 = Math.round(WEB_EST.pag[0] / WEB_EST.cre[0] * 100);
+      var t26 = Math.round(WEB_EST.pag[1] / WEB_EST.cre[1] * 100);
+      return '<tr><td class="lft">Tasa de pago<span class="val">pagados ÷ creados</span></td>' +
+        '<td class="num pct">' + nf0.format(t25) + '%</td>' +
+        '<td class="num pct">' + nf0.format(t26) + '%</td>' + varPp(t25, t26) + '</tr>';
+    })() +
+    '<tr class="total"><td class="lft">Ventas netas<span class="val">todos los estados</span></td>' +
+      '<td class="num">' + mm2(WEB_EST.ven[0]) + '</td>' +
+      '<td class="num">' + mm2(WEB_EST.ven[1]) + '</td>' + varSem(WEB_EST.ven[0], WEB_EST.ven[1]) + '</tr>' +
+    '</tbody>';
+
+  /* ---- 4. Pedidos por origen UTM ----
+     [origen, pedidos 25, ventas 25 en $M, pedidos 26, ventas 26 en $M]
+     null = no existía en 2025; 'pend' = falta el dato */
+  var WEB_UTM = [
+    ['Sin etiqueta UTM',                       163, 24.8, 118, 24.1],
+    ['Google (PMax, Marca, TL Search)',         90, 15.2, 110, 22.8],
+    ['Meta (campañas propias)',                132, 17.6,  78, 13.9],
+    ['Ecore-Compra-RMK<span class="val">plataforma por confirmar</span>',
+                                              null, null,  23,  4.3],
+    ['Email (Klaviyo)',                          5,  1.0,   2,  0.3],
+    ['Otros (tiendas, orgánico, alianzas)',      5,  1.1,  12, 'pend']
+  ];
+  document.getElementById('t-web-utm').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Origen</th>' +
+        '<th class="g25" colspan="2">Octubre 2025</th>' +
+        '<th class="g26" colspan="2">Octubre 2026</th>' +
+      '</tr>' +
+      '<tr class="campos"><th>Pedidos</th><th>Ventas</th><th>Pedidos</th><th>Ventas</th></tr>' +
+    '</thead><tbody>' +
+    WEB_UTM.map(function(o){
+      return '<tr>' +
+        '<td class="lft">' + o[0] + '</td>' +
+        (o[1] === null ? NA : '<td class="num">' + u(o[1]) + '</td>') +
+        (o[2] === null ? NA : '<td class="num">' + mm(o[2]) + '</td>') +
+        '<td class="num">' + u(o[3]) + (o[1] === null ? '' : sem(o[1], o[3])) + '</td>' +
+        (o[4] === 'pend' ? PEND
+          : '<td class="num">' + mm(o[4]) + (o[2] === null ? '' : sem(o[2], o[4])) + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total">' +
+      '<td class="lft">Total<span class="val">venta neta del mes, todos los estados</span></td>' +
+      '<td class="num">' + u(395) + '</td>' +
+      '<td class="num">' + mm2(WEB_EST.ven[0]) + '</td>' +
+      '<td class="num">' + u(343) + sem(395, 343) + '</td>' +
+      '<td class="num">' + mm2(WEB_EST.ven[1]) + sem(WEB_EST.ven[0], WEB_EST.ven[1]) + '</td>' +
+    '</tr></tbody>';
+
+
+  /* ---- 5a. PMax Shopping por página de entrada ----
+     [página, [ses,ped] ago, [ses,ped] sep, [ses,ped] oct]  null = sin dato */
+  var WEB_PMAX = [
+    ['Colección «Todas las shorts»', [683, 5],  [6902, 7], [9597, 3]],
+    ['Colección Panty',              [2174, 3], [4288, 1], [4436, 1]],
+    ['Fajas moldeadoras',            [540, 5],  [1305, 6], [1552, 19]],
+    ['Home',                         null,      null,      [548, 10]]
+  ];
+  function celdasPmax(p){
+    if (p === null) { return PEND + PEND + PEND; }
+    return '<td class="num">' + u(p[0]) + '</td>' +
+           '<td class="num">' + u(p[1]) + '</td>' +
+           '<td class="num pct">' + pc2(p[1] / p[0] * 100) + '</td>';
+  }
+  document.getElementById('t-web-pmax').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Página de entrada</th>' +
+        '<th class="gv" colspan="3">Agosto 2026</th>' +
+        '<th class="gv" colspan="3">Septiembre 2026</th>' +
+        '<th class="g26" colspan="3">Octubre 2026</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Ses.</th><th>Ped.</th><th>Conv.</th>' +
+        '<th>Ses.</th><th>Ped.</th><th>Conv.</th>' +
+        '<th>Ses.</th><th>Ped.</th><th>Conv.</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    WEB_PMAX.map(function(p){
+      return '<tr><td class="lft">' + p[0] + '</td>' +
+        celdasPmax(p[1]) + celdasPmax(p[2]) + celdasPmax(p[3]) + '</tr>';
+    }).join('') + '</tbody>';
+
+  var WEB_PMAX25 = [['Home', 4532, 54], ['Colección «Todas las fajas»', 1405, 19]];
+  document.getElementById('t-web-pmax25').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Página de entrada</th><th>Sesiones</th><th>Pedidos</th><th>Conv.</th>' +
+    '</tr></thead><tbody>' +
+    WEB_PMAX25.map(function(p){
+      return '<tr><td class="lft">' + p[0] + '</td>' +
+        '<td class="num">' + u(p[1]) + '</td>' +
+        '<td class="num">' + u(p[2]) + '</td>' +
+        '<td class="num pct">' + pc2(p[2] / p[1] * 100) + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  /* ---- 5b. Páginas de entrada, octubre contra octubre ----
+     [página, ses 25, ped 25, ses 26, ped 26]  null = no está en el top 50 */
+  var WEB_PAG = [
+    ['Home',                        16172, 137, 14595, 111],
+    ['Colección «Todas las shorts»',  301,   5, 20034,  59],
+    ['Colección «Todas las fajas»',  1900,  21,  8808,  18],
+    ['Colección Panty',              null,null,  4444,   1],
+    ['Colección Cinturillas',        null,null,  1784,  12],
+    ['Fajas moldeadoras',            null,null,  1724,  21]
+  ];
+  document.getElementById('t-web-paginas').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Página de entrada</th>' +
+        '<th class="g25" colspan="2">Octubre 2025</th>' +
+        '<th class="g26" colspan="2">Octubre 2026</th>' +
+        '<th class="gv" colspan="2">Variación</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Ses.</th><th>Ped.</th><th>Ses.</th><th>Ped.</th><th>Ses.</th><th>Ped.</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    WEB_PAG.map(function(p){
+      var nd = '<td class="num no-aplica">n.d.</td>';
+      return '<tr><td class="lft">' + p[0] + '</td>' +
+        (p[1] === null ? nd + nd : '<td class="num">' + u(p[1]) + '</td><td class="num">' + u(p[2]) + '</td>') +
+        '<td class="num">' + u(p[3]) + '</td>' +
+        '<td class="num">' + u(p[4]) + '</td>' +
+        (p[1] === null ? NA + NA : varSem(p[1], p[3]) + varSem(p[2], p[4])) +
+      '</tr>';
+    }).join('') + '</tbody>';
+
+  /* ---- 5c. Por tipo de página. [tipo, ses 25, conv 25, ses 26, conv 26] ---- */
+  var WEB_TIPO = [
+    ['Colecciones', 13887, 0.58, 40306, 0.33],
+    ['Home',        16172, 0.85, 14595, 0.76],
+    ['Producto',    11288, 0.94,  7320, 0.51]
+  ];
+  document.getElementById('t-web-tipos').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Tipo de página</th>' +
+        '<th class="g25" colspan="2">Octubre 2025</th>' +
+        '<th class="g26" colspan="2">Octubre 2026</th>' +
+        '<th class="gv" colspan="2">Variación</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        '<th>Sesiones</th><th>Conv.</th><th>Sesiones</th><th>Conv.</th>' +
+        '<th>Sesiones</th><th>Conv.</th>' +
+      '</tr>' +
+    '</thead><tbody>' +
+    WEB_TIPO.map(function(t){
+      return '<tr><td class="lft">' + t[0] + '</td>' +
+        '<td class="num">' + u(t[1]) + '</td>' +
+        '<td class="num pct">' + pc2(t[2]) + '</td>' +
+        '<td class="num">' + u(t[3]) + '</td>' +
+        '<td class="num pct">' + pc2(t[4]) + '</td>' +
+        varSem(t[1], t[3]) + varSem(t[2], t[4]) +
+      '</tr>';
+    }).join('') + '</tbody>';
+
+  /* ---- 6. Clientes nuevos y recurrentes ----
+     Ventas en $M. El % de recurrentes y las variaciones salen de aquí. */
+  var CLI = {
+    nue:   {ac:[5415, 4794],     oct:[656, 615]},
+    vNue:  {ac:[1066.9, 966.1],  oct:[128.9, 122.6]},
+    rec:   {ac:[1290, 1572],     oct:[161, 202]},
+    vRec:  {ac:[376.2, 517.7],   oct:[39.5, 57.4]},
+    tkNue: [201767, 201743],
+    tkRec: [225919, 254164],
+    pauta: {ac:[29068, 34063],   oct:[31768, 34585]}
+  };
+  (function(){
+    var fila = function(rot, d, fmt, varFn){
+      return '<tr><td class="lft">' + rot + '</td>' +
+        '<td class="num">' + fmt(d.ac[0]) + '</td>' +
+        '<td class="num">' + fmt(d.ac[1]) + '</td>' + varFn(d.ac[0], d.ac[1]) +
+        '<td class="num">' + fmt(d.oct[0]) + '</td>' +
+        '<td class="num">' + fmt(d.oct[1]) + '</td>' + varFn(d.oct[0], d.oct[1]) +
+      '</tr>';
+    };
+    var pRec = function(v, n){ return v / (v + n) * 100; };
+    document.getElementById('t-web-clientes').innerHTML =
+      '<thead>' +
+        '<tr class="grupos">' +
+          '<th class="lft" rowspan="2">Indicador</th>' +
+          '<th class="gv" colspan="3">Enero–octubre</th>' +
+          '<th class="g26" colspan="3">Octubre</th>' +
+        '</tr>' +
+        '<tr class="campos">' +
+          '<th>2025</th><th>2026</th><th>Var.</th>' +
+          '<th>2025</th><th>2026</th><th>Var.</th>' +
+        '</tr>' +
+      '</thead><tbody>' +
+      fila('Clientes nuevos',               CLI.nue,  u,  varSem) +
+      fila('Ventas netas de nuevos',        CLI.vNue, mm, varSem) +
+      fila('Clientes recurrentes',          CLI.rec,  u,  varSem) +
+      fila('Ventas netas de recurrentes',   CLI.vRec, mm, varSem) +
+      '<tr><td class="lft">Ticket promedio · nuevos</td>' +
+        PEND + PEND + NA +
+        '<td class="num">' + cop(CLI.tkNue[0]) + '</td>' +
+        '<td class="num">' + cop(CLI.tkNue[1]) + '</td>' +
+        varSem(CLI.tkNue[0], CLI.tkNue[1]) + '</tr>' +
+      '<tr><td class="lft">Ticket promedio · recurrentes</td>' +
+        PEND + PEND + NA +
+        '<td class="num">' + cop(CLI.tkRec[0]) + '</td>' +
+        '<td class="num">' + cop(CLI.tkRec[1]) + '</td>' +
+        varSem(CLI.tkRec[0], CLI.tkRec[1]) + '</tr>' +
+      (function(){
+        var a1 = pRec(CLI.vRec.ac[0],  CLI.vNue.ac[0]),  a2 = pRec(CLI.vRec.ac[1],  CLI.vNue.ac[1]);
+        var o1 = pRec(CLI.vRec.oct[0], CLI.vNue.oct[0]), o2 = pRec(CLI.vRec.oct[1], CLI.vNue.oct[1]);
+        return '<tr class="total"><td class="lft">% de la venta neta de recurrentes</td>' +
+          '<td class="num pct">' + pc1(a1) + '</td>' +
+          '<td class="num pct">' + pc1(a2) + '</td>' + varPp(a1, a2) +
+          '<td class="num pct">' + pc1(o1) + '</td>' +
+          '<td class="num pct">' + pc1(o2) + '</td>' + varPp(o1, o2) + '</tr>';
+      })() +
+      '<tr class="hija"><td class="lft">Pauta total (Meta + Google) por cliente nuevo' +
+        '<span class="val">indicador mezclado</span></td>' +
+        '<td class="num">' + cop(CLI.pauta.ac[0]) + '</td>' +
+        '<td class="num">' + cop(CLI.pauta.ac[1]) + '</td>' +
+        varSemInv(CLI.pauta.ac[0], CLI.pauta.ac[1]) +
+        '<td class="num">' + cop(CLI.pauta.oct[0]) + '</td>' +
+        '<td class="num">' + cop(CLI.pauta.oct[1]) + '</td>' +
+        varSemInv(CLI.pauta.oct[0], CLI.pauta.oct[1]) + '</tr>' +
+      '</tbody>';
+  })();
+
+  /* ---- 7. Carritos abandonados ---- */
+  var CARR = [
+    ['Enero–agosto 2026', null, null, null],
+    ['Septiembre 2026',   200, 51994206, 3],
+    ['Octubre 2026',      169, 40062250, 0]
+  ];
+  document.getElementById('t-web-carritos').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Periodo</th><th>Carritos abandonados</th>' +
+      '<th>Valor</th><th>Recuperados</th>' +
+    '</tr></thead><tbody>' +
+    CARR.map(function(c){
+      if (c[1] === null) {
+        return '<tr><td class="lft">' + c[0] + '</td>' + PEND + PEND + PEND + '</tr>';
+      }
+      return '<tr><td class="lft">' + c[0] + '</td>' +
+        '<td class="num">' + u(c[1]) + '</td>' +
+        '<td class="num">' + cop(c[2]) + '</td>' +
+        '<td class="num">' + u(c[3]) + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  /* ---- 8. Pedidos sin pagar por estado y canal ----
+     [rótulo, clase, ped 25, val 25 en $M, ped 26, val 26 en $M]
+     null = el reporte de 2025 no lo trae */
+  var SINPAGAR = [
+    ['Pendiente',                                '',      277, 50.8, 195, 37.8],
+    ['Borradores y pedidos manuales',            'hija', null, null, 147, 29.1],
+    ['Tienda online',                            'hija', null, null,  45,  8.1],
+    ['Otros canales',                            'hija', null, null,   3,  0.6],
+    ['Parcialmente pagado',                      '',   'pend','pend', 66, 14.4],
+    ['Canal «otros»',                            'hija', null, null,  64, 14.0],
+    ['Pagado',                                   '',      524,114.6, 579,128.0]
+  ];
+  document.getElementById('t-web-sinpagar').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Estado financiero y canal</th>' +
+        '<th class="g25" colspan="2">Octubre 2025</th>' +
+        '<th class="g26" colspan="2">Octubre 2026</th>' +
+        '<th class="gv" rowspan="2">Var. pedidos</th>' +
+      '</tr>' +
+      '<tr class="campos"><th>Pedidos</th><th>Valor</th><th>Pedidos</th><th>Valor</th></tr>' +
+    '</thead><tbody>' +
+    SINPAGAR.map(function(f){
+      var c25 = f[2] === 'pend' ? PEND + PEND
+              : f[2] === null   ? NA + NA
+              : '<td class="num">' + u(f[2]) + '</td><td class="num">' + mm(f[3]) + '</td>';
+      var vr  = (typeof f[2] === 'number')
+              ? (f[0] === 'Pagado' ? varSem(f[2], f[4]) : varSemInv(f[2], f[4]))
+              : NA;
+      return '<tr' + (f[1] ? ' class="hija"' : '') + '>' +
+        '<td class="lft">' + f[0] + '</td>' + c25 +
+        '<td class="num">' + u(f[4]) + '</td>' +
+        '<td class="num">' + mm(f[5]) + '</td>' + vr +
+      '</tr>';
+    }).join('') +
+    (function(){
+      var p26 = 0, v26 = 0;
+      SINPAGAR.forEach(function(f){ if (!f[1]) { p26 += f[4]; v26 += f[5]; } });
+      return '<tr class="total">' +
+        '<td class="lft">Total del mes<span class="val">los tres estados</span></td>' +
+        PEND + PEND +
+        '<td class="num">' + u(p26) + '</td>' +
+        '<td class="num">' + mm(v26) + '</td>' + NA +
+      '</tr></tbody>';
+    })();
+
+
+  /* ================= DESCUENTOS · SHOPIFY, OCTUBRE 2026 ================= */
+
+  /* Descuento total por tipo. [tipo, oct 2025 en $M, oct 2026 en $M] */
+  var DESC_TIPO = [
+    ['Automático', 0,    6.98],
+    ['Manual',     2.84, 7.06],
+    ['Código',     0.09, 0.90]
+  ];
+  document.getElementById('t-desc-tipo').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Tipo de descuento</th><th>Octubre 2025</th>' +
+      '<th>Octubre 2026</th><th>Var.</th>' +
+    '</tr></thead><tbody>' +
+    DESC_TIPO.map(function(d){
+      return '<tr><td class="lft">' + d[0] + '</td>' +
+        '<td class="num">' + mm2(d[1]) + '</td>' +
+        '<td class="num">' + mm2(d[2]) + '</td>' +
+        (d[1] ? varSemInv(d[1], d[2]) : '<td class="num var no-aplica">nuevo</td>') +
+      '</tr>';
+    }).join('') +
+    (function(){
+      var t = DESC_TIPO.reduce(function(a,d){ return [a[0]+d[1], a[1]+d[2]]; }, [0,0]);
+      return '<tr class="total"><td class="lft">Total del mes</td>' +
+        '<td class="num">' + mm2(t[0]) + '</td>' +
+        '<td class="num">' + mm2(t[1]) + '</td>' + varSemInv(t[0], t[1]) + '</tr></tbody>';
+    })();
+
+  /* Principales descuentos de octubre 2026.
+     [nombre, tipo, pedidos, descuento, venta bruta]  null = sin dato */
+  var DESC_TOP = [
+    ['Lleva 2 Shorts',   'Automático', 57, 3553280, 19381700],
+    ['25% Mayorista',    'Manual',      1, 2050825,  8203300],
+    ['Lleva 2 Fajas',    'Automático', 11, 1271560,  6916400],
+    ['TICKETFORYOU<span class="val">bono de $100.000</span>',
+                         'Código',      9,  900000,  2549800],
+    ['20% cliente',      'Manual',      1,  852020,  4260100],
+    ['Primer compra',    'Manual',     15,  466820,  4668200],
+    ['Live TikTok 15%<span class="val">suma de 5 registros</span>',
+                         'Manual',     20, 1174648,     null]
+  ];
+  document.getElementById('t-desc-top').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Descuento</th><th class="lft">Tipo</th><th>Pedidos</th>' +
+      '<th>Descuento</th><th>Venta bruta</th><th>% sobre la bruta</th>' +
+    '</tr></thead><tbody>' +
+    DESC_TOP.map(function(d){
+      return '<tr>' +
+        '<td class="lft">' + d[0] + '</td>' +
+        '<td class="lft canal">' + d[1] + '</td>' +
+        '<td class="num">' + u(d[2]) + '</td>' +
+        '<td class="num">' + cop(d[3]) + '</td>' +
+        (d[4] === null ? PEND + PEND
+          : '<td class="num">' + cop(d[4]) + '</td>' +
+            '<td class="num pct">' + pc1(d[3] / d[4] * 100) + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="hija">' +
+      '<td class="lft">Lleva 2 Shorts<span class="val">septiembre 2026, para comparar</span></td>' +
+      '<td class="lft canal">Automático</td>' +
+      '<td class="num">' + u(68) + '</td>' +
+      '<td class="num">' + cop(4311960) + '</td>' +
+      '<td class="num">' + cop(24009160) + '</td>' +
+      '<td class="num pct">' + pc1(4311960 / 24009160 * 100) + '</td>' +
+    '</tr></tbody>';
+
+  /* ================= PAUTA · PEDIDOS POR CAMPAÑA (UTM DE SHOPIFY) =======
+     [campaña, pedidos ago, pedidos sep, pedidos oct, ventas oct en $M] */
+  var UTM_META = [
+    ['CBO_COL_PRO_SHORTS',                        2, 10, 26, 4.23],
+    ['CBO_COL_PRO_TESTING',                       6, 19, 20, 4.00],
+    ['ABO_COL_RET_(Compra)_26<span class="val">suma de las dos variantes del nombre</span>',
+                                                 15, 19, 20, 3.63],
+    ['ABO_COL_PRO_(Winners)_Shorts_26',          14, 19,  6, 0.78],
+    ['CBO_COL_PRO_(Creative Diversification)',   40, 14,  4, 0.65],
+    ['CBO_COL_PRO_(Winners)',                     0,  0,  2, 0.58]
+  ];
+  var UTM_GOOGLE = [
+    ['PMax Shopping',                            38, 30, 51, 10.54],
+    ['Ecore-ADS-Marca-2026',                     44, 56, 49,  9.75],
+    ['TL Search · Conversión Web y WA',           7,  8, 10,  2.47]
+  ];
+  var UTM_GOOGLE_APARTE = [
+    ['Ecore-Compra-RMK<span class="val">plataforma por confirmar</span>',
+                                                 35, 37, 23,  4.35]
+  ];
+
+  function tablaUtm(id, filas, aparte, tot25, nom25, filas25){
+    var cab =
+      '<thead><tr class="campos">' +
+        '<th class="lft">Campaña</th><th>Ago 2026</th><th>Sep 2026</th>' +
+        '<th>Oct 2026</th><th>Ventas oct 2026</th>' +
+      '</tr></thead><tbody>';
+    var fila = function(f, cls){
+      return '<tr' + (cls ? ' class="' + cls + '"' : '') + '>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        '<td class="num">' + u(f[1]) + '</td>' +
+        '<td class="num">' + u(f[2]) + '</td>' +
+        '<td class="num">' + u(f[3]) + '</td>' +
+        '<td class="num">' + mm2(f[4]) + '</td>' +
+      '</tr>';
+    };
+    var tot = filas.reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[4]]; }, [0,0,0,0]);
+    var html = cab + filas.map(function(f){ return fila(f); }).join('') +
+      '<tr class="total">' +
+        '<td class="lft">' + nom25 + '<span class="val">suma de las campañas de arriba</span></td>' +
+        '<td class="num">' + u(tot[0]) + '</td>' +
+        '<td class="num">' + u(tot[1]) + '</td>' +
+        '<td class="num">' + u(tot[2]) + sem(tot25[0], tot[2]) + '</td>' +
+        '<td class="num">' + mm2(tot[3]) + sem(tot25[1], tot[3]) + '</td>' +
+      '</tr>' +
+      (aparte ? aparte.map(function(f){ return fila(f, 'hija'); }).join('') : '') +
+      '<tr class="hija">' +
+        '<td class="lft">Octubre 2025<span class="val">' + (filas25 || '') + '</span></td>' +
+        '<td class="num no-aplica">—</td><td class="num no-aplica">—</td>' +
+        '<td class="num">' + u(tot25[0]) + '</td>' +
+        '<td class="num">' + mm2(tot25[1]) + '</td>' +
+      '</tr></tbody>';
+    document.getElementById(id).innerHTML = html;
+  }
+  tablaUtm('t-utm-meta', UTM_META, null, [132, 17.61], 'Total Meta',
+           'todas las campañas de Meta');
+  tablaUtm('t-utm-google', UTM_GOOGLE, UTM_GOOGLE_APARTE, [90, 15.17], 'Total Google',
+           'PMax 80 pedidos · $13,58 M y TL Search 10 · $1,59 M');
+
+  /* Retorno marginal de Google en octubre. [concepto, 2025, 2026, formato] */
+  var MARGINAL = [
+    ['Inversión', 2.12, 5.30, mm2, false],
+    ['Pedidos',     90,  110, u,   true],
+    ['Ventas',    15.2, 22.8, mm2, true]
+  ];
+  document.getElementById('t-utm-marginal').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Concepto</th><th>Octubre 2025</th><th>Octubre 2026</th>' +
+      '<th>Incremento</th><th>Var.</th>' +
+    '</tr></thead><tbody>' +
+    MARGINAL.map(function(m){
+      var d = m[2] - m[1];
+      return '<tr><td class="lft">' + m[0] + '</td>' +
+        '<td class="num">' + m[3](m[1]) + '</td>' +
+        '<td class="num">' + m[3](m[2]) + '</td>' +
+        '<td class="num">+' + m[3](d) + '</td>' +
+        (m[4] ? varSem(m[1], m[2])
+              : '<td class="num var">' + varTxt(m[1], m[2]).s + '</td>') +
+      '</tr>';
+    }).join('') + '</tbody>';
 
 
   ligarGraficos();

@@ -29,12 +29,21 @@ Cinco bloques, con los datos entregados tal cual:
    conversión mes a mes (datos reales de Google), más los totales del periodo.
    Las conversiones y el costo por conversión del periodo siguen pendientes;
    septiembre 2026 sí tiene detalle por campaña.
+3b. **Pedidos por campaña, UTM de Shopify** — pedidos de Shopify que llegaron
+   con la etiqueta UTM de cada campaña de Meta y de Google, agosto a octubre de
+   2026, con el comparativo de octubre de 2025 y el retorno marginal de Google.
+   Es otra fuente que la del píxel: no se suma con lo que reporta la plataforma.
 4. **Embudo WhatsApp (agosto)** — rama de pauta desglosada. Debajo, las ventas
    cerradas por canal de origen, donde la fila de «Anuncio» es el mismo dato de
    la rama de pauta.
    **Embudo Shopify (agosto)** — sesiones por fuente y ventas atribuidas en dos
    donas, el embudo de conversión en trapecios, y las tablas de datos en
    secciones plegables. La advertencia del 74,3% sin atribuir va siempre visible.
+   **Tienda online, octubre 2026 (Shopify)** — sesiones y conversión mes a mes
+   de enero a octubre, embudo de compra, pedidos por estado, pedidos por origen
+   UTM, páginas de entrada y UTM, clientes nuevos contra recurrentes, carritos
+   abandonados y pedidos sin pagar por estado y canal. Cada bloque lleva su
+   fuente y su definición.
    **Auditoría de walinks** — las cinco puertas de entrada a WhatsApp (home,
    anuncios Meta, Facebook, bio de Instagram y TikTok), cada una con su captura,
    el mensaje que llega hoy al chat y el mensaje sugerido. Debajo, las plantillas
@@ -44,7 +53,10 @@ Cinco bloques, con los datos entregados tal cual:
 6. **Descuentos por canal (ERP, B2C)** — descuentos, neto y % sobre venta neta por
    canal, más la tendencia mensual del %. Septiembre 2026 trae por primera vez
    los cinco canales y el ticket promedio de cada uno. Sale del ERP de facturación, no de
-   Shopify, así que no se mezcla con los Bloques 1 y 2.
+   Shopify, así que no se mezcla con los Bloques 1 y 2. Al final del bloque,
+   con fuente rotulada aparte, el **descuento de octubre por tipo** (automático,
+   manual y código) y los **principales descuentos de octubre 2026**, los dos de
+   Shopify.
 7. **Auditoría del reporte de la agencia (MLO Growth)** — lo verificado contra
    nuestros datos de Meta, lo contradictorio, y el reparto real de los leads de
    pauta según B2Chat.
