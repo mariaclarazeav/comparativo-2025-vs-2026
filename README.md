@@ -39,11 +39,18 @@ Cinco bloques, con los datos entregados tal cual:
    **Embudo Shopify (agosto)** — sesiones por fuente y ventas atribuidas en dos
    donas, el embudo de conversión en trapecios, y las tablas de datos en
    secciones plegables. La advertencia del 74,3% sin atribuir va siempre visible.
-   **Tienda online, octubre 2026 (Shopify)** — sesiones y conversión mes a mes
-   de enero a octubre, embudo de compra, pedidos por estado, pedidos por origen
-   UTM, páginas de entrada y UTM, clientes nuevos contra recurrentes, carritos
-   abandonados y pedidos sin pagar por estado y canal. Cada bloque lleva su
-   fuente y su definición.
+   **Salud del embudo** — las cuatro tasas del embudo mes a mes, 2025 completo y
+   2026 hasta octubre, contra las metas por etapa. Carrito→compra es la única
+   comparable entre años: las otras dependen del cálculo de sesiones, que
+   Shopify cambió, o del corte de medición de julio de 2025.
+   **Tienda online, octubre 2026 (Shopify)** — embudo de tráfico y conversión
+   mes a mes de enero a octubre (sesiones, % con carrito y carrito→compra, con
+   el aviso de que Shopify cambió el cálculo de sesiones el 21 de septiembre de
+   2026), la conversión del mes con el método nuevo, el embudo de compra de
+   octubre contra octubre, pedidos por estado, ventas atribuidas por fuente en
+   dos bases, páginas de entrada y UTM, clientes nuevos contra recurrentes,
+   carritos abandonados y pedidos sin pagar por estado y canal. Cada bloque
+   lleva su fuente y su definición.
    **Auditoría de walinks** — las cinco puertas de entrada a WhatsApp (home,
    anuncios Meta, Facebook, bio de Instagram y TikTok), cada una con su captura,
    el mensaje que llega hoy al chat y el mensaje sugerido. Debajo, las plantillas

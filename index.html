@@ -2133,23 +2133,38 @@
   </div>
 
   <div class="panel-tab" id="sitio-web" role="tabpanel" aria-labelledby="tab-sitio-web">
-  <!-- SESIONES Y CONVERSIÓN -->
+  <!-- EMBUDO DE TRÁFICO Y CONVERSIÓN -->
   <section class="ancha">
     <div class="cab">
       <span class="num-bloque">Tienda online</span>
-      <h2>Sesiones y conversión</h2>
-      <span class="marca-morada">Shopify · sesiones por dispositivo</span>
+      <h2>Embudo de tráfico y conversión</h2>
+      <span class="marca-morada">Shopify · tienda online</span>
     </div>
-    <p class="sub">Enero a octubre de los dos años. La conversión es pedidos ÷ sesiones.</p>
+    <p class="sub">Enero a octubre de los dos años.</p>
+    <div class="nota fuerte">
+      <span class="etq">Metodología</span>
+      <span>Desde el 21 de septiembre de 2026 Shopify calcula las sesiones y sus métricas derivadas de forma diferente (aviso de Shopify). Las sesiones y la conversión por sesiones de sep–oct 2026 no son comparables con meses anteriores. Carrito→compra no depende del cálculo de sesiones.</span>
+    </div>
     <div class="franja-sem" id="franja-sem-web"></div>
     <div class="scroll"><table id="t-web-mes" class="tabla-sticky"></table></div>
     <div class="nota">
       <span class="etq">⚠ Tráfico atípico</span>
-      <span>Jun 2025 y sep 2026 tienen picos de sesiones de escritorio atípicos (sep 2026: 42.825 sesiones de escritorio, 29 pedidos); marcados con ⚠ y excluidos de comparaciones de conversión.</span>
+      <span>Picos de sesiones de escritorio atípicos en jun 2025 y sep 2026 (sep 2026: 42.825 sesiones de escritorio, 29 pedidos). Van marcadas con ⚠ las filas de jun 2025 y de sep–oct 2026.</span>
     </div>
     <div class="nota info">
       <span class="etq">Definición</span>
-      <span>Sesiones y pedidos de la tienda online según Shopify. La conversión de cada año se calcula en el sitio como pedidos ÷ sesiones del mismo mes.</span>
+      <span>Sesiones de la tienda online según Shopify. «Con carrito» es el porcentaje de sesiones que añadieron algo al carrito y «carrito→compra» el de esos carritos que terminaron en pedido. El semáforo solo va en carrito→compra, que es la única de las tres que no depende del cálculo de sesiones.</span>
+    </div>
+
+    <h3 class="sub-cab">Conversión del mes (método nuevo de Shopify)</h3>
+    <div class="scroll"><table id="t-web-conv-nueva"></table></div>
+    <div class="nota">
+      <span class="etq">Periodo</span>
+      <span class="pendiente">[completar con el rango de fechas de la consulta]</span>
+    </div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Cálculo con el método nuevo; no comparar con la conversión de meses anteriores calculada con el método anterior. Los porcentajes son sobre sesiones y van tal como los entrega el reporte.</span>
     </div>
   </section>
 
@@ -2183,18 +2198,35 @@
     </div>
   </section>
 
-  <!-- PEDIDOS POR ORIGEN UTM -->
+  <!-- VENTAS ATRIBUIDAS POR FUENTE -->
   <section class="ancha">
     <div class="cab">
-      <span class="num-bloque">UTM</span>
-      <h2>Pedidos de la tienda online por origen</h2>
-      <span class="marca-morada">Shopify · todos los estados</span>
+      <span class="num-bloque">Fuente</span>
+      <h2>Ventas atribuidas por fuente</h2>
+      <span class="marca-morada">Shopify</span>
     </div>
-    <p class="sub">Octubre de los dos años, 395 pedidos en 2025 y 343 en 2026.</p>
+    <p class="sub">Octubre de los dos años, en dos bases distintas.</p>
+
+    <h3 class="sub-cab">Todos los canales, pedidos pagados</h3>
+    <div class="scroll"><table id="t-web-fuente-pag"></table></div>
+    <div class="nota info">
+      <span class="etq">Definición</span>
+      <span>Shopify, reporte de fuentes de tráfico, pedidos pagados de todos los canales de venta. «Sin atribución» son pedidos manuales / WhatsApp, no tráfico perdido.</span>
+    </div>
+
+    <h4 class="tabla-anio">IA generativa</h4>
+    <div class="scroll"><table id="t-web-ia"></table></div>
+
+    <h3 class="sub-cab">Tienda online, todos los estados, por UTM</h3>
+    <p class="sub">395 pedidos en octubre de 2025 y 343 en octubre de 2026.</p>
     <div class="scroll"><table id="t-web-utm"></table></div>
     <div class="nota">
       <span class="etq">Definición</span>
       <span>Origen tomado de la etiqueta UTM del pedido, todos los estados. Los pedidos sin etiqueta no se pueden asignar a un canal.</span>
+    </div>
+    <div class="nota fuerte">
+      <span class="etq">Bases distintas</span>
+      <span>Las dos tablas usan bases distintas (pagados de todos los canales vs. todos los estados de la tienda online); no se suman ni se comparan peso a peso.</span>
     </div>
   </section>
 
@@ -2335,24 +2367,8 @@
       </span>
     </div>
 
-    <h3 class="sub-cab">Reconciliación 325 vs. 695 pedidos — resuelto</h3>
-    <p class="sub">Por qué el embudo cierra en 325 compras mientras el informe de ventas reporta 695 pedidos en el mismo agosto.</p>
-    <div class="scroll"><table id="t-reconcilia"></table></div>
-    <div class="conclusion">
-      <span class="rot">Hallazgo confirmado</span>
-      Shopify (695 pedidos en agosto, 789 en septiembre) ≈ WhatsApp + E-commerce del dashboard operativo (697 y 800): Shopify recoge ambos canales. El corte con/sin sesión de agosto (328 / 367) se parece numéricamente a WhatsApp/E-commerce (331 / 366), pero no está confirmado a cuál corresponde cada uno. Se retira la afirmación de que los 367 pedidos sin sesión son de WhatsApp.
-    </div>
-    <div class="nota">
-      <span class="etq">Pendiente</span>
-      <span>Pedidos por canal de venta de Shopify (web / borrador / POS) de agosto y septiembre.</span>
-    </div>
-    <div class="nota">
-      <span class="etq">Definición</span>
-      <span>$177,8M (totalPriceSet) vs. $172,2M (total_sales) del informe de ventas es una diferencia de definición contable, no un error — no usar las dos cifras juntas en el mismo total.</span>
-    </div>
-
     <h3 class="sub-cab">Salud del embudo, mes a mes — 2025 vs 2026</h3>
-    <p class="sub">Tasa de conversión total (sesión → compra) por mes y el detalle de cada etapa. 2026 llega hasta septiembre, ya con el mes completo.</p>
+    <p class="sub">Las cuatro tasas del embudo por mes. 2025 va completo y 2026 llega hasta octubre, ya con el mes cerrado. Fuente: Shopify, tienda online.</p>
     <div class="leyenda-lineas">
       <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
@@ -2372,26 +2388,18 @@
       </span>
     </div>
 
+    <div class="nota fuerte">
+      <span class="etq">Metodología</span>
+      <span>Desde el 21 de septiembre de 2026 Shopify calcula las sesiones y sus métricas derivadas de forma diferente (aviso de Shopify). Las sesiones y la conversión por sesiones de sep–oct 2026 no son comparables con meses anteriores. Carrito→compra no depende del cálculo de sesiones.</span>
+    </div>
+    <div class="nota">
+      <span class="etq">Corte de medición</span>
+      <span>En julio 2025 la etapa carrito→checkout pasa de 51% a 81%: posible cambio de medición de Shopify; esa etapa no es comparable entre años. Carrito→compra combina ambas etapas y sí es comparable.</span>
+    </div>
     <h4 class="tabla-anio">2025</h4>
     <div class="scroll"><table id="t-salud-25"></table></div>
     <h4 class="tabla-anio">2026</h4>
     <div class="scroll"><table id="t-salud-26"></table></div>
-    <div class="nota">
-      <span class="etq">Corte</span>
-      <span>Agosto 2026 aquí (52.819 sesiones, 323 compras) difiere levemente del embudo principal de arriba (56.455 sesiones, 325 compras) — diferencia menor, probablemente de zona horaria o corte de consulta, no una contradicción real.</span>
-    </div>
-    <div class="nota info">
-      <span class="etq">Septiembre</span>
-      <span><b>Las sesiones casi se duplicaron frente a agosto</b> (103.420 contra 52.819 en esta misma tabla, 56.455 según el embudo principal) pero Sesión→Carrito cayó a 1,44%, la más baja en año y medio de datos — patrón de dilución: mucho más tráfico, menor intención. En la otra punta, Carrito→Checkout marcó su mejor mes registrado (84,48%).</span>
-    </div>
-    <div class="conclusion">
-      <span class="rot">Hallazgo confirmado</span>
-      De 21 meses medidos, ninguno alcanzó la meta en «Sesión→Carrito» ni en «Checkout→Compra» — 0% de cumplimiento en año y medio. La única etapa que sí cumple de forma consistente es «Carrito→Checkout» (verde desde julio 2025). Esto no es un mes malo, es un problema estructural sostenido en las dos puntas del embudo.
-    </div>
-    <div class="nota info">
-      <span class="etq">Patrón</span>
-      <span><b>Jun-jul-ago 2025 muestra el mismo patrón que se repite en 2026:</b> la etapa Carrito→Checkout mejora fuerte a mitad de año (de ~42-55% a ~80-83% en 2025; de ~65% a ~74% en 2026), pero Checkout→Compra cae en esos mismos meses (de ~35% a ~18% en 2025). Vale la pena investigar si hay un cambio operativo o técnico que se repite cada año en esa época — podría ser estacional (rebajas, alto volumen) o un problema recurrente del checkout bajo carga.</span>
-    </div>
   </section>
   </div>
 
@@ -4861,26 +4869,61 @@
       '</tr>';
     }).join('') + '</tbody>';
 
-  /* Salud del embudo mes a mes. [mes, sesiones, carrito, checkout, compra] */
+  /* ---- Embudo de tráfico y conversión, mes a mes ----
+     Tasas tal como las entrega Shopify; no se derivan unas de otras porque
+     el reporte las redondea por separado.
+     [mes, sesiones, sesión→carrito %, carrito→checkout %, checkout→compra %,
+      carrito→compra %] */
   var salud25 = [
-    ['Enero',      30213, 1426,  596, 205], ['Febrero',    26067, 1006,  465, 164],
-    ['Marzo',      25583, 1185,  495, 156], ['Abril',      22653,  909,  499, 139],
-    ['Mayo',       41056, 1578,  937, 255], ['Junio',      64880, 1627,  823, 193],
-    ['Julio',      53559, 1926, 1560, 284], ['Agosto',     51385, 2141, 1776, 321],
-    ['Septiembre', 49184, 1893, 1514, 333], ['Octubre',    49820, 2138, 1674, 381],
-    ['Noviembre',  64586, 2932, 2100, 523], ['Diciembre',  73412, 2668, 1775, 476]
+    ['Enero',      30213, 4.7,  41.8, 34.4, 14.4],
+    ['Febrero',    26067, 3.9,  46.2, 35.3, 16.3],
+    ['Marzo',      25579, 4.6,  41.8, 31.3, 13.1],
+    ['Abril',      22653, 4.0,  54.9, 27.9, 15.3],
+    ['Mayo',       41056, 3.8,  59.4, 27.2, 16.2],
+    ['Junio',      64878, 2.5,  50.6, 23.5, 11.9],
+    ['Julio',      53556, 3.6,  81.0, 18.2, 14.7],
+    ['Agosto',     51383, 4.2,  83.0, 18.1, 15.0],
+    ['Septiembre', 49184, 3.9,  80.0, 22.0, 17.6],
+    ['Octubre',    55034, 3.94, 77.96, 22.53, 17.6],
+    ['Noviembre',  73555, 4.0,  71.5, 24.8, 17.8],
+    ['Diciembre',  79611, 3.4,  66.4, 26.9, 17.9]
   ];
   var salud26 = [
-    ['Enero',      43874, 1883, 1231, 317], ['Febrero',    36394, 1295,  840, 201],
-    ['Marzo',      43288, 1812, 1143, 251], ['Abril',      34289, 1445,  936, 228],
-    ['Mayo',       38168, 1499, 1011, 216], ['Junio',      34968, 1539, 1129, 256],
-    ['Julio',      42649, 1461, 1073, 270], ['Agosto',     52819, 1736, 1211, 323],
-    ['Septiembre', 103420, 1488, 1257, 459]
+    ['Enero',      47647, 4.0,  65.4, 25.8, 16.8],
+    ['Febrero',    38742, 3.4,  64.9, 24.1, 15.6],
+    ['Marzo',      45758, 4.0,  63.3, 21.8, 13.8],
+    ['Abril',      36302, 4.0,  65.4, 24.2, 15.8],
+    ['Mayo',       42362, 3.5,  67.9, 21.0, 14.3],
+    ['Junio',      39547, 3.9,  73.9, 22.5, 16.6],
+    ['Julio',      47368, 3.1,  73.8, 25.1, 18.5],
+    ['Agosto',     56115, 3.1,  70.2, 26.3, 18.4],
+    ['Septiembre',104693, 1.5,  75.1, 29.0, 21.8],
+    ['Octubre',    74173, 2.44, 59.16, 33.21, 19.6]
   ];
+  /* Meses con tráfico de sesiones atípico o no comparable: ⚠ */
+  var RARO25 = {'Junio':1}, RARO26 = {'Septiembre':1, 'Octubre':1};
+  var AV = ' <span class="aviso" title="Tráfico atípico o método de sesiones nuevo">⚠</span>';
+
+  /* Promedio ponderado de un tramo de meses: pondera por sesiones y por
+     carritos, nunca por promedio simple de porcentajes. */
+  function pondera(filas){
+    var ses = 0, carr = 0, chk = 0, cmp = 0;
+    filas.forEach(function(f){
+      var c = f[1] * f[2] / 100;
+      ses  += f[1];
+      carr += c;
+      chk  += c * f[3] / 100;
+      cmp  += c * f[5] / 100;
+    });
+    return {ses:ses, carr:carr, chk:chk, cmp:cmp,
+            sc: carr / ses * 100, cck: chk / carr * 100,
+            ckc: cmp / chk * 100, cc: cmp / carr * 100, tot: cmp / ses * 100};
+  }
+
   var mesesAnio = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   var nombresAnio = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
                      'Septiembre','Octubre','Noviembre','Diciembre'];
-  var tasaTotal = function(f){ return f[4] / f[1] * 100; };
+  var tasaTotal = function(f){ return f[2] * f[5] / 100; };
 
   document.getElementById('grafico-salud').innerHTML =
     '<div class="grafico-b1">' +
@@ -4916,77 +4959,60 @@
            '<td class="falta">' + (falta <= 0 ? '—' : nf2.format(falta) + ' pp') + '</td>';
   }
 
-  function tablaSalud(id, filas, parcial){
+  function tablaSalud(id, filas, raros){
+    /* Las tres etapas con meta van con su semáforo y lo que falta.
+       Carrito→compra no tiene meta: va suelta, y es la única comparable
+       entre años porque no depende del cálculo de sesiones. */
+    var conMeta = [0, 1, 2, 3];
     document.getElementById(id).innerHTML =
       '<thead>' +
         '<tr class="grupos">' +
           '<th class="lft" rowspan="2">Mes</th>' +
-          '<th rowspan="2">Sesiones</th><th rowspan="2">Carrito</th>' +
-          '<th rowspan="2">Checkout</th><th rowspan="2">Compra</th>' +
-          metasEmbudo.map(function(m){
-            return '<th class="gv" colspan="2">' + m[0] +
-                   '<span class="obj">meta ' + (m[1] % 1 === 0 ? nf0.format(m[1]) : nf1.format(m[1])) + '%</span></th>';
-          }).join('') +
+          '<th rowspan="2">Sesiones</th>' +
+          '<th class="gv" colspan="2">' + metasEmbudo[0][0] +
+            '<span class="obj">meta ' + nf0.format(metasEmbudo[0][1]) + '%</span></th>' +
+          '<th class="gv" colspan="2">' + metasEmbudo[1][0] +
+            '<span class="obj">meta ' + nf0.format(metasEmbudo[1][1]) + '%</span></th>' +
+          '<th class="gv" colspan="2">' + metasEmbudo[2][0] +
+            '<span class="obj">meta ' + nf0.format(metasEmbudo[2][1]) + '%</span></th>' +
+          '<th rowspan="2">Carrito→Compra</th>' +
+          '<th class="gv" colspan="2">' + metasEmbudo[3][0] +
+            '<span class="obj">meta ' + nf0.format(metasEmbudo[3][1]) + '%</span></th>' +
         '</tr>' +
         '<tr class="campos">' +
-          metasEmbudo.map(function(){ return '<th>%</th><th>Falta</th>'; }).join('') +
+          '<th>%</th><th>Falta</th><th>%</th><th>Falta</th><th>%</th><th>Falta</th>' +
+          '<th>%</th><th>Falta</th>' +
         '</tr>' +
       '</thead><tbody>' +
-      filas.map(function(f, i){
-        var ultimo = parcial && i === filas.length - 1;
-        var etapas = [f[2]/f[1]*100, f[3]/f[2]*100, f[4]/f[3]*100, tasaTotal(f)];
+      filas.map(function(f){
         return '<tr>' +
-          '<td class="lft">' + f[0] + (ultimo ? '<span class="marca-amarilla">Parcial 1–13</span>' : '') + '</td>' +
+          '<td class="lft">' + f[0] + (raros[f[0]] ? AV : '') + '</td>' +
           '<td class="num">' + u(f[1]) + '</td>' +
-          '<td class="num">' + u(f[2]) + '</td>' +
-          '<td class="num">' + u(f[3]) + '</td>' +
-          '<td class="num">' + u(f[4]) + '</td>' +
-          etapas.map(function(v, k){ return celdaMeta(v, metasEmbudo[k][1]); }).join('') +
+          celdaMeta(f[2], metasEmbudo[0][1]) +
+          celdaMeta(f[3], metasEmbudo[1][1]) +
+          celdaMeta(f[4], metasEmbudo[2][1]) +
+          '<td class="num pct">' + nf2.format(f[5]) + '%</td>' +
+          celdaMeta(tasaTotal(f), metasEmbudo[3][1]) +
         '</tr>';
       }).join('') +
       (function(){
-        var t = filas.reduce(function(a,f){ return [a[0]+f[1], a[1]+f[2], a[2]+f[3], a[3]+f[4]]; }, [0,0,0,0]);
-        var etapas = [t[1]/t[0]*100, t[2]/t[1]*100, t[3]/t[2]*100, t[3]/t[0]*100];
+        var t = pondera(filas);
         return '<tr class="total">' +
-          '<td class="lft">Total</td>' +
-          '<td class="num">' + u(t[0]) + '</td>' +
-          '<td class="num">' + u(t[1]) + '</td>' +
-          '<td class="num">' + u(t[2]) + '</td>' +
-          '<td class="num">' + u(t[3]) + '</td>' +
-          etapas.map(function(v, k){ return celdaMeta(v, metasEmbudo[k][1]); }).join('') +
+          '<td class="lft">Total<span class="val">ponderado</span></td>' +
+          '<td class="num">' + u(t.ses) + '</td>' +
+          celdaMeta(t.sc,  metasEmbudo[0][1]) +
+          celdaMeta(t.cck, metasEmbudo[1][1]) +
+          celdaMeta(t.ckc, metasEmbudo[2][1]) +
+          '<td class="num pct">' + nf2.format(t.cc) + '%</td>' +
+          celdaMeta(t.tot, metasEmbudo[3][1]) +
         '</tr>';
       })() +
       '</tbody>';
   }
-  tablaSalud('t-salud-25', salud25, false);
-  tablaSalud('t-salud-26', salud26, false);
+  tablaSalud('t-salud-25', salud25, RARO25);
+  tablaSalud('t-salud-26', salud26, RARO26);
 
   /* ---------------- Embudo Shopify (agosto) ---------------- */
-  var reconcilia = [
-    ['Con sesión de tienda online asociada',  328,  67686782, true],
-    ['Sin sesión asociada',                   367, 110175147, false]
-  ];
-  var reconTot = reconcilia.reduce(function(a,r){ return [a[0]+r[1], a[1]+r[2]]; }, [0,0]);
-
-  document.getElementById('t-reconcilia').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Grupo</th><th>Pedidos</th><th>% de pedidos</th><th>Valor (COP)</th>' +
-    '</tr></thead><tbody>' +
-    reconcilia.map(function(r){
-      return '<tr' + (r[3] ? ' class="enlazada"' : '') + '>' +
-        '<td class="lft">' + r[0] + (r[3] ? '<span class="marca-morada">≈ 325 del embudo</span>' : '') + '</td>' +
-        '<td class="num">' + u(r[1]) + '</td>' +
-        '<td class="num">' + nf1.format(r[1] / reconTot[0] * 100) + '%</td>' +
-        '<td class="num">' + cop(r[2]) + '</td>' +
-      '</tr>';
-    }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total</td>' +
-      '<td class="num">' + u(reconTot[0]) + '</td>' +
-      '<td class="num">100%</td>' +
-      '<td class="num">' + cop(reconTot[1]) + '</td>' +
-    '</tr></tbody>';
-
   var shopFuentes = [
     ['Social (redes sociales)',    21201, '#4C1D6B'],
     ['Directo',                    17283, '#7A4E9A'],
@@ -5428,9 +5454,6 @@
     ['La pauta es el canal con peor tasa de cierre',
      'Pauta cierra 0,22% de sus leads, contra 6,7% de los canales propios y 58,3% de Walink. Tiene el mayor volumen y el peor rendimiento.',
      'whatsapp', 'WhatsApp'],
-    ['Shopify recoge WhatsApp y E-commerce juntos',
-     'Los 695 pedidos de agosto y los 789 de septiembre cuadran con la suma de los dos canales del dashboard operativo (697 y 800). El 52,8% de los pedidos de agosto no tiene sesión web asociada, pero falta confirmar a qué canal corresponde cada grupo.',
-     'sitio-web', 'Sitio web'],
     ['La atribución de ventas de Shopify no sirve para decidir',
      'El 74,3% de las ventas no tiene fuente asignada, y cuatro canales aparecen en $0 sin que eso signifique que no vendieron. Hace falta GA4 conectado.',
      'sitio-web', 'Sitio web'],
@@ -5864,24 +5887,6 @@
     return '<span class="val">' + marca(colorVar(r.v)) + r.s + '</span>';
   }
 
-  /* ---- 1. Sesiones y conversión, mes a mes ----
-     [mes, sesiones 25, pedidos 25, sesiones 26, pedidos 26] */
-  var WEB_MES = [
-    ['Enero',      30211, 206, 47645, 321],
-    ['Febrero',    26063, 165, 38734, 204],
-    ['Marzo',      25571, 155, 45750, 250],
-    ['Abril',      22648, 139, 36289, 229],
-    ['Mayo',       41053, 257, 42325, 214],
-    ['Junio',      64874, 195, 39535, 260],
-    ['Julio',      53546, 286, 47336, 271],
-    ['Agosto',     51368, 367, 56081, 326],
-    ['Septiembre', 49180, 345, 101629, 338],
-    ['Octubre',    55015, 392, 74072, 356]
-  ];
-  /* Meses con tráfico atípico: [mes, año]. Se marcan con ⚠ y quedan fuera
-     de la comparación de conversión. */
-  var WEB_RARO = {'Junio': 2025, 'Septiembre': 2026};
-
   document.getElementById('t-web-mes').innerHTML =
     '<thead>' +
       '<tr class="grupos">' +
@@ -5890,50 +5895,68 @@
         '<th class="g26" colspan="3">2026</th>' +
       '</tr>' +
       '<tr class="campos">' +
-        '<th>Sesiones</th><th>Pedidos</th><th>Conv.</th>' +
-        '<th>Sesiones</th><th>Pedidos</th><th>Conv.</th>' +
+        '<th>Sesiones</th><th>Con carrito</th><th>Carrito→compra</th>' +
+        '<th>Sesiones</th><th>Con carrito</th><th>Carrito→compra</th>' +
       '</tr>' +
     '</thead><tbody>' +
-    WEB_MES.map(function(m){
-      var c25 = m[2] / m[1] * 100, c26 = m[4] / m[3] * 100;
-      var raro = WEB_RARO[m[0]];
-      var avisa = function(anio){
-        return raro === anio ? ' <span class="aviso" title="Tráfico atípico">⚠</span>' : '';
-      };
+    salud26.map(function(b, i){
+      var a = salud25[i];
       return '<tr>' +
-        '<td class="lft">' + m[0] + '</td>' +
-        '<td class="num">' + u(m[1]) + avisa(2025) + '</td>' +
-        '<td class="num">' + u(m[2]) + '</td>' +
-        '<td class="num pct">' + pc2(c25) + '</td>' +
-        '<td class="num">' + u(m[3]) + avisa(2026) + '</td>' +
-        '<td class="num">' + u(m[4]) + '</td>' +
-        '<td class="num pct">' + pc2(c26) + (raro ? '' : sem(c25, c26)) + '</td>' +
+        '<td class="lft">' + a[0] + '</td>' +
+        '<td class="num">' + u(a[1]) + (RARO25[a[0]] ? AV : '') + '</td>' +
+        '<td class="num pct">' + pc1(a[2]) + '</td>' +
+        '<td class="num pct">' + pc1(a[5]) + '</td>' +
+        '<td class="num">' + u(b[1]) + (RARO26[b[0]] ? AV : '') + '</td>' +
+        '<td class="num pct">' + pc1(b[2]) + '</td>' +
+        '<td class="num pct">' + pc1(b[5]) + sem(a[5], b[5]) + '</td>' +
       '</tr>';
     }).join('') +
     (function(){
-      /* Acumulado enero–agosto: los dos meses con tráfico atípico quedan fuera */
-      var a = WEB_MES.slice(0, 8).reduce(function(t, m){
-        return [t[0]+m[1], t[1]+m[2], t[2]+m[3], t[3]+m[4]];
-      }, [0,0,0,0]);
-      var c25 = a[1] / a[0] * 100, c26 = a[3] / a[2] * 100;
+      var a = pondera(salud25.slice(0, 8)), b = pondera(salud26.slice(0, 8));
       return '<tr class="total">' +
-        '<td class="lft">Acumulado Ene–Ago<span class="val">enero a agosto de cada año</span></td>' +
-        '<td class="num">' + u(a[0]) + '</td>' +
-        '<td class="num">' + u(a[1]) + '</td>' +
-        '<td class="num pct">' + pc2(c25) + '</td>' +
-        '<td class="num">' + u(a[2]) + '</td>' +
-        '<td class="num">' + u(a[3]) + '</td>' +
-        '<td class="num pct">' + pc2(c26) + sem(c25, c26) + '</td>' +
+        '<td class="lft">Acumulado Ene–Ago<span class="val">ponderado por sesiones y carritos</span></td>' +
+        '<td class="num">' + u(a.ses) + '</td>' +
+        '<td class="num pct">' + pc1(a.sc) + '</td>' +
+        '<td class="num pct">' + pc1(a.cc) + '</td>' +
+        '<td class="num">' + u(b.ses) + '</td>' +
+        '<td class="num pct">' + pc1(b.sc) + '</td>' +
+        '<td class="num pct">' + pc1(b.cc) + sem(a.cc, b.cc) + '</td>' +
       '</tr></tbody>';
     })();
   pintarFranjaSem('franja-sem-web');
+
+  /* Conversión del mes con el método nuevo de Shopify.
+     [etapa, número]; el % es sobre sesiones y se calcula aquí. */
+  var CONV_NUEVA = [
+    ['Sesiones',            22831, null],
+    ['Añadido al carrito',    894, 3.91],
+    ['Llegaron al pago',      722, 3.16],
+    ['Completaron el pago',   342, 1.49]
+  ];
+  document.getElementById('t-web-conv-nueva').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Etapa</th><th>Número</th><th>% de sesiones</th>' +
+    '</tr></thead><tbody>' +
+    CONV_NUEVA.map(function(e){
+      return '<tr><td class="lft">' + e[0] + '</td>' +
+        '<td class="num">' + u(e[1]) + '</td>' +
+        (e[2] === null ? '<td class="num no-aplica">—</td>'
+                       : '<td class="num pct">' + pc2(e[2]) + '</td>') +
+      '</tr>';
+    }).join('') +
+    '<tr class="total"><td class="lft">Tasa de conversión</td>' +
+      '<td class="num no-aplica">—</td>' +
+      '<td class="num pct">' + pc2(CONV_NUEVA[3][2]) + '</td>' +
+    '</tr></tbody>';
 
   /* ---- 2. Embudo de compra ----
      [etapa, oct 2025, ago 2026, sep 2026, oct 2026] en % */
   var WEB_EMBUDO = [
     ['Sesiones con carrito',   3.94,  3.13,  1.46,  2.44],
     ['De carrito a checkout', 77.96, 70.19, 75.11, 59.16],
-    ['De checkout a compra',  22.53, 26.26, 29.04, 33.21]
+    ['De checkout a compra',  22.53, 26.26, 29.04, 33.21],
+    ['De carrito a compra<span class="val">combina las dos etapas anteriores</span>',
+                              17.60, 18.40, 21.80, 19.60]
   ];
   document.getElementById('t-web-embudo').innerHTML =
     '<thead><tr class="campos">' +
@@ -5979,6 +6002,64 @@
       '<td class="num">' + mm2(WEB_EST.ven[0]) + '</td>' +
       '<td class="num">' + mm2(WEB_EST.ven[1]) + '</td>' + varSem(WEB_EST.ven[0], WEB_EST.ven[1]) + '</tr>' +
     '</tbody>';
+
+  /* ---- Ventas atribuidas por fuente · todos los canales, pedidos pagados ----
+     [fuente, pedidos 25, ventas 25 en $M, pedidos 26, ventas 26 en $M]
+     null = no existía en 2025; 'pend' = falta el dato */
+  var FUENTE_PAG = [
+    ['Sin atribución<span class="val">pedidos manuales / WhatsApp, no es tráfico perdido</span>',
+                                                   282, 72.4,  270,  65.5],
+    ['Google pagado',                               67, 12.4,  113,  23.3],
+    ['Meta pagado<span class="val">Facebook + Instagram + Meta con UTM</span>',
+                                                    55,  9.0,   50,   9.9],
+    ['Meta con fuente «unknown»',                    7,  1.1,   24,   4.2],
+    ['Directo',                                     36,  6.7,   58,  12.5],
+    ['Orgánico Google',                             21,  3.3,   10,   1.8],
+    ['Beacons',                                   null, null,   28,   5.5],
+    ['Otros / orgánico<span class="val">Metricool, otros</span>',
+                                                    27,  4.2, 'pend', 'pend']
+  ];
+  document.getElementById('t-web-fuente-pag').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Fuente</th>' +
+        '<th class="g25" colspan="2">Octubre 2025</th>' +
+        '<th class="g26" colspan="2">Octubre 2026</th>' +
+      '</tr>' +
+      '<tr class="campos"><th>Pedidos</th><th>Ventas</th><th>Pedidos</th><th>Ventas</th></tr>' +
+    '</thead><tbody>' +
+    FUENTE_PAG.map(function(f){
+      var comparable = typeof f[1] === 'number' && typeof f[3] === 'number';
+      return '<tr>' +
+        '<td class="lft">' + f[0] + '</td>' +
+        (f[1] === null ? NA : '<td class="num">' + u(f[1]) + '</td>') +
+        (f[2] === null ? NA : '<td class="num">' + mm(f[2]) + '</td>') +
+        (f[3] === 'pend' ? PEND
+          : '<td class="num">' + u(f[3]) + (comparable ? sem(f[1], f[3]) : '') + '</td>') +
+        (f[4] === 'pend' ? PEND
+          : '<td class="num">' + mm(f[4]) + (comparable ? sem(f[2], f[4]) : '') + '</td>') +
+      '</tr>';
+    }).join('') +
+    (function(){
+      var p25 = 0, v25 = 0;
+      FUENTE_PAG.forEach(function(f){ if (typeof f[1] === 'number') { p25 += f[1]; v25 += f[2]; } });
+      return '<tr class="total">' +
+        '<td class="lft">Total<span class="val">2026 no cierra: falta «otros / orgánico»</span></td>' +
+        '<td class="num">' + u(p25) + '</td>' +
+        '<td class="num">' + mm(v25) + '</td>' + PEND + PEND +
+      '</tr></tbody>';
+    })();
+
+  /* IA generativa. [concepto, oct 2025, oct 2026]  'pend' = falta el dato */
+  var IA_GEN = [['Sesiones', 'pend', 175], ['Pedidos', 'pend', 3]];
+  document.getElementById('t-web-ia').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Concepto</th><th>Octubre 2025</th><th>Octubre 2026</th>' +
+    '</tr></thead><tbody>' +
+    IA_GEN.map(function(f){
+      return '<tr><td class="lft">' + f[0] + '</td>' + PEND +
+        '<td class="num">' + u(f[2]) + '</td></tr>';
+    }).join('') + '</tbody>';
 
   /* ---- 4. Pedidos por origen UTM ----
      [origen, pedidos 25, ventas 25 en $M, pedidos 26, ventas 26 en $M]
