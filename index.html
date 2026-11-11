@@ -1422,7 +1422,7 @@
   <div class="panel-tab" id="resumen" role="tabpanel" aria-labelledby="tab-resumen">
     <section class="sin-filete">
       <div class="tiles" id="tiles"></div>
-      <p class="pie-nota">Ventas de enero a septiembre, 4 categorías principales, Equipo de WhatsApp y Sitio Web. Cada bloque del tablero indica su propio rango de tiempo y su fuente.</p>
+      <p class="pie-nota">Ventas de enero a octubre según el ERP, cuatro categorías, Sitio Web y Equipo de WhatsApp. Cada bloque del tablero indica su propio rango de tiempo y su fuente.</p>
 
       <div class="cab">
         <span class="num-bloque">Resumen ejecutivo</span>
@@ -1434,86 +1434,40 @@
   </div>
 
   <div class="panel-tab" id="ventas" role="tabpanel" aria-labelledby="tab-ventas">
-  <!-- VENTAS POR CATEGORÍA -->
+  <!-- VENTAS ERP -->
   <section class="ancha">
     <div class="cab">
       <span class="num-bloque">Bloque 01</span>
-      <h2>Ventas por categoría — 4 categorías principales</h2>
-      <span class="marca-morada">Equipo de WhatsApp + Sitio Web · Ene–Sep</span>
+      <h2>Ventas por categoría</h2>
+      <span class="marca-morada">ERP · Power BI · Ene–Oct</span>
     </div>
-    <p class="sub">Fajas, Short, Cinturilla y Brasier, mes a mes y por canal. Todo lo de abajo se calcula sobre las mismas 72 filas de origen: al mover un filtro se recalculan las tarjetas, los gráficos y las tablas.</p>
+    <div class="nota info">
+      <span class="etq">Fuente</span>
+      <span><b>ERP (Power BI).</b> Canal Comercial = Sitio Web / Equipo de WhatsApp, todos los tipos de canal, con notas crédito restadas. No es comparable peso a peso con Shopify.</span>
+    </div>
 
-    <div class="nota fuerte">
-      <span class="etq">Por reemplazar</span>
-      <span>
-        <b>Esta matriz sale de un pivote anterior y la coordinación la dio por no válida.</b>
-        Se reemplaza por la del ERP (Power BI «Comparativo Online 2025 2026») en cuanto llegue el archivo <code>ventas_mes_categoria_canal_2025_2026_ERP.csv</code>, que no venía adjunto. Mientras tanto queda a la vista para no perder la referencia, pero no debe usarse para decidir: cubre enero–septiembre, solo WhatsApp y Sitio Web, y no descuenta notas crédito.
-      </span>
+    <div class="tiles" id="erp-tarjetas"></div>
+    <div class="scroll"><table id="t-erp-total"></table></div>
+
+    <div class="conclusion">
+      <span class="rot">Lectura</span>
+      Ene–Oct el crecimiento lo empuja Short (+24,5%) y el sitio web (+49,4%); WhatsApp cae −7,3%. Fajas pesa 55% de la venta y solo crece +3,6% en valor con −5,7% en unidades. Cinturilla cae −28,2% en unidades.
     </div>
+
+    <div id="erp-bloques"></div>
+
+    <h3 class="sub-cab">Consolidado mes × categoría</h3>
+    <p class="sub">Ventas de 2026 y su variación contra el mismo mes de 2025, para ver la mezcla completa de un vistazo.</p>
+    <div class="scroll"><table id="t-erp-consolidado" class="tabla-sticky"></table></div>
 
     <div class="franja-sem" id="franja-sem"></div>
-
-    <div class="filtros">
-      <label for="f-canal">Canal
-        <select id="f-canal">
-          <option value="">Todos</option>
-          <option value="WA">Equipo de WhatsApp</option>
-          <option value="Web">Sitio Web</option>
-        </select>
-      </label>
-      <label for="f-cat">Categoría
-        <select id="f-cat">
-          <option value="">Todas</option>
-          <option value="Fajas">Fajas</option>
-          <option value="Short">Short</option>
-          <option value="Cinturilla">Cinturilla</option>
-          <option value="Brasier">Brasier</option>
-        </select>
-      </label>
-      <span class="filtro-estado" id="f-estado"></span>
-    </div>
-
-    <div class="tiles" id="tiles-resumen"></div>
-
-    <h3 class="sub-cab">Ventas y unidades por mes</h3>
-    <p class="sub">Pase el mouse sobre cualquier mes para ver los dos años y la diferencia.</p>
-    <div class="leyenda-lineas">
-      <span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>
-      <span><span class="sw" style="background:var(--morado)"></span>2026</span>
-    </div>
-    <div class="graficos-b1" id="graficos-ventas"></div>
-
-    <h3 class="sub-cab">Mes a mes — 2025 vs 2026</h3>
-    <div class="scroll"><table id="t-mes"></table></div>
-
-    <h3 class="sub-cab">Unidades — mes × categoría</h3>
-    <p class="sub">Los dos años uno al lado del otro, con total por fila y por columna.</p>
-    <div class="scroll"><table id="t-cat-mes"></table></div>
-
-    <h3 class="sub-cab">Totales por categoría y por canal</h3>
-    <div class="scroll"><table id="t-cat"></table></div>
-
-    <h3 class="sub-cab">Unidades por mes y categoría</h3>
-    <p class="sub">Los cuatro paneles comparten el mismo eje vertical, así que la altura de las líneas es comparable entre categorías. Siguen el filtro de canal.</p>
-    <div class="paneles" id="paneles"></div>
-
     <div class="nota">
-      <span class="etq">Alcance</span>
-      <span>No incluye Accesorios, Vestido de baño ni Sin categoría; no es comparable peso a peso con el total del Dashboard Online.</span>
+      <span class="etq">Redondeo</span>
+      <span>Las ventas mensuales llegaron en millones con un decimal, así que la suma de los meses puede quedar una o dos décimas por encima o por debajo del total del ERP. Donde aparecen las dos cifras, cada una lleva su rótulo.</span>
     </div>
-  </section>
-
-  <!-- SEPTIEMBRE POR CATEGORÍA · SHOPIFY -->
-  <section>
-    <div class="cab">
-      <span class="num-bloque">Shopify</span>
-      <h2>Septiembre 2026 por categoría — Shopify (e-commerce)</h2>
-    </div>
-    <p class="sub">Vista aparte: el desglose por categoría que da Shopify, que cubre el e-commerce e incluye categorías que el bloque de arriba no tiene. Su total ($166.988.522) no es el total de venta online del mes y no se suma ni se compara peso a peso con el del dashboard ($195.904.828).</p>
-    <div class="scroll"><table id="t-cat-sep"></table></div>
-    <div class="nota info">
-      <span class="etq">Unificado</span>
-      <span>«Faja» y «Fajas» venían separadas en Shopify y son la misma categoría: quedan sumadas en <b>Fajas</b> (327 unidades, $71.871.050).</span>
+    <div class="nota">
+      <span class="etq">Pendiente del CSV</span>
+      <span>Faltan en el archivo las <b>unidades mes a mes</b> de cada categoría y la <b>apertura por canal de octubre</b>. Las columnas quedan marcadas y se llenan en cuanto llegue <code>ventas_mes_categoria_canal_2025_2026_ERP.csv</code>, que no venía adjunto.</span>
     </div>
   </section>
 
@@ -1569,24 +1523,6 @@
       <span><span class="sw" style="background:var(--morado)"></span>2026</span>
     </div>
     <div id="grafico-desc-bruta"></div>
-  </section>
-
-  <!-- CATEGORÍAS SHOPIFY -->
-  <section>
-    <div class="cab">
-      <span class="num-bloque">Categorías</span>
-      <h2>Venta neta por categoría</h2>
-      <span class="marca-morada">Shopify · todos los estados</span>
-    </div>
-    <p class="sub">Acumulado de enero a octubre y el detalle del mes de octubre.</p>
-    <div class="scroll"><table id="t-cat-shopify"></table></div>
-
-    <h4 class="tabla-anio">Octubre</h4>
-    <div class="scroll"><table id="t-cat-shopify-oct"></table></div>
-    <div class="nota info">
-      <span class="etq">Shorts</span>
-      <span><b>Crecimiento con más descuento, no con más precio.</b> El descuento de Shorts pasó de 2,5% en octubre de 2025 a 9,3% en octubre de 2026, y el ticket por pedido bajó de $182.000 a $180.000: la venta sube +25,9% porque se venden más unidades (+39,5%), no porque cada una deje más.</span>
-    </div>
   </section>
 
   <!-- CANAL Y PEDIDOS SIN PAGAR -->
@@ -2567,104 +2503,6 @@
   var difU = function(d){ return (d > 0 ? '+' : '') + u(d) + ' u'; };
   var difCop = function(d){ return (d > 0 ? '+' : (d < 0 ? '-' : '')) + cop(Math.abs(d)); };
 
-  /* ---------------- Ventas por mes, categoría y canal ----------------
-     Datos del Excel dinámico, 72 filas: un renglón por canal × categoría × mes
-     con unidades y ventas de cada año. Todo lo que muestra el bloque —
-     tarjetas, gráficos y tablas— se calcula de aquí; no hay totales escritos
-     a mano. [canal, categoría, mes, unidades 2025, ventas 2025, unidades 2026, ventas 2026] */
-  var VENTAS = [
-    ['WA','Brasier','ene',33,2410470,13,1137361],
-    ['WA','Brasier','feb',40,2973067,13,1243256],
-    ['WA','Brasier','mar',19,1514394,27,2620234],
-    ['WA','Brasier','abr',54,4181576,31,2727155],
-    ['WA','Brasier','may',37,2777634,3,331155],
-    ['WA','Brasier','jun',26,2290392,22,2098085],
-    ['WA','Brasier','jul',17,1669414,17,1763707],
-    ['WA','Brasier','ago',21,2005901,14,1377835],
-    ['WA','Brasier','sep',10,894097,19,1870409],
-    ['WA','Cinturilla','ene',35,4106872,41,6496262],
-    ['WA','Cinturilla','feb',18,2326117,26,4478491],
-    ['WA','Cinturilla','mar',31,4350977,38,6427450],
-    ['WA','Cinturilla','abr',47,5091523,20,3205055],
-    ['WA','Cinturilla','may',86,7021609,16,3116800],
-    ['WA','Cinturilla','jun',42,5349838,23,3497780],
-    ['WA','Cinturilla','jul',45,5197592,27,3863612],
-    ['WA','Cinturilla','ago',28,4693638,21,3003914],
-    ['WA','Cinturilla','sep',28,4581197,28,3958977],
-    ['WA','Fajas','ene',217,45336540,210,47415372],
-    ['WA','Fajas','feb',260,54164264,193,48035865],
-    ['WA','Fajas','mar',279,58803311,217,51906449],
-    ['WA','Fajas','abr',237,51667264,218,51304526],
-    ['WA','Fajas','may',249,54643389,195,45113699],
-    ['WA','Fajas','jun',236,51896620,195,44047414],
-    ['WA','Fajas','jul',315,62210143,202,46077185],
-    ['WA','Fajas','ago',286,63053778,181,41733096],
-    ['WA','Fajas','sep',196,44428437,182,41854524],
-    ['WA','Short','ene',225,22173368,176,22385248],
-    ['WA','Short','feb',150,16872492,141,19550208],
-    ['WA','Short','mar',201,21998578,161,18963675],
-    ['WA','Short','abr',381,38113213,162,21425389],
-    ['WA','Short','may',200,22541658,222,27982992],
-    ['WA','Short','jun',183,21257662,179,23975329],
-    ['WA','Short','jul',220,24267457,238,27746267],
-    ['WA','Short','ago',177,20983049,199,23593596],
-    ['WA','Short','sep',170,20672371,268,31982114],
-    ['Web','Brasier','ene',1,72700,20,1876057],
-    ['Web','Brasier','feb',13,978400,12,1227800],
-    ['Web','Brasier','mar',18,1450800,10,1044151],
-    ['Web','Brasier','abr',8,639200,10,1043000],
-    ['Web','Brasier','may',23,1980028,4,380240],
-    ['Web','Brasier','jun',6,533529,25,2369195],
-    ['Web','Brasier','jul',13,1254814,13,1304745],
-    ['Web','Brasier','ago',4,384600,17,1683780],
-    ['Web','Brasier','sep',20,1939112,32,2836990],
-    ['Web','Cinturilla','ene',9,1109580,12,1981069],
-    ['Web','Cinturilla','feb',8,962271,6,981102],
-    ['Web','Cinturilla','mar',9,1205722,18,3031772],
-    ['Web','Cinturilla','abr',44,4485571,20,2838924],
-    ['Web','Cinturilla','may',88,6795957,8,1400326],
-    ['Web','Cinturilla','jun',45,4787653,20,2929610],
-    ['Web','Cinturilla','jul',14,1284532,17,2619336],
-    ['Web','Cinturilla','ago',60,6611068,18,2922950],
-    ['Web','Cinturilla','sep',40,4905231,17,2120092],
-    ['Web','Fajas','ene',67,14398601,123,27532990],
-    ['Web','Fajas','feb',81,17674308,72,17591420],
-    ['Web','Fajas','mar',65,13810099,92,23656995],
-    ['Web','Fajas','abr',48,10379361,87,20887403],
-    ['Web','Fajas','may',46,10044078,95,22798988],
-    ['Web','Fajas','jun',66,15202789,79,19934264],
-    ['Web','Fajas','jul',113,22378376,79,18751629],
-    ['Web','Fajas','ago',117,23041851,65,17213739],
-    ['Web','Fajas','sep',137,30524819,100,25674464],
-    ['Web','Short','ene',156,16749434,152,18850141],
-    ['Web','Short','feb',97,11180183,119,16872809],
-    ['Web','Short','mar',73,8267968,181,22984691],
-    ['Web','Short','abr',79,9878092,110,14794425],
-    ['Web','Short','may',111,13304695,136,17444026],
-    ['Web','Short','jun',97,11482515,164,21095081],
-    ['Web','Short','jul',145,16701701,156,19544851],
-    ['Web','Short','ago',144,17097221,234,29834554],
-    ['Web','Short','sep',163,20340749,274,32547395]
-  ];
-
-  var CANALES = [['WA','Equipo de WhatsApp'], ['Web','Sitio Web']];
-  var CATS    = ['Fajas','Short','Cinturilla','Brasier'];
-  var MESES   = [['ene','Enero','Ene'], ['feb','Febrero','Feb'], ['mar','Marzo','Mar'],
-                 ['abr','Abril','Abr'], ['may','Mayo','May'],    ['jun','Junio','Jun'],
-                 ['jul','Julio','Jul'], ['ago','Agosto','Ago'],  ['sep','Septiembre','Sep']];
-  var nombreCanal = function(c){
-    var f = CANALES.filter(function(x){ return x[0] === c; })[0];
-    return f ? f[1] : c;
-  };
-
-  /* Suma unidades y ventas de los dos años sobre las filas que pasen el filtro */
-  function sumaVentas(filtro){
-    return VENTAS.reduce(function(a, r){
-      if (filtro && !filtro(r)) { return a; }
-      return [a[0]+r[3], a[1]+r[4], a[2]+r[5], a[3]+r[6]];
-    }, [0,0,0,0]);
-  }
-
   /* ---- Umbrales del semáforo, en un solo sitio ----
      Todo lo que pinta color —tablas, matriz, tarjetas, paneles y la propia
      leyenda— lee de aquí, así que cambiar un número los mueve a todos. */
@@ -2764,338 +2602,224 @@
   pintarFranjaSem('franja-sem');
   pintarFranjaSem('franja-sem-pauta');
 
-  /* Estado de los filtros */
-  var filtroCanal = '', filtroCat = '';
-  function pasa(r){
-    return (!filtroCanal || r[0] === filtroCanal) && (!filtroCat || r[1] === filtroCat);
-  }
-  function catsVisibles(){ return filtroCat ? [filtroCat] : CATS; }
-  function canalesVisibles(){
-    return filtroCanal ? CANALES.filter(function(c){ return c[0] === filtroCanal; }) : CANALES;
+  /* ---------------- Ventas por categoría · ERP (Power BI) ----------------
+     Las ventas mensuales vienen en millones de pesos con un decimal, tal como
+     las entrega el informe; las unidades y la apertura por canal, solo con el
+     acumulado Ene–Oct. Todo lo demás —totales, variaciones, participaciones y
+     escalas— se calcula aquí. */
+  var ERP_MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                   'Julio','Agosto','Septiembre','Octubre'];
+  var ERP_ETQ   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct'];
+
+  var ERP = [
+    {nom:'Fajas',
+     v25:[61.5,79.1,76.8,67.7,71.5,71.2,95.5,92.0,87.2,93.6],
+     v26:[87.5,80.5,88.3,84.2,82.5,71.5,76.4,66.5,94.2,92.9],
+     tot:[795.9, 824.5], ud:[3690, 3479],
+     web:[202.9, 293.9], wa:[593.0, 530.6]},
+    {nom:'Short',
+     v25:[39.7,28.9,32.1,49.6,38.1,36.0,44.5,41.4,55.6,65.3],
+     v26:[48.6,42.7,49.1,39.3,53.2,49.4,52.3,57.7,78.9,65.7],
+     tot:[431.3, 536.8], ud:[3806, 4300],
+     web:[160.0, 265.1], wa:[271.3, 271.7]},
+    {nom:'Cinturilla',
+     v25:[4.8,4.2,6.7,9.8,14.4,10.1,7.3,12.4,10.1,10.7],
+     v26:[10.2,8.3,11.7,8.2,5.7,7.9,7.2,7.0,9.0,12.3],
+     tot:[90.4, 87.6], ud:[783, 562],
+     web:[39.5, 40.2], wa:[50.9, 47.4]},
+    {nom:'Brasier',
+     v25:[2.7,4.1,3.4,5.6,5.3,3.1,3.4,3.0,2.9,4.7],
+     v26:[3.5,3.9,4.1,4.8,1.8,5.3,4.1,3.8,6.1,5.2],
+     tot:[38.4, 42.7], ud:[457, 448],
+     web:[12.3, 20.3], wa:[26.1, 22.4]}
+  ];
+  var ERP_TOT = ERP.reduce(function(a,c){
+    return [a[0]+c.tot[0], a[1]+c.tot[1], a[2]+c.ud[0], a[3]+c.ud[1]];
+  }, [0,0,0,0]);
+
+  var mm   = function(v){ return '$' + nf1.format(v) + ' M'; };
+  var pend = '<td class="num pendiente">[pendiente del CSV]</td>';
+  function varCelda(a, b){
+    var r = varTxt(a, b);
+    return '<td class="num var">' + marca(colorVar(r.v)) + r.s + '</td>';
   }
 
-  /* ---- Tarjetas de resumen ---- */
-  function tarjeta(rot, t){
-    var vU = varTxt(t[0], t[2]), vV = varTxt(t[1], t[3]);
+  /* ---- 1. Tarjetas de resumen ---- */
+  document.getElementById('erp-tarjetas').innerHTML = ERP.map(function(c){
+    var vV = varTxt(c.tot[0], c.tot[1]), vU = varTxt(c.ud[0], c.ud[1]);
     return '<div class="tile">' +
-      '<div class="rot">' + rot + '</div>' +
-      '<div class="par"><span class="a">' + u(t[0]) + '</span>' +
-        '<span class="flecha">→</span><span class="b">' + u(t[2]) + ' u</span></div>' +
+      '<div class="rot">' + c.nom + '</div>' +
+      '<div class="par"><span class="a">' + mm(c.tot[0]) + '</span>' +
+        '<span class="flecha">→</span><span class="b">' + mm(c.tot[1]) + '</span></div>' +
       '<div class="pie">' +
-        marca(colorVar(vU.v)) + vU.s + ' en unidades · ' +
-        cop(t[3]) + ' ' + marca(colorVar(vV.v)) + vV.s + ' en ventas' +
+        marca(colorVar(vV.v)) + vV.s + ' en ventas · ' +
+        u(c.ud[1]) + ' unidades ' + marca(colorVar(vU.v)) + vU.s + '<br>' +
+        nf1.format(c.tot[1] / ERP_TOT[1] * 100) + '% de la venta de 2026' +
       '</div>' +
     '</div>';
-  }
+  }).join('');
 
-  function pintarTarjetas(){
-    var html = catsVisibles().map(function(c){
-      return tarjeta(c, sumaVentas(function(r){ return pasa(r) && r[1] === c; }));
-    }).join('') +
-    canalesVisibles().map(function(c){
-      return tarjeta(c[1], sumaVentas(function(r){ return pasa(r) && r[0] === c[0]; }));
-    }).join('');
-    document.getElementById('tiles-resumen').innerHTML = html;
+  /* ---- 2. Fila de total ---- */
+  document.getElementById('t-erp-total').innerHTML =
+    '<thead><tr class="campos">' +
+      '<th class="lft">Total Ene–Oct</th><th>Ventas 2025</th><th>Ventas 2026</th><th>Var.</th>' +
+      '<th>Unidades 2025</th><th>Unidades 2026</th><th>Var.</th>' +
+    '</tr></thead><tbody>' +
+    '<tr class="total">' +
+      '<td class="lft">Las cuatro categorías</td>' +
+      '<td class="num">' + mm(ERP_TOT[0]) + '</td>' +
+      '<td class="num">' + mm(ERP_TOT[1]) + '</td>' +
+      varCelda(ERP_TOT[0], ERP_TOT[1]) +
+      '<td class="num">' + u(ERP_TOT[2]) + '</td>' +
+      '<td class="num">' + u(ERP_TOT[3]) + '</td>' +
+      varCelda(ERP_TOT[2], ERP_TOT[3]) +
+    '</tr></tbody>';
 
-    var t = sumaVentas(pasa);
-    document.getElementById('f-estado').innerHTML =
-      'Selección Ene–Sep: <b>' + u(t[2]) + ' unidades</b> y <b>' + cop(t[3]) + '</b> en 2026, ' +
-      'contra ' + u(t[0]) + ' y ' + cop(t[1]) + ' en 2025.';
-  }
-
-  /* ---- Gráficos de ventas y unidades ---- */
-  function serieMensual(indice){
-    return MESES.map(function(m){
-      return sumaVentas(function(r){ return pasa(r) && r[2] === m[0]; })[indice];
-    });
-  }
-
-  function pintarGraficos(){
-    var u25 = serieMensual(0), u26 = serieMensual(2);
-    var v25 = serieMensual(1), v26 = serieMensual(3);
-    var topeU = Math.max.apply(null, u25.concat(u26));
-    var topeV = Math.max.apply(null, v25.concat(v26));
-    var escU = Math.ceil(topeU / 100) * 100;
-    var escV = Math.ceil(topeV / 20000000) * 20000000;
-    var etq = MESES.map(function(m){ return m[2]; });
-    var nom = MESES.map(function(m){ return m[1]; });
-
-    document.getElementById('graficos-ventas').innerHTML =
-      '<div class="grafico-b1">' +
-        '<div class="rot">Ventas por mes <span class="eje">eje desde 0</span></div>' +
-        bloqueGrafico('v-val', {
-          a:v25, b:v26, etiquetas:etq, nombres:nom,
-          escala:escV, ticks:[0, escV/2, escV], geo:GEO_MEDIO,
-          fmtEje: function(x){ return '$' + u(x/1000000) + ' M'; },
-          fmt: cop, fmtDif: difCop,
-          titulo: 'Ventas por mes, 2025 y 2026'
-        }) +
-      '</div>' +
-      '<div class="grafico-b1">' +
-        '<div class="rot">Unidades por mes <span class="eje">eje desde 0</span></div>' +
-        bloqueGrafico('v-und', {
-          a:u25, b:u26, etiquetas:etq, nombres:nom,
-          escala:escU, ticks:[0, escU/2, escU], geo:GEO_MEDIO,
-          fmtEje: u, fmt: u, fmtDif: difU,
-          titulo: 'Unidades por mes, 2025 y 2026'
-        }) +
-      '</div>';
-  }
-
-  /* ---- Tabla mensual 2025 vs 2026 ---- */
-  function pintarTablaMes(){
-    var cuerpo = MESES.map(function(m){
-      var t = sumaVentas(function(r){ return pasa(r) && r[2] === m[0]; });
-      return '<tr>' +
-        '<td class="lft">' + m[1] + '</td>' +
-        '<td class="num">' + u(t[0]) + '</td>' +
-        '<td class="num">' + cop(t[1]) + '</td>' +
-        '<td class="num">' + u(t[2]) + '</td>' +
-        '<td class="num">' + cop(t[3]) + '</td>' +
-        varSem(t[0], t[2]) + varSem(t[1], t[3]) +
-      '</tr>';
-    }).join('');
-    var tot = sumaVentas(pasa);
-
-    document.getElementById('t-mes').innerHTML =
-      '<thead>' +
-        '<tr class="grupos">' +
-          '<th class="lft" rowspan="2">Mes</th>' +
-          '<th class="g25" colspan="2">2025</th>' +
-          '<th class="g26" colspan="2">2026</th>' +
-          '<th class="gv" colspan="2">Variación</th>' +
-        '</tr>' +
-        '<tr class="campos">' +
-          '<th>Unidades</th><th>Ventas (COP)</th>' +
-          '<th>Unidades</th><th>Ventas (COP)</th>' +
-          '<th>Und.</th><th>Ventas</th>' +
-        '</tr>' +
-      '</thead><tbody>' + cuerpo +
-      '<tr class="total">' +
-        '<td class="lft">Total Ene–Sep</td>' +
-        '<td class="num">' + u(tot[0]) + '</td>' +
-        '<td class="num">' + cop(tot[1]) + '</td>' +
-        '<td class="num">' + u(tot[2]) + '</td>' +
-        '<td class="num">' + cop(tot[3]) + '</td>' +
-        varSem(tot[0], tot[2]) + varSem(tot[1], tot[3]) +
-      '</tr></tbody>';
-  }
-
-  /* ---- Matriz mes × categoría, en unidades ---- */
-  function pintarMatriz(){
-    var cats = catsVisibles();
-    function celda(cat, mes){
-      return sumaVentas(function(r){
-        return pasa(r) && r[1] === cat && (!mes || r[2] === mes);
-      });
-    }
-
-    document.getElementById('t-cat-mes').innerHTML =
-      '<thead>' +
-        '<tr class="grupos">' +
-          '<th class="lft" rowspan="2">Mes</th>' +
-          cats.map(function(c){ return '<th class="gv" colspan="3">' + c + '</th>'; }).join('') +
-          '<th class="g26" colspan="3">Total del mes</th>' +
-        '</tr>' +
-        '<tr class="campos">' +
-          cats.concat(['_']).map(function(){ return '<th>2025</th><th>2026</th><th>Var.</th>'; }).join('') +
-        '</tr>' +
-      '</thead><tbody>' +
-      MESES.map(function(m){
-        var fila = sumaVentas(function(r){ return pasa(r) && r[2] === m[0]; });
-        return '<tr>' +
-          '<td class="lft">' + m[1] + '</td>' +
-          cats.map(function(c){
-            var t = celda(c, m[0]);
-            return '<td class="num">' + u(t[0]) + '</td><td class="num">' + u(t[2]) + '</td>' +
-                   varSem(t[0], t[2]);
-          }).join('') +
-          '<td class="num">' + u(fila[0]) + '</td><td class="num">' + u(fila[2]) + '</td>' +
-          varSem(fila[0], fila[2]) +
-        '</tr>';
-      }).join('') +
-      (function(){
-        var g = sumaVentas(pasa);
-        return '<tr class="total">' +
-          '<td class="lft">Total Ene–Sep</td>' +
-          cats.map(function(c){
-            var t = celda(c, null);
-            return '<td class="num">' + u(t[0]) + '</td><td class="num">' + u(t[2]) + '</td>' +
-                   varSem(t[0], t[2]);
-          }).join('') +
-          '<td class="num">' + u(g[0]) + '</td><td class="num">' + u(g[2]) + '</td>' +
-          varSem(g[0], g[2]) +
-        '</tr>';
-      })() +
-      '</tbody>';
-  }
-
-  /* ---- Totales por categoría y canal ---- */
-  function pintarCategoriaCanal(){
-    var html = '';
-    catsVisibles().forEach(function(cat){
-      canalesVisibles().forEach(function(ca){
-        var t = sumaVentas(function(r){ return pasa(r) && r[1] === cat && r[0] === ca[0]; });
-        html += '<tr>' +
-          '<td class="lft">' + cat + '</td>' +
-          '<td class="lft canal">' + ca[1] + '</td>' +
-          '<td class="num">' + u(t[0]) + '</td>' +
-          '<td class="num">' + cop(t[1]) + '</td>' +
-          '<td class="num">' + u(t[2]) + '</td>' +
-          '<td class="num">' + cop(t[3]) + '</td>' +
-          varSem(t[0], t[2]) + varSem(t[1], t[3]) +
-        '</tr>';
-      });
-      if (canalesVisibles().length > 1){
-        var s = sumaVentas(function(r){ return pasa(r) && r[1] === cat; });
-        html += '<tr class="sub-total">' +
-          '<td class="lft">Subtotal ' + cat + '</td><td></td>' +
-          '<td class="num">' + u(s[0]) + '</td>' +
-          '<td class="num">' + cop(s[1]) + '</td>' +
-          '<td class="num">' + u(s[2]) + '</td>' +
-          '<td class="num">' + cop(s[3]) + '</td>' +
-          varSem(s[0], s[2]) + varSem(s[1], s[3]) +
-        '</tr>';
-      }
-    });
-    var g = sumaVentas(pasa);
-
-    document.getElementById('t-cat').innerHTML =
-      '<thead>' +
-        '<tr class="grupos">' +
-          '<th class="lft" rowspan="2">Categoría</th>' +
-          '<th class="lft" rowspan="2">Canal</th>' +
-          '<th class="g25" colspan="2">2025</th>' +
-          '<th class="g26" colspan="2">2026</th>' +
-          '<th class="gv" colspan="2">Variación</th>' +
-        '</tr>' +
-        '<tr class="campos">' +
-          '<th>Unidades</th><th>Ventas (COP)</th>' +
-          '<th>Unidades</th><th>Ventas (COP)</th>' +
-          '<th>Und.</th><th>Ventas</th>' +
-        '</tr>' +
-      '</thead><tbody>' + html +
-      '<tr class="total">' +
-        '<td class="lft">Total</td><td></td>' +
-        '<td class="num">' + u(g[0]) + '</td>' +
-        '<td class="num">' + cop(g[1]) + '</td>' +
-        '<td class="num">' + u(g[2]) + '</td>' +
-        '<td class="num">' + cop(g[3]) + '</td>' +
-        varSem(g[0], g[2]) + varSem(g[1], g[3]) +
-      '</tr></tbody>';
-  }
-
-  /* ---- Paneles de unidades por categoría ---- */
-  function pintarPaneles(){
-    var cats = catsVisibles();
-    var series = {};
-    var techo = 0;
-    cats.forEach(function(c){
-      var a = MESES.map(function(m){
-        return sumaVentas(function(r){ return pasa(r) && r[1] === c && r[2] === m[0]; })[0];
-      });
-      var b = MESES.map(function(m){
-        return sumaVentas(function(r){ return pasa(r) && r[1] === c && r[2] === m[0]; })[2];
-      });
-      series[c] = {a:a, b:b};
-      a.concat(b).forEach(function(v){ if (v > techo) { techo = v; } });
-    });
-    var esc = Math.max(50, Math.ceil(techo / 50) * 50);
-
-    document.getElementById('paneles').innerHTML = cats.map(function(cat){
-      var t = sumaVentas(function(r){ return pasa(r) && r[1] === cat; });
-      var v = varTxt(t[0], t[2]);
-      return '<div class="panel" data-cat="' + cat + '">' +
-        '<h3>' + cat + '</h3>' +
-        bloqueGrafico('cat-' + cat, {
-          a: series[cat].a, b: series[cat].b,
-          etiquetas: MESES.map(function(m){ return m[2]; }),
-          nombres: MESES.map(function(m){ return m[1]; }),
-          escala: esc, ticks: [0, esc/2, esc], geo: GEO_PANEL,
-          fmtEje: u, fmt: u, fmtDif: difU,
-          titulo: 'Unidades por mes de ' + cat + ', 2025 y 2026'
-        }) +
-        '<div class="cifras">' +
-          '<span class="a">' + u(t[0]) + '</span>' +
-          '<span class="flecha">→</span>' +
-          '<span class="b">' + u(t[2]) + '</span>' +
-          '<span class="var">' + marca(colorVar(v.v)) + v.s + '</span>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  /* Tiles del resumen ejecutivo: el periodo completo, sin filtros */
+  /* Tiles del resumen ejecutivo, con el total del ERP */
   (function(){
-    var t = sumaVentas(null);
-    var vU = varTxt(t[0], t[2]), vV = varTxt(t[1], t[3]);
-    document.getElementById("tiles").innerHTML =
+    var vV = varTxt(ERP_TOT[0], ERP_TOT[1]), vU = varTxt(ERP_TOT[2], ERP_TOT[3]);
+    document.getElementById('tiles').innerHTML =
       '<div class="tile">' +
-        '<div class="rot">Unidades vendidas · Ene–Sep</div>' +
-        '<div class="par"><span class="a">' + u(t[0]) + '</span><span class="flecha">→</span><span class="b">' + u(t[2]) + '</span></div>' +
-        '<div class="pie">' + vU.s + ' frente a 2025 · ' + u(t[2]-t[0]) + ' unidades</div>' +
+        '<div class="rot">Ventas · Ene–Oct · ERP</div>' +
+        '<div class="par"><span class="a">' + mm(ERP_TOT[0]) + '</span>' +
+          '<span class="flecha">→</span><span class="b">' + mm(ERP_TOT[1]) + '</span></div>' +
+        '<div class="pie">' + marca(colorVar(vV.v)) + vV.s + ' frente a 2025</div>' +
       '</div>' +
       '<div class="tile">' +
-        '<div class="rot">Ventas · Ene–Sep</div>' +
-        '<div class="par"><span class="a">' + cop(t[1]) + '</span><span class="flecha">→</span><span class="b">' + cop(t[3]) + '</span></div>' +
-        '<div class="pie">' + vV.s + ' frente a 2025 · ' + cop(t[3]-t[1]) + '</div>' +
+        '<div class="rot">Unidades · Ene–Oct · ERP</div>' +
+        '<div class="par"><span class="a">' + u(ERP_TOT[2]) + '</span>' +
+          '<span class="flecha">→</span><span class="b">' + u(ERP_TOT[3]) + '</span></div>' +
+        '<div class="pie">' + marca(colorVar(vU.v)) + vU.s + ' frente a 2025 · ' +
+          u(ERP_TOT[3] - ERP_TOT[2]) + ' unidades</div>' +
       '</div>';
   })();
 
-  function pintarVentas(){
-    pintarTarjetas();
-    pintarGraficos();
-    pintarTablaMes();
-    pintarMatriz();
-    pintarCategoriaCanal();
-    pintarPaneles();
-    ligarGraficos();
-  }
+  /* ---- 3. Un bloque por categoría ---- */
+  document.getElementById('erp-bloques').innerHTML = ERP.map(function(c, k){
+    var sum25 = c.v25.reduce(function(a,v){ return a+v; }, 0);
+    var sum26 = c.v26.reduce(function(a,v){ return a+v; }, 0);
+    var techo = Math.max.apply(null, c.v25.concat(c.v26));
+    var esc = Math.ceil(techo / 10) * 10;
 
-  document.getElementById('f-canal').addEventListener('change', function(e){
-    filtroCanal = e.target.value; pintarVentas();
-  });
-  document.getElementById('f-cat').addEventListener('change', function(e){
-    filtroCat = e.target.value; pintarVentas();
-  });
-  pintarVentas();
+    var mensual =
+      '<div class="scroll"><table class="tabla-sticky">' +
+        '<thead>' +
+          '<tr class="grupos">' +
+            '<th class="lft" rowspan="2">Mes</th>' +
+            '<th class="g25" colspan="2">2025</th>' +
+            '<th class="g26" colspan="2">2026</th>' +
+            '<th class="gv" colspan="2">Variación</th>' +
+          '</tr>' +
+          '<tr class="campos">' +
+            '<th>Ventas</th><th>UD</th><th>Ventas</th><th>UD</th><th>Ventas</th><th>UD</th>' +
+          '</tr>' +
+        '</thead><tbody>' +
+        ERP_MESES.map(function(m, i){
+          return '<tr>' +
+            '<td class="lft">' + m + '</td>' +
+            '<td class="num">' + mm(c.v25[i]) + '</td>' + pend +
+            '<td class="num">' + mm(c.v26[i]) + '</td>' + pend +
+            varCelda(c.v25[i], c.v26[i]) +
+            '<td class="num pendiente">[pendiente del CSV]</td>' +
+          '</tr>';
+        }).join('') +
+        '<tr class="total">' +
+          '<td class="lft">Suma de los meses<span class="val">total del ERP: ' +
+            mm(c.tot[0]) + ' → ' + mm(c.tot[1]) + '</span></td>' +
+          '<td class="num">' + mm(sum25) + '</td>' +
+          '<td class="num">' + u(c.ud[0]) + '</td>' +
+          '<td class="num">' + mm(sum26) + '</td>' +
+          '<td class="num">' + u(c.ud[1]) + '</td>' +
+          varCelda(sum25, sum26) +
+          varCelda(c.ud[0], c.ud[1]) +
+        '</tr></tbody></table></div>';
 
-  /* Septiembre 2026 por categoría, tal como las nombra Shopify.
-     [categoría, unidades, valor, marca] */
-  var catSep = [
-    ['Fajas',           327, 71871050, null],
-    ['Short',           455, 56833820, null],
-    ['Accesorios',       95,  6201098, null],
-    ['Cinturilla',       39,  5811887, null],
-    ['Vestido de baño',   1,    82319, null],
-    ['Sin categoría',   228, 26188348, 'null']
-  ];
-  var catSepTot = catSep.reduce(function(a,c){ return [a[0]+c[1], a[1]+c[2]]; }, [0,0]);
+    var canal =
+      '<div class="scroll"><table>' +
+        '<thead><tr class="campos">' +
+          '<th class="lft">Canal</th><th>Ventas 2025</th><th>Ventas 2026</th><th>Var.</th>' +
+          '<th class="wrap">Octubre 2025</th><th class="wrap">Octubre 2026</th>' +
+        '</tr></thead><tbody>' +
+        [['Sitio Web', c.web], ['Equipo de WhatsApp', c.wa]].map(function(f){
+          return '<tr>' +
+            '<td class="lft">' + f[0] + '</td>' +
+            '<td class="num">' + mm(f[1][0]) + '</td>' +
+            '<td class="num">' + mm(f[1][1]) + '</td>' +
+            varCelda(f[1][0], f[1][1]) +
+            pend + pend +
+          '</tr>';
+        }).join('') +
+        '<tr class="total">' +
+          '<td class="lft">Total Ene–Oct</td>' +
+          '<td class="num">' + mm(c.web[0] + c.wa[0]) + '</td>' +
+          '<td class="num">' + mm(c.web[1] + c.wa[1]) + '</td>' +
+          varCelda(c.web[0] + c.wa[0], c.web[1] + c.wa[1]) +
+          '<td class="num">' + mm(c.v25[9]) + '</td>' +
+          '<td class="num">' + mm(c.v26[9]) + '</td>' +
+        '</tr></tbody></table></div>';
 
-  document.getElementById('t-cat-sep').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Categoría (Shopify)</th><th>Unidades</th><th>Valor</th>' +
-      '<th>% de las unidades</th><th>% del valor</th>' +
-    '</tr></thead><tbody>' +
-    catSep.map(function(c){
-      var flojo = c[3] !== null;
+    return '<div class="bloque-cat">' +
+      '<h3 class="sub-cab">' + c.nom + '</h3>' +
+      mensual +
+      '<h4 class="tabla-anio">Apertura por canal</h4>' +
+      canal +
+      '<div class="leyenda-lineas">' +
+        '<span><span class="sw" style="background:var(--nude-oscuro)"></span>2025</span>' +
+        '<span><span class="sw" style="background:var(--morado)"></span>2026</span>' +
+      '</div>' +
+      '<div class="grafico-b1">' +
+        '<div class="rot">Ventas por mes · ' + c.nom + ' <span class="eje">eje desde 0</span></div>' +
+        bloqueGrafico('erp-' + k, {
+          a: c.v25, b: c.v26, etiquetas: ERP_ETQ, nombres: ERP_MESES,
+          escala: esc, ticks: [0, esc/2, esc], geo: GEO_LARGO,
+          fmtEje: function(v){ return '$' + nf0.format(v) + ' M'; },
+          fmt: mm,
+          fmtDif: function(d){ return (d > 0 ? '+' : '') + nf1.format(d) + ' M'; },
+          titulo: 'Ventas por mes de ' + c.nom + ', 2025 y 2026'
+        }) +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---- 4. Consolidado mes × categoría ---- */
+  document.getElementById('t-erp-consolidado').innerHTML =
+    '<thead>' +
+      '<tr class="grupos">' +
+        '<th class="lft" rowspan="2">Mes</th>' +
+        ERP.map(function(c){ return '<th class="gv" colspan="2">' + c.nom + '</th>'; }).join('') +
+        '<th class="g26" colspan="2">Total del mes</th>' +
+      '</tr>' +
+      '<tr class="campos">' +
+        ERP.concat([{}]).map(function(){ return '<th>2026</th><th>Var.</th>'; }).join('') +
+      '</tr>' +
+    '</thead><tbody>' +
+    ERP_MESES.map(function(m, i){
+      var t25 = ERP.reduce(function(a,c){ return a + c.v25[i]; }, 0);
+      var t26 = ERP.reduce(function(a,c){ return a + c.v26[i]; }, 0);
       return '<tr>' +
-        '<td class="lft">' + c[0] +
-          (c[3] === 'null' ? '<span class="marca-amarilla">Sin etiqueta</span>' : '') + '</td>' +
-        '<td class="num' + (flojo ? ' pendiente' : '') + '">' + u(c[1]) + '</td>' +
-        '<td class="num' + (flojo ? ' pendiente' : '') + '">' + cop(c[2]) + '</td>' +
-        '<td class="num pct">' + nf1.format(c[1] / catSepTot[0] * 100) + '%</td>' +
-        '<td class="num pct">' + nf1.format(c[2] / catSepTot[1] * 100) + '%</td>' +
+        '<td class="lft">' + m + '</td>' +
+        ERP.map(function(c){
+          return '<td class="num">' + mm(c.v26[i]) + '</td>' + varCelda(c.v25[i], c.v26[i]);
+        }).join('') +
+        '<td class="num">' + mm(t26) + '</td>' + varCelda(t25, t26) +
       '</tr>';
     }).join('') +
-    '<tr class="total">' +
-      '<td class="lft">Total septiembre</td>' +
-      '<td class="num">' + u(catSepTot[0]) + '</td>' +
-      '<td class="num">' + cop(catSepTot[1]) + '</td>' +
-      '<td class="num">100%</td><td class="num">100%</td>' +
-    '</tr></tbody>';
-
-
+    (function(){
+      var g25 = 0, g26 = 0;
+      ERP.forEach(function(c){
+        g25 += c.v25.reduce(function(a,v){ return a+v; }, 0);
+        g26 += c.v26.reduce(function(a,v){ return a+v; }, 0);
+      });
+      return '<tr class="total">' +
+        '<td class="lft">Suma de los meses</td>' +
+        ERP.map(function(c){
+          var s25 = c.v25.reduce(function(a,v){ return a+v; }, 0);
+          var s26 = c.v26.reduce(function(a,v){ return a+v; }, 0);
+          return '<td class="num">' + mm(s26) + '</td>' + varCelda(s25, s26);
+        }).join('') +
+        '<td class="num">' + mm(g26) + '</td>' + varCelda(g25, g26) +
+      '</tr></tbody>';
+    })();
 
   /* ---------------- Octubre por tipo de canal (ERP) ----------------
      Llegó en millones con un decimal, así que se guarda así y se formatea
@@ -3221,55 +2945,6 @@
         titulo: 'Porcentaje de descuento sobre la venta bruta por mes, 2025 y 2026'
       }) +
     '</div>';
-
-  /* Categorías de Shopify, venta neta. [categoría, 2025, 2026] */
-  var catShop = [
-    ['Shorts',      349900000, 455900000],
-    ['Fajas',       647800000, 602400000],
-    ['Cinturillas',  83900000,  75600000],
-    ['Accesorios',   68100000,  63200000]
-  ];
-
-  document.getElementById('t-cat-shopify').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Categoría</th><th>Neta 2025</th><th>Neta 2026</th><th>Var.</th>' +
-    '</tr></thead><tbody>' +
-    catShop.map(function(c){
-      return '<tr>' +
-        '<td class="lft">' + c[0] + '</td>' +
-        '<td class="num">' + cop(c[1]) + '</td>' +
-        '<td class="num">' + cop(c[2]) + '</td>' +
-        varSem(c[1], c[2]) +
-      '</tr>';
-    }).join('') + '</tbody>';
-
-  /* Octubre por categoría. [categoría, neta 25, neta 26, var unidades] */
-  var catShopOct = [
-    ['Shorts',      45260000, 56980000,  39.5],
-    ['Fajas',       80110000, 83450000,  11.8],
-    ['Cinturillas', 10320000,  7900000, null],
-    ['Accesorios',      null,     null, null, -29.2]
-  ];
-
-  document.getElementById('t-cat-shopify-oct').innerHTML =
-    '<thead><tr class="campos">' +
-      '<th class="lft">Categoría</th><th>Neta oct 2025</th><th>Neta oct 2026</th>' +
-      '<th>Var. venta</th><th>Var. unidades</th>' +
-    '</tr></thead><tbody>' +
-    catShopOct.map(function(c){
-      var sinMonto = c[1] === null;
-      return '<tr>' +
-        '<td class="lft">' + c[0] + '</td>' +
-        (sinMonto
-          ? '<td class="num pendiente">[pendiente]</td><td class="num pendiente">[pendiente]</td>' +
-            '<td class="num var">' + marca(colorVar(c[4])) + nf1.format(c[4]) + '%</td>'
-          : '<td class="num">' + cop(c[1]) + '</td>' +
-            '<td class="num">' + cop(c[2]) + '</td>' + varSem(c[1], c[2])) +
-        (c[3] === null
-          ? '<td class="num pendiente">[pendiente]</td>'
-          : '<td class="num var">' + marca(colorVar(c[3])) + '+' + nf1.format(c[3]) + '%</td>') +
-      '</tr>';
-    }).join('') + '</tbody>';
 
   /* Canal y pedidos sin pagar en octubre. [concepto, 2025, 2026, formato, nota] */
   var canalOct = [
@@ -5336,7 +5011,7 @@
   var invMeta   = invSepMes;                /* inversión de Meta en septiembre */
   var invGoogle = googleSepTot[0];
   var ventaFoco = focoSepVenta;             /* WhatsApp + E-commerce */
-  var ventaShop = catSepTot[1];             /* neto de Shopify */
+  var ventaShop = 166988522;               /* Shopify, septiembre, todos los estados */
   var reclamado = recMeta + recGoogle;
   var invTotal  = invMeta + invGoogle;
 

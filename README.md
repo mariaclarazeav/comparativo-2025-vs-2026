@@ -5,15 +5,17 @@ fuentes de Google. Se abre directamente en el navegador.
 
 Cinco bloques, con los datos entregados tal cual:
 
-1. **Ventas por categoría** — Fajas, Short, Cinturilla y Brasier, Equipo de
-   WhatsApp y Sitio Web, enero–septiembre de los dos años. Sale de las 72 filas
-   del Excel dinámico (canal × categoría × mes) embebidas en el archivo: las
-   tarjetas, los gráficos y las cuatro tablas se calculan de ahí, y los filtros
-   de canal y categoría las recalculan todas. No incluye Accesorios, Vestido de
-   baño ni Sin categoría.
+1. **Ventas por categoría — ERP (Power BI)**, fuente única de la pestaña de
+   ventas: Fajas, Short, Cinturilla y Brasier en ese orden fijo, enero–octubre
+   de los dos años. Cuatro tarjetas, la tabla de las cuatro categorías, un
+   bloque por categoría (tabla mensual, tabla por canal y gráfico de línea) y
+   la tabla consolidada. Los totales y las variaciones se calculan en el sitio
+   desde la matriz embebida; no hay cifras escritas a mano en las tablas. No
+   incluye Accesorios, Vestido de baño ni Sin categoría. Las unidades por mes y
+   el corte de octubre por canal y categoría quedan marcados como pendientes:
+   el CSV del ERP no llegó.
 2. **Venta bruta, descuentos y venta neta** (Shopify, todos los estados,
-   enero–octubre), **venta neta por categoría**, **tienda online y pedidos sin
-   pagar**, **Septiembre 2026 por categoría — Shopify (e-commerce)**, **Venta online por
+   enero–octubre), **tienda online y pedidos sin pagar** y **Venta online por
    subcanal** (FAJITEX_Dashboard_Online_Diario.xlsx, fuente definitiva de la
    venta online, con WhatsApp como un solo canal y el foco marcado).
 3. **Pauta Meta** — gráfico de inversión mensual 2025 vs 2026 (ambos años cortados
