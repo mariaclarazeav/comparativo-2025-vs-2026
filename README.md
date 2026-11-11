@@ -10,10 +10,12 @@ Cinco bloques, con los datos entregados tal cual:
    de los dos años. Cuatro tarjetas, la tabla de las cuatro categorías, un
    bloque por categoría (tabla mensual, tabla por canal y gráfico de línea) y
    la tabla consolidada. Los totales y las variaciones se calculan en el sitio
-   desde la matriz embebida; no hay cifras escritas a mano en las tablas. No
-   incluye Accesorios, Vestido de baño ni Sin categoría. Las unidades por mes y
-   el corte de octubre por canal y categoría quedan marcados como pendientes:
-   el CSV del ERP no llegó.
+   desde la matriz embebida; no hay cifras escritas a mano en las tablas. Las
+   ventas mensuales llegaron en millones con un decimal y los totales del
+   periodo en pesos exactos: el total manda y la fila de cierre dice cuándo la
+   suma de los meses queda una décima lejos por redondeo. No incluye
+   Accesorios, Vestido de baño ni Sin categoría. La apertura por canal es del
+   acumulado enero–octubre; el ERP no entregó ese corte solo para octubre.
 2. **Venta bruta, descuentos y venta neta** (Shopify, todos los estados,
    enero–octubre), **tienda online y pedidos sin pagar** y **Venta online por
    subcanal** (FAJITEX_Dashboard_Online_Diario.xlsx, fuente definitiva de la

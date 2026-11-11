@@ -1465,9 +1465,9 @@
       <span class="etq">Redondeo</span>
       <span>Las ventas mensuales llegaron en millones con un decimal, así que la suma de los meses puede quedar una o dos décimas por encima o por debajo del total del ERP. Donde aparecen las dos cifras, cada una lleva su rótulo.</span>
     </div>
-    <div class="nota">
-      <span class="etq">Pendiente del CSV</span>
-      <span>Faltan en el archivo las <b>unidades mes a mes</b> de cada categoría y la <b>apertura por canal de octubre</b>. Las columnas quedan marcadas y se llenan en cuanto llegue <code>ventas_mes_categoria_canal_2025_2026_ERP.csv</code>, que no venía adjunto.</span>
+    <div class="nota info">
+      <span class="etq">Apertura por canal</span>
+      <span>La apertura entre Sitio Web y Equipo de WhatsApp es del acumulado enero–octubre. El ERP no entregó ese mismo corte <b>solo para octubre</b>, así que esas dos columnas no están: el total de octubre por categoría sí, en la tabla mensual.</span>
     </div>
   </section>
 
@@ -2611,34 +2611,64 @@
                    'Julio','Agosto','Septiembre','Octubre'];
   var ERP_ETQ   = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct'];
 
+  /* Ventas en millones con un decimal, que es la precisión en que llegaron.
+     Los totales del periodo sí llegaron en pesos exactos, así que se guardan
+     en pesos y se redondean solo al mostrar: son la cifra de control.
+     Unidades, mes a mes, tal como vienen del ERP. */
   var ERP = [
     {nom:'Fajas',
      v25:[61.5,79.1,76.8,67.7,71.5,71.2,95.5,92.0,87.2,93.6],
      v26:[87.5,80.5,88.3,84.2,82.5,71.5,76.4,66.5,94.2,92.9],
-     tot:[795.9, 824.5], ud:[3690, 3479],
+     u25:[293,383,366,309,325,325,477,430,389,393],
+     u26:[391,327,360,356,354,310,335,279,395,372],
+     tot:[795880365, 824515788],
      web:[202.9, 293.9], wa:[593.0, 530.6]},
     {nom:'Short',
      v25:[39.7,28.9,32.1,49.6,38.1,36.0,44.5,41.4,55.6,65.3],
      v26:[48.6,42.7,49.1,39.3,53.2,49.4,52.3,57.7,78.9,65.7],
-     tot:[431.3, 536.8], ud:[3806, 4300],
+     u25:[388,255,292,472,330,313,397,347,460,552],
+     u26:[389,308,402,295,418,377,433,467,666,545],
+     tot:[431259256, 536804197],
      web:[160.0, 265.1], wa:[271.3, 271.7]},
     {nom:'Cinturilla',
      v25:[4.8,4.2,6.7,9.8,14.4,10.1,7.3,12.4,10.1,10.7],
      v26:[10.2,8.3,11.7,8.2,5.7,7.9,7.2,7.0,9.0,12.3],
-     tot:[90.4, 87.6], ud:[783, 562],
+     u25:[41,34,49,93,181,85,66,97,73,64],
+     u26:[63,49,70,51,31,53,48,47,64,86],
+     tot:[90367302, 87554282],
      web:[39.5, 40.2], wa:[50.9, 47.4]},
     {nom:'Brasier',
      v25:[2.7,4.1,3.4,5.6,5.3,3.1,3.4,3.0,2.9,4.7],
      v26:[3.5,3.9,4.1,4.8,1.8,5.3,4.1,3.8,6.1,5.2],
-     tot:[38.4, 42.7], ud:[457, 448],
+     u25:[37,55,43,72,66,35,35,32,31,51],
+     u26:[39,41,42,52,19,55,41,38,66,55],
+     tot:[38352401, 42694573],
      web:[12.3, 20.3], wa:[26.1, 22.4]}
   ];
+  var suma = function(a, v){ return a + v; };
+  ERP.forEach(function(c){
+    c.ud  = [c.u25.reduce(suma, 0), c.u26.reduce(suma, 0)];
+    c.sum = [c.v25.reduce(suma, 0), c.v26.reduce(suma, 0)];
+  });
   var ERP_TOT = ERP.reduce(function(a,c){
     return [a[0]+c.tot[0], a[1]+c.tot[1], a[2]+c.ud[0], a[3]+c.ud[1]];
   }, [0,0,0,0]);
 
-  var mm   = function(v){ return '$' + nf1.format(v) + ' M'; };
-  var pend = '<td class="num pendiente">[pendiente del CSV]</td>';
+  var mm = function(v){ return '$' + nf1.format(v) + ' M'; };      /* millones */
+  var mp = function(p){ return mm(p / 1e6); };                     /* pesos    */
+
+  /* Las ventas mensuales llegaron redondeadas a la décima de millón, así que
+     sumarlas puede quedar una o dos décimas lejos del total en pesos del ERP.
+     Donde pasa, la fila de cierre lo dice; donde cuadra, no sobra nada. */
+  function difRedondeo(c){
+    var partes = [];
+    if (Math.abs(c.sum[0] - c.tot[0] / 1e6) >= 0.05) { partes.push('2025 ' + mm(c.sum[0])); }
+    if (Math.abs(c.sum[1] - c.tot[1] / 1e6) >= 0.05) { partes.push('2026 ' + mm(c.sum[1])); }
+    if (!partes.length) { return ''; }
+    return '<span class="val">por redondeo, los meses de arriba suman ' +
+      partes.join(' y ') + '</span>';
+  }
+
   function varCelda(a, b){
     var r = varTxt(a, b);
     return '<td class="num var">' + marca(colorVar(r.v)) + r.s + '</td>';
@@ -2649,8 +2679,8 @@
     var vV = varTxt(c.tot[0], c.tot[1]), vU = varTxt(c.ud[0], c.ud[1]);
     return '<div class="tile">' +
       '<div class="rot">' + c.nom + '</div>' +
-      '<div class="par"><span class="a">' + mm(c.tot[0]) + '</span>' +
-        '<span class="flecha">→</span><span class="b">' + mm(c.tot[1]) + '</span></div>' +
+      '<div class="par"><span class="a">' + mp(c.tot[0]) + '</span>' +
+        '<span class="flecha">→</span><span class="b">' + mp(c.tot[1]) + '</span></div>' +
       '<div class="pie">' +
         marca(colorVar(vV.v)) + vV.s + ' en ventas · ' +
         u(c.ud[1]) + ' unidades ' + marca(colorVar(vU.v)) + vU.s + '<br>' +
@@ -2667,8 +2697,8 @@
     '</tr></thead><tbody>' +
     '<tr class="total">' +
       '<td class="lft">Las cuatro categorías</td>' +
-      '<td class="num">' + mm(ERP_TOT[0]) + '</td>' +
-      '<td class="num">' + mm(ERP_TOT[1]) + '</td>' +
+      '<td class="num">' + mp(ERP_TOT[0]) + '</td>' +
+      '<td class="num">' + mp(ERP_TOT[1]) + '</td>' +
       varCelda(ERP_TOT[0], ERP_TOT[1]) +
       '<td class="num">' + u(ERP_TOT[2]) + '</td>' +
       '<td class="num">' + u(ERP_TOT[3]) + '</td>' +
@@ -2681,8 +2711,8 @@
     document.getElementById('tiles').innerHTML =
       '<div class="tile">' +
         '<div class="rot">Ventas · Ene–Oct · ERP</div>' +
-        '<div class="par"><span class="a">' + mm(ERP_TOT[0]) + '</span>' +
-          '<span class="flecha">→</span><span class="b">' + mm(ERP_TOT[1]) + '</span></div>' +
+        '<div class="par"><span class="a">' + mp(ERP_TOT[0]) + '</span>' +
+          '<span class="flecha">→</span><span class="b">' + mp(ERP_TOT[1]) + '</span></div>' +
         '<div class="pie">' + marca(colorVar(vV.v)) + vV.s + ' frente a 2025</div>' +
       '</div>' +
       '<div class="tile">' +
@@ -2696,8 +2726,6 @@
 
   /* ---- 3. Un bloque por categoría ---- */
   document.getElementById('erp-bloques').innerHTML = ERP.map(function(c, k){
-    var sum25 = c.v25.reduce(function(a,v){ return a+v; }, 0);
-    var sum26 = c.v26.reduce(function(a,v){ return a+v; }, 0);
     var techo = Math.max.apply(null, c.v25.concat(c.v26));
     var esc = Math.ceil(techo / 10) * 10;
 
@@ -2717,20 +2745,21 @@
         ERP_MESES.map(function(m, i){
           return '<tr>' +
             '<td class="lft">' + m + '</td>' +
-            '<td class="num">' + mm(c.v25[i]) + '</td>' + pend +
-            '<td class="num">' + mm(c.v26[i]) + '</td>' + pend +
+            '<td class="num">' + mm(c.v25[i]) + '</td>' +
+            '<td class="num">' + u(c.u25[i]) + '</td>' +
+            '<td class="num">' + mm(c.v26[i]) + '</td>' +
+            '<td class="num">' + u(c.u26[i]) + '</td>' +
             varCelda(c.v25[i], c.v26[i]) +
-            '<td class="num pendiente">[pendiente del CSV]</td>' +
+            varCelda(c.u25[i], c.u26[i]) +
           '</tr>';
         }).join('') +
         '<tr class="total">' +
-          '<td class="lft">Suma de los meses<span class="val">total del ERP: ' +
-            mm(c.tot[0]) + ' → ' + mm(c.tot[1]) + '</span></td>' +
-          '<td class="num">' + mm(sum25) + '</td>' +
+          '<td class="lft">Total Ene–Oct · ERP' + difRedondeo(c) + '</td>' +
+          '<td class="num">' + mp(c.tot[0]) + '</td>' +
           '<td class="num">' + u(c.ud[0]) + '</td>' +
-          '<td class="num">' + mm(sum26) + '</td>' +
+          '<td class="num">' + mp(c.tot[1]) + '</td>' +
           '<td class="num">' + u(c.ud[1]) + '</td>' +
-          varCelda(sum25, sum26) +
+          varCelda(c.tot[0], c.tot[1]) +
           varCelda(c.ud[0], c.ud[1]) +
         '</tr></tbody></table></div>';
 
@@ -2738,7 +2767,6 @@
       '<div class="scroll"><table>' +
         '<thead><tr class="campos">' +
           '<th class="lft">Canal</th><th>Ventas 2025</th><th>Ventas 2026</th><th>Var.</th>' +
-          '<th class="wrap">Octubre 2025</th><th class="wrap">Octubre 2026</th>' +
         '</tr></thead><tbody>' +
         [['Sitio Web', c.web], ['Equipo de WhatsApp', c.wa]].map(function(f){
           return '<tr>' +
@@ -2746,7 +2774,6 @@
             '<td class="num">' + mm(f[1][0]) + '</td>' +
             '<td class="num">' + mm(f[1][1]) + '</td>' +
             varCelda(f[1][0], f[1][1]) +
-            pend + pend +
           '</tr>';
         }).join('') +
         '<tr class="total">' +
@@ -2754,8 +2781,6 @@
           '<td class="num">' + mm(c.web[0] + c.wa[0]) + '</td>' +
           '<td class="num">' + mm(c.web[1] + c.wa[1]) + '</td>' +
           varCelda(c.web[0] + c.wa[0], c.web[1] + c.wa[1]) +
-          '<td class="num">' + mm(c.v25[9]) + '</td>' +
-          '<td class="num">' + mm(c.v26[9]) + '</td>' +
         '</tr></tbody></table></div>';
 
     return '<div class="bloque-cat">' +
